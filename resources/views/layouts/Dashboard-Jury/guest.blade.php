@@ -2,27 +2,23 @@
 <html lang="en">
 <!--begin::Head-->
 
-<head>
-	<base href="../../" />
+<head><base href="../../"/>
 	<title>Le Grand Prix de Photographie By Darem Bouchentouf</title>
 	<meta charset="utf-8" />
 
-	<meta property="og:locale" content="en_US" />
 	<meta property="og:type" content="article" />
 
 	<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
 	<!--begin::Fonts(mandatory for all pages)-->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
 	<!--end::Fonts-->
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<!--begin::Vendor Stylesheets(used for this page only)-->
-	<link href="{{asset('assets-metronic-1/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet"
-		type="text/css" />
+	<link href="{{asset('assets-metronic-1/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
 	<!--end::Vendor Stylesheets-->
 	<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-	<link href="{{asset('assets-metronic-1/plugins/global/plugins.bundle.css')}}" rel="stylesheet"
-		type="text/css')}}" />
+	<link href="{{asset('assets-metronic-1/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
 	<link href="{{asset('assets-metronic-1/css/style.bundle.css')}}" rel="stylesheet" type="text/css" />
-	<link rel="stylesheet" href="sweetalert2.min.css">
 	<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 	<!--end::Global Stylesheets Bundle-->
@@ -276,6 +272,24 @@
 									</div>
 									<!--end:Menu item-->
 									<!--end:Menu item-->
+									<div class="menu-item">
+										<!--begin:Menu link-->
+										<a class="menu-link" href="/jury/ratings">
+											<span class="menu-icon">
+												<i class="ki-duotone ki-menu fs-1">
+													<span class="path1"></span>
+													<span class="path2"></span>
+													<span class="path3"></span>
+													<span class="path4"></span>
+													<span class="path5"></span>
+													<span class="path6"></span>
+												</i>
+											</span>
+											<span class="menu-title">Évaluations</span>
+										</a>
+										<!--end:Menu link-->
+									</div>
+									<!--end:Menu item-->
 								</div>
 
 								<!--end::Menu-->
@@ -293,7 +307,7 @@
 				</div>
 				<!--end::Sidebar-->
 
-				@yield('content')   
+				@yield('content')
 
 				<!--begin::Footer-->
 				<div id="kt_app_footer" class="app-footer">
@@ -334,39 +348,39 @@
 
 	<!--end::Modals-->
 	<!--begin::Javascript-->
-	<!-- Include your Vue and Alpine scripts -->
-	<script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
-	<script src="https://cdn.jsdelivr.net/npm/alpinejs@3"></script>
+		<script>
+			$.ajaxSetup({
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				}
+			});
+		</script>
+		<script src="{{asset('assets-metronic-1/plugins/global/plugins.bundle.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/scripts.bundle.js')}}"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--begin::Vendors Javascript(used for this page only)-->
+		<script src="{{asset('assets-metronic-1/plugins/custom/datatables/datatables.bundle.js')}}"></script>
+		<!--end::Vendors Javascript-->
+		<!--begin::Custom Javascript(used for this page only)-->
+		<script src="{{asset('assets-metronic-1/js/custom/pages/user-profile/general.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/widgets.bundle.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/custom/widgets.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/custom/apps/chat/chat.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/create-app.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/offer-a-deal/type.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/offer-a-deal/details.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/offer-a-deal/finance.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/offer-a-deal/complete.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/offer-a-deal/main.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/create-campaign.js')}}"></script>
+		<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/users-search.js')}}"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-	<!-- Include your app.js -->
-	<script src="{{ asset('js/app.js') }}" defer></script>
-	<script>var hostUrl = "assets-metronic-1/";</script>
-	<!--begin::Global Javascript Bundle(mandatory for all pages)-->
-	<script src="{{asset('assets-metronic-1/plugins/global/plugins.bundle.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/scripts.bundle.js')}}"></script>
-	<!--end::Global Javascript Bundle-->
-	<!--begin::Vendors Javascript(used for this page only)-->
-	<script src="{{asset('assets-metronic-1/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-	<!--end::Vendors Javascript-->
-	<!--begin::Custom Javascript(used for this page only)-->
-	<script src="{{asset('assets-metronic-1/js/custom/pages/user-profile/general.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/widgets.bundle.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/custom/widgets.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/custom/apps/chat/chat.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/upgrade-plan.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/create-app.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/offer-a-deal/type.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/offer-a-deal/details.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/offer-a-deal/finance.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/offer-a-deal/complete.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/offer-a-deal/main.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/create-campaign.js')}}"></script>
-	<script src="{{asset('assets-metronic-1/js/custom/utilities/modals/users-search.js')}}"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-	<!--end::Custom Javascript-->
+		<!--end::Custom Javascript-->
 	<!--end::Javascript-->
 </body>
 <!--end::Body-->
 
 </html>
+
