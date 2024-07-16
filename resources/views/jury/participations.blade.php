@@ -91,7 +91,7 @@
         .rated > label:hover ~ input:checked ~ label {
         color: #c59b08;
         }
-</style> 
+</style>
 
 <style>
 
@@ -109,21 +109,21 @@
     transition: color 150ms ease-in-out, background-color 150ms ease-in-out, transform 150ms ease-in-out;
     outline: 0;
     margin: 5em 0;
-    
+
     &:hover {
         color: #f0b43e;
     }
-    
+
     &:active {
         transform: scale(0.95);
     }
-    
+
     &.selected {
         color: #FFF;
         background-color: #f0b43e;
         border-color: #f0b43e;
     }
-    
+
     .heart-icon {
         display: inline-block;
         fill: currentColor;
@@ -138,25 +138,25 @@
     }
 
     .my-small-height-swal {
-    padding: 10px; 
+    padding: 10px;
     }
 
     .my-small-height-swal .swal2-title {
-    font-size: 1.25em; 
-    margin-bottom: 5px; 
+    font-size: 1.25em;
+    margin-bottom: 5px;
     }
 
     .my-small-height-swal .swal2-icon {
-    font-size: 1.5em; 
+    font-size: 1.5em;
     margin-top: 5px;
     }
-    
+
 </style>
-<div class="load container my-5">
+<div class="load container my-5" id="whole">
 @if($participation)
-    <div class="container-fluid"> 
+    <div class="container-fluid">
         <div class="row g-5 g-xl-10 mb-5 mb-xl-10 section">
-            <div> 
+            <div>
                 <div class="card card-flush h-xl-100">
                     <div class="card-body py-9">
                         <!--begin::Row-->
@@ -207,9 +207,9 @@
                                                     <!--end::Items-->
                                                     <form id="rating-form" class="py-6 px-4" action="{{ route('ratings.store') }}" method="POST" autocomplete="off">
                                                         @csrf
-                                                        <div class="d-flex flex-column flex-md-row align-items-start mt-10"> 
+                                                        <div class="d-flex flex-column flex-md-row align-items-start mt-10">
                                                             <!-- Rating Section -->
-                                                            <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-md-6 mb-3"> 
+                                                            <div class="border border-gray-300 border-dashed rounded min-w-100px w-100 py-2 px-4 me-md-6 mb-3">
                                                                 <input type="hidden" name="jury_id" value="{{ Auth::guard('jury')->user()->id }}">
                                                                 <input type="hidden" name="participation_id" value="{{ $participation->id }}">
                                                                 <div class="form-group col">
@@ -236,12 +236,12 @@
                                                             <button type="submit" class="btn btn-sm py-3 px-5 btn-primary">
                                                                 <span class="fw-bold fs-5">Submit</span>
                                                             </button>
-                                                            
+
                                                         </div>
-                                                         
+
 
                                                             <!-- End Button Section -->
-                                                        
+
                                                     </form>
 
                                             </div>
@@ -253,16 +253,15 @@
                         </div>
                     </div>
                 </div>
-               
+
 
             @else
             <div style="text-align: center;">
                 <h1>Félicitations ! Vous avez noté toutes les participations.</h1>
             </div>
-            @endif
-            
         </div>
     </div>
+@endif
 </div>
 
 
@@ -296,7 +295,7 @@
             dataType: 'json',
             success: function(data) {
                 if (data.success) {
-                    // Rating submitted successfully
+                    $('#whole').load(location.href + ' #whole > *');
                     Swal.fire({
                     position: "top-end",
                     icon: "success",
@@ -308,16 +307,16 @@
                     }
                     });
 
-                    $('.section').load(location.href + ' .section');
+
+
+                    // $('.section').load(location.href + ' .section');
 
 
                 } else {
-                    // Failed to submit rating
                     alert('Failed to submit rating');
                 }
             },
             error: function(xhr, status, error) {
-                // Handle errors
                 alert('An error occurred while processing your request', status, error);
             }
         });
