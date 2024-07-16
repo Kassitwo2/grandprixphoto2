@@ -19,7 +19,7 @@ use App\Models\Ville;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Models\Admin; 
+use App\Models\Admin;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -48,13 +48,13 @@ use Illuminate\Support\Facades\DB;
 Route::get('/hiba/{email}', function ($email) {
 
     $findUser = User::where('email', $email)->first();
-    
+
     if ($findUser) {
 
 
         //$user = Auth::user(); // Assuming you're using Laravel's built-in authentication
 
-    
+
 
             // If the user exists, log them in
             Auth::login($findUser);
@@ -63,7 +63,7 @@ Route::get('/hiba/{email}', function ($email) {
             return redirect('/dashboard')->with('success', 'Utilisateur mis à jour avec succès.');
 
 
-    
+
 
 
     }});
@@ -79,7 +79,7 @@ Route::get('/', function () {
 
 
 
-/* 
+/*
 Route::get('/participations', function () {
     return view('user.participations');
 })->middleware(['auth', 'verified']);
@@ -87,14 +87,14 @@ Route::get('/participations', function () {
 
 
 Route::middleware(['auth', 'checkProfileCompletion'])->group(function () {
-    
+
     Route::get('/dashboard', function () {
         $userId = auth()->id();
         // Get the count of participations for the user
         $participationCount = Participation::where('user_id', $userId)->count();
         return view('user.dashboard',compact('participationCount'));
     })->middleware(['auth', 'verified'])->name('dashboard');
-    
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -146,11 +146,11 @@ Route::get('/insert-jury', function () {
 
 
 Route::middleware(['auth:admin'])->group(function () {
-    
+
 
 
     Route::get('admin/dashboard',[Dashboard::class, 'render'])->middleware(['auth:admin', 'verified'])->name('admin.dashboard');
-    
+
     //Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 
     Route::get('/admin/utilisateurs', [AdminController::class, 'get_users'])->name('users.index');
@@ -171,7 +171,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
 
     Route::get('/admin/participations-refuse', [AdminController::class, 'participationRefuse'])->name('participations.refuse');
-    
+
     Route::get('/admin/participations-approuve', [AdminController::class, 'participationsApprouve'])->name('participations.approuve');
 
 
@@ -198,7 +198,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
     Route::get('/check-participation', [AdminController::class, 'checkParticipation'])->name('check-participation');
 
-    
+
     Route::put('/admin/ratings/{id}/update-rating', [AdminController::class, 'updateRating'])->name('rating.update');
 
 
@@ -209,9 +209,7 @@ require __DIR__.'/adminauth.php';
 
 
 
-Route::get('/jury/dashboard', function () {
-    return view('jury.dashboard');
-})->middleware(['auth:jury', 'verified'])->name('jury.dashboard');
+Route::get('/jury/dashboard',  [JuryController::class, 'render'])->middleware(['auth:jury', 'verified'])->name('jury.dashboard');
 
 
 
@@ -260,7 +258,7 @@ Route::get('/users/data',function (Request $request)
             // Add more search criteria as needed
         });
     }
-    
+
     return response()->json($users);
 
 })->name('users.data');
@@ -307,13 +305,13 @@ Route::get('/clearCache', function () {
 });
 
 
-/* 
- 
+/*
+
 Route::get('/presence', function () {
     return view('auth.presance');
 });
 
- 
+
  */
 
  Route::put('/save-form-data', [Controller::class,'savePresenceFormation'])->name('save.form.data');
@@ -355,10 +353,10 @@ Route::get('/phpinfo', function (Request $request ) {
         ]);
 
         //
-    
+
             // Read EXIF data
-            
-    
+
+
         } else {
             // Return error message if image path not found
             return response()->json(['error' => 'Image path not found.'], 404);
@@ -385,4 +383,4 @@ Route::get('/counts', function(){
 
     dd($userCountsParVille[0]);
 
-}); 
+});

@@ -255,11 +255,12 @@
                 </div>
 
 
-            @else
-            <div style="text-align: center;">
-                <h1>Félicitations ! Vous avez noté toutes les participations.</h1>
-            </div>
+
         </div>
+    </div>
+    @else
+    <div style="text-align: center;">
+        <h1>Félicitations ! Vous avez noté toutes les participations.</h1>
     </div>
 @endif
 </div>

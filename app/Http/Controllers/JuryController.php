@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Participation;
 use App\Models\Rating;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class JuryController extends Controller
 {
@@ -26,7 +29,7 @@ class JuryController extends Controller
         [
             'participation' => $participation,
             //'exif' =>  exif_read_data($image),
-        ]); 
+        ]);
     }
 
     public function showCategorieFaras()
@@ -43,7 +46,7 @@ class JuryController extends Controller
                             })
                             ->inRandomOrder()
                             ->first();
-    
+
         return view('jury.participations', [
             'participation' => $participation,
         ]);
@@ -62,7 +65,7 @@ class JuryController extends Controller
                             })
                             ->inRandomOrder()
                             ->first();
-    
+
         return view('jury.participations', [
             'participation' => $participation,
         ]);
@@ -82,12 +85,12 @@ class JuryController extends Controller
                             })
                             ->inRandomOrder()
                             ->first();
-    
+
         return view('jury.participations', [
             'participation' => $participation,
         ]);
     }
-    
+
 
 
     public function store(Request $request)
@@ -157,7 +160,7 @@ class JuryController extends Controller
         ->with('categorie')
         ->join('ratings', 'participations.id', '=', 'ratings.participation_id')
         ->where('ratings.jury_id', $juryId)
-        ->select('participations.*', 'ratings.rating') 
+        ->select('participations.*', 'ratings.rating')
         ->paginate(10);
 
     $ratings = Rating::where('jury_id', $juryId)->get();
@@ -199,4 +202,92 @@ public function destroyRating($id)
         return response()->json(['success' => false]);
     }
 }
+
+public $count = 0;
+
+    public function render()
+    {
+        $juryId = Auth::id();
+
+        $users = User::with('ville')->latest()->paginate(20);
+        $allUsersCount = User::where('is_complete', 1)->count();
+        $hommeUsersCount = User::where('sexe', 'homme')->count();
+        $femmeUsersCount = User::where('sexe', 'femme')->count();
+        $proUsersCount = User::whereIn('profile', ['professionnel', 'Professionel'])->count();
+
+        $amateurUsersCount = User::where('profile', 'Amateur')->count();
+
+        $allParticipations = Participation::where('is_conforme', 1)->count();
+
+        $participationRated = Participation::where('is_conforme', 1)
+                                ->join('ratings', 'participations.id', '=', 'ratings.participation_id')
+                                ->where('ratings.jury_id', $juryId)
+                                ->count();
+
+        $participationNotRated = Participation::where('is_conforme', 1)
+                                ->leftJoin('ratings', function($join) use ($juryId) {
+                                    $join->on('participations.id', '=', 'ratings.participation_id')
+                                         ->where('ratings.jury_id', $juryId);
+                                })
+                                ->whereNull('ratings.participation_id')
+                                ->count();
+
+        // Calculate the date 18 years ago
+        $dateEighteenYearsAgo = Carbon::now()->subYears(18);
+
+        // Calculate the date 30 years ago
+        $dateThirtyYearsAgo = Carbon::now()->subYears(30);
+
+        // Calculate the date 60 years ago
+        $dateSixtyYearsAgo = Carbon::now()->subYears(60);
+
+        // Get the count of users whose age is under 18
+        $countUnderEighteen = User::whereDate('DateNaissance', '>', $dateEighteenYearsAgo)->count();
+
+
+        // Get the count of users between 18 and 30 years old
+        $countBetweenEighteenAndThirty = User::whereDate('DateNaissance', '>', $dateThirtyYearsAgo)
+        ->whereDate('DateNaissance', '<', $dateEighteenYearsAgo)
+        ->count();
+
+
+
+        // Get the count of users between 30 and 60 years old
+        $countBetweenThirtyAndSixty = User::whereDate('DateNaissance', '>', $dateSixtyYearsAgo)
+            ->whereDate('DateNaissance', '<', $dateThirtyYearsAgo)
+            ->count();
+
+        // Get users who are 60 years old or older
+        $usersOverSixty = User::whereDate('DateNaissance', '<', $dateSixtyYearsAgo)->count();
+
+
+
+        $userCountsParRegions = User::join('villes', 'villes.id', '=', 'users.ville_id')
+        ->join('region', 'region.id', '=', 'villes.region')
+        ->select('region.id', 'region.region', DB::raw('COUNT(users.id) AS user_count'))
+        ->groupBy('region.id', 'region.region')
+        ->orderByDesc('user_count')
+        ->get();
+
+
+
+        return view('jury.dashboard', [
+
+            'count' => $this->count,
+            'userCountsParRegions' => $userCountsParRegions,
+            'allParticipations' => $allParticipations,
+            'users' =>$users,
+            'femmeUsersCount' =>$femmeUsersCount,
+            'hommeUsersCount' =>$hommeUsersCount,
+            'proUsersCount' =>$proUsersCount,
+            'amateurUsersCount' =>$amateurUsersCount,
+
+            'participationRatedCount' => $participationRated,
+            'participationNotRatedCount' => $participationNotRated,
+            'countUnderEighteen' =>$countUnderEighteen,
+            'countBetweenEighteenAndThirty' =>$countBetweenEighteenAndThirty,
+            'countBetweenThirtyAndSixty' =>$countBetweenThirtyAndSixty,
+            'usersOverSixty' =>$usersOverSixty,
+        ]);
+    }
 }
