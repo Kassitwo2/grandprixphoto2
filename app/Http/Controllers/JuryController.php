@@ -40,10 +40,10 @@ class JuryController extends Controller
                             ->whereNotIn('id', function($query) use ($userId) {
                                 $query->select('participation_id')
                                       ->from('ratings')
-                                      ->where('jury_id', $userId)
-                                      ->where('is_conforme','=', 1);
+                                      ->where('jury_id', $userId);
 
                             })
+                            ->where('is_conforme','=', 1)
                             ->inRandomOrder()
                             ->first();
 
@@ -59,10 +59,10 @@ class JuryController extends Controller
                             ->whereNotIn('id', function($query) use ($userId) {
                                 $query->select('participation_id')
                                       ->from('ratings')
-                                      ->where('jury_id', $userId)
-                                      ->where('is_conforme','=', 1);
+                                      ->where('jury_id', $userId);
 
                             })
+                            ->where('is_conforme','=', 1)
                             ->inRandomOrder()
                             ->first();
 
@@ -79,10 +79,9 @@ class JuryController extends Controller
                             ->whereNotIn('id', function($query) use ($userId) {
                                 $query->select('participation_id')
                                       ->from('ratings')
-                                      ->where('jury_id', $userId)
-                                      ->where('is_conforme','=', 1);
-
+                                      ->where('jury_id', $userId);
                             })
+                            ->where('is_conforme','=', 1)
                             ->inRandomOrder()
                             ->first();
 

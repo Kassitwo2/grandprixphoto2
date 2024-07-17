@@ -266,77 +266,66 @@
 </div>
 
 
+<script>
+    $(document).ready(function() {
+     $(document).on('submit', '#rating-form', function(e) {
+         e.preventDefault();
+ 
+         var formData = $(this).serialize();
+ 
+         $.ajax({
+             type: "POST",
+             url: $(this).attr('action'),
+             data: formData,
+             dataType: 'json',
+             success: function(data) {
+                 if (data.success) {
+                     $('#whole').load(location.href + ' #whole > *');
+                     Swal.fire({
+                     position: "top-end",
+                     icon: "success",
+                     title: "Evaluation ajoutee avec success",
+                     showConfirmButton: false,
+                     timer: 1500,
+                     customClass: {
+                         popup: 'my-small-height-swal'
+                     }
+                     });
+ 
+ 
+ 
+                     // $('.section').load(location.href + ' .section');
+ 
+ 
+                 } else {
+                     alert('Failed to submit rating');
+                 }
+             },
+             error: function(xhr, status, error) {
+                 alert('An error occurred while processing your request', status, error);
+             }
+         });
+     });
+ });
+ 
+ 
+ 
+ </script>
+ 
+ <script>
+   document.addEventListener('DOMContentLoaded', function() {
+   var likeButton = document.getElementById('like-button');
+   likeButton.addEventListener('click', function() {
+     window.lb = likeButton;
+     likeButton.classList.toggle('selected');
+   });
+ }, false);
+ </script>
+ 
 
-
-
-<!--begin::Javascript-->
-<script>var hostUrl = "assets/";</script>
-<!--begin::Global Javascript Bundle(mandatory for all pages)-->
-<script src="{{asset('assets-metronic-1/plugins/global/plugins.bundle.js')}}"></script>
-<script src="{{asset('assets-metronic-1/js/scripts.bundle.js')}}"></script>
-<!--end::Global Javascript Bundle-->
-<!--begin::Vendors Javascript(used for this page only)-->
-<script src="{{asset('assets-metronic-1/plugins/custom/datatables/datatables.bundle.js')}}"></script>
-<!--end::Vendors Javascript-->
 
 <!--end::Javascript-->
-<script src="sweetalert2.min.js"></script>
 
-<script>
-   $(document).ready(function() {
-    $(document).on('submit', '#rating-form', function(e) {
-        e.preventDefault();
-
-        var formData = $(this).serialize();
-
-        $.ajax({
-            type: "POST",
-            url: $(this).attr('action'),
-            data: formData,
-            dataType: 'json',
-            success: function(data) {
-                if (data.success) {
-                    $('#whole').load(location.href + ' #whole > *');
-                    Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Evaluation ajoutee avec success",
-                    showConfirmButton: false,
-                    timer: 1500,
-                    customClass: {
-                        popup: 'my-small-height-swal'
-                    }
-                    });
-
-
-
-                    // $('.section').load(location.href + ' .section');
-
-
-                } else {
-                    alert('Failed to submit rating');
-                }
-            },
-            error: function(xhr, status, error) {
-                alert('An error occurred while processing your request', status, error);
-            }
-        });
-    });
-});
-
-
-
-</script>
-
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-  var likeButton = document.getElementById('like-button');
-  likeButton.addEventListener('click', function() {
-    window.lb = likeButton;
-    likeButton.classList.toggle('selected');
-  });
-}, false);
-</script>
 
 
 @endsection
