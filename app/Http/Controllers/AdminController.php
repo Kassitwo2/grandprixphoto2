@@ -624,7 +624,7 @@ class AdminController extends Controller
         ->select('users.*', 'villes.name AS ville')
         ->where('villes.id','=', 122)
         ->get();
-    
+     
 
         return view('admin.onlyDarem', [
             'userCountsParRegions' => $userCountsParRegions,
@@ -639,6 +639,9 @@ class AdminController extends Controller
         // Fetch user participations using Eloquent relationship
         $participations = Participation::where('user_id','=',$id)->with('categorie')->get();
 
+
+       // dd($participations);
+        
 
         //xdd($participations);
         // Return response as JSON
