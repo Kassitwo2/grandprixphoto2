@@ -73,7 +73,7 @@ class AdminController extends Controller
             'userCountFacebook' => $userCountFacebook
 
         ]);
-    
+
 /*         return Inertia::render('Admin/Participations', [
             // Additional data to pass to the component if needed
         ]); */
@@ -94,7 +94,7 @@ class AdminController extends Controller
             'participations' => $participations,
         ]);
     }
-    
+
     public function get_participationsToConferme(Request $request)
     {
 
@@ -113,7 +113,7 @@ class AdminController extends Controller
         ->join('users', 'participations.user_id', '=', 'users.id')
         ->where('users.profile','=','Amateur')
         ->count();
-    
+
 
 
 
@@ -121,8 +121,8 @@ class AdminController extends Controller
         ->join('users', 'participations.user_id', '=', 'users.id')
         ->where('users.profile','=','Professionnel')
         ->count();
-    
-    
+
+
 
         $totalParticipants = Participation::distinct('user_id')->count();
 
@@ -145,8 +145,8 @@ class AdminController extends Controller
         $participationsApprouve = Participation::with('categorie')->where('is_conforme',1)->paginate(12);
         $participationsRefuse = Participation::with('categorie')->where('is_conforme',-1)->paginate(12);
 
-    
-    
+
+
 
 
 
@@ -191,20 +191,20 @@ class AdminController extends Controller
             'countParticipantsApprouvées' => $countParticipantsApprouvées,
             'countParticipantsRejetes'=>$countParticipantsRejetes
 
-            
+
 
         ]);
     }
-    
+
 
 
     public function participationRefuse(){
-        
+
         $participations = Participation::with('categorie')->where('is_conforme',0)->paginate(12);
         $participationsApprouve = Participation::with('categorie')->where('is_conforme',1)->paginate(12);
         $participationsRefuse = Participation::with('categorie')->where('is_conforme',-1)->paginate(12);
 
-    
+
         $participationsCountByFaras = Participation::where('category_id', 1)
         ->where('is_conforme',-1)
         ->count(); // Get the count of users
@@ -217,7 +217,7 @@ class AdminController extends Controller
         $participationsCountByVitalite = Participation::where('category_id', 5)
         ->where('is_conforme',-1)
         ->count(); // Get the count of users
-    
+
 
 
         $countParticipationsStandBy = Participation::where('is_conforme',0)->count();
@@ -240,8 +240,8 @@ class AdminController extends Controller
         ->where('is_conforme', -1)
         ->distinct('user_id')
         ->count('user_id');
-    
-        
+
+
         return view('admin.participationsRefuse', [
             'participations' => $participations,
             'participationsRefuse'=> $participationsRefuse,
@@ -296,9 +296,9 @@ class AdminController extends Controller
         ->where('is_conforme', -1)
         ->distinct('user_id')
         ->count('user_id');
-    
-    
-        
+
+
+
         return view('admin.participationsApprouve', [
             'participations' => $participations,
             'participationsRefuse'=> $participationsRefuse,
@@ -326,9 +326,9 @@ class AdminController extends Controller
          [
             'participation' => $participation,
             //'exif' =>  exif_read_data($image),
-            
-        
-        ]); 
+
+
+        ]);
     }
 
 
@@ -338,14 +338,14 @@ class AdminController extends Controller
         $validatedData = $request->validate([
             'rating' => 'required|integer|min:1|max:5',
         ]);
-    
+
         $juryId = auth()->id(); // Assuming you are using authentication
-    
+
         // Check if the user has already rated the product
         $existingRating = Rating::where('participation_id', $participationId)
                                        ->where('jury_id', $juryId)
                                        ->first();
-    
+
         if ($existingRating) {
             // User has already rated the product, update the rating
             $existingRating->rating = $validatedData['rating'];
@@ -363,7 +363,7 @@ class AdminController extends Controller
 
             return response()->json(['message' => 'Rating added successfully']);
         }
-    
+
        // return response()->json(['message' => 'Rating saved successfully']);
     }
 
@@ -394,16 +394,16 @@ class AdminController extends Controller
 
         return response()->json(['success' => true, 'customer' => $jury]);
     }
-    
+
     public function get_user_data()
     {
         return Excel::download(new UserExport, 'user.xlsx');
     }
-    
+
 
     public function updateJury(Request $request)
     {
-        
+
         //dd($request->id);
         // Validate incoming request data
         $validatedData = $request->validate([
@@ -433,7 +433,7 @@ class AdminController extends Controller
     public function ajaxDestroy(Request $request, Jury $jury)
     {
         $jury->delete();
-    
+
         return response()->json(['success' => true]);
     }
 
@@ -444,7 +444,7 @@ class AdminController extends Controller
         $participation = Participation::findOrFail($request->id);
         $user = User::findOrFail($participation->user_id);
         $image = $participation->image;
-    
+
         // Helper function to send email and handle exceptions
         function sendEmail($user, $mailable) {
             try {
@@ -453,7 +453,7 @@ class AdminController extends Controller
                 return response()->json(['success' => false, 'message' => 'Failed to send confirmation email.']);
             }
         }
-    
+
         // Determine action based on category
         if ($request->is_categorie == 0) {
             sendEmail($user, new ParticipationApprouvee($image));
@@ -466,19 +466,19 @@ class AdminController extends Controller
             if (file_exists(public_path('storage/' . $image))) {
                 $imagePath = public_path('storage/' . $image);
                 $exifData = @exif_read_data($imagePath);
-    
+
                 // Extract EXIF data
                 $width = $exifData['COMPUTED']['Width'] ?? 'NULL';
                 $height = $exifData['COMPUTED']['Height'] ?? 'NULL';
                 $widthAndHeight = ($width !== 'NULL' && $height !== 'NULL') ? $width . '/' . $height : 'NULL';
-    
+
                 $fileSize = $exifData['FileSize'] ?? null;
                 $volume = $fileSize ? round($fileSize / (1024 * 1024), 2) : 'NULL';
-    
+
                 $xResolution = isset($exifData['XResolution']) ? explode('/', $exifData['XResolution'])[0] : 'NULL';
                 $yResolution = isset($exifData['YResolution']) ? explode('/', $exifData['YResolution'])[0] : 'NULL';
                 $dpi = ($xResolution !== 'NULL' && $yResolution !== 'NULL') ? $xResolution . '/' . $yResolution : 'NULL';
-    
+
                 sendEmail($user, new emailLargeurEtLangeurRejetee($image, $dpi, $volume, $widthAndHeight));
             } else {
                 return response()->json(['success' => false, 'message' => 'Image file does not exist.']);
@@ -486,15 +486,15 @@ class AdminController extends Controller
         } else {
             sendEmail($user, new ParticipationApprouvee($image));
         }
-    
+
         // Update the participation record
         $participation->update([
             'is_conforme' => $request->is_conforme
         ]);
-    
+
         return response()->json(['success' => true, 'message' => 'Participation successfully updated.']);
     }
-    
+
 
 
     public function get_presences(){
@@ -536,17 +536,17 @@ class AdminController extends Controller
         $admin->password = $validatedData['password'];
         $admin->is_Admin = $validatedData['is_Admin'];
         $admin->save();
-        
+
         return response()->json(['success' => true, 'admin' => $admin]);
-    
+
     }
-    
+
 
 
 
     public function updateAdmin(Request $request)
     {
-        
+
         //dd($request->id);
         // Validate incoming request data
         $validatedData = $request->validate([
@@ -577,7 +577,7 @@ class AdminController extends Controller
     public function adminDestroy(Request $request, Admin $admin)
     {
         $admin->delete();
-    
+
         return response()->json(['success' => true]);
     }
 
@@ -585,12 +585,12 @@ class AdminController extends Controller
     public function search(Request $request)
     {
         $searchTerm = $request->input('search');
-    
+
         $juries = Jury::where('name', 'like', "%{$searchTerm}%")
                       ->orWhere('email', 'like', "%{$searchTerm}%")
                       ->orderBy('created_at', 'desc')
                       ->get();
-    
+
         return response()->json($juries);
     }
 
@@ -616,7 +616,7 @@ class AdminController extends Controller
 
 
     public function onlyDarem(){
-        
+
 
         $users = User::has('participations')->with('participations')->get();
 
@@ -624,7 +624,7 @@ class AdminController extends Controller
         ->select('users.*', 'villes.name AS ville')
         ->where('villes.id','=', 122)
         ->get();
-     
+
 
         return view('admin.onlyDarem', [
             'userCountsParRegions' => $userCountsParRegions,
@@ -636,16 +636,21 @@ class AdminController extends Controller
 
     public function getParticipations($id)
     {
-        // Fetch user participations using Eloquent relationship
-        $participations = Participation::where('user_id','=',$id)->with('categorie')->get();
+        try {
+            // Convert $id to integer
+            $id = intval($id);
+
+            if (!is_int($id)) {
+                return response()->json(['error' => 'Invalid user ID'], 400);
+            }
+
+            $participations = Participation::where('user_id', $id)->with('categorie')->get();
 
 
-       // dd($participations);
-        
-
-        //xdd($participations);
-        // Return response as JSON
-        return response()->json($participations);
+            return response()->json($participations, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function get_ratings(Request $request)
@@ -656,9 +661,9 @@ class AdminController extends Controller
 
         $juries = Jury::with('ratings')->get();
         $countJuries = Jury::count();
-        
+
         $admins = Admin::with('ratings')->where('id','=', auth()->id())->get();
-        
+
         return view('admin.ratings', [
             'participations' => $participations,
             'juries' => $juries,
@@ -677,8 +682,8 @@ class AdminController extends Controller
         return response()->json(['isRated' => $isRated]);
     }
 
-  
-   
+
+
     public function updateRating(Request $request, $id)
         {
             $validatedData = $request->validate([
