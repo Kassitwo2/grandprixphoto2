@@ -38,14 +38,12 @@
                                         <!--begin::Table head-->
                                         <thead>
                                             <tr class="fw-bold text-muted bg-light">
-
                                                 <th class="ps-18 min-w-100px rounded-start">image</th>
                                                 <th class="min-w-100px">name</th>
                                                 <th class="min-w-100px">Profile</th>
                                                 <th class="min-w-100px">telephone</th>
                                                 <th class="min-w-100px">Email</th>
                                                 <th class="min-w-100px">ville</th>
-
                                                 <th class="min-w-100px rounded-end">Actions</th>
                                             </tr>
                                         </thead>
@@ -350,7 +348,7 @@
                                 console.error(xhr.responseText);
 
                                 console.log(error);
-                                alert('Error retrieving participations.');
+                                alert('Error retrieving participations.'+ error);
                             }
                         });
                 });

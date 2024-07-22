@@ -207,7 +207,29 @@ Route::middleware(['auth:admin'])->group(function () {
 
 require __DIR__.'/adminauth.php';
 
+Route::get('/clear-caches', function () {
+    try {
+        // Clear application cache
+        Artisan::call('cache:clear');
+        echo "Application cache cleared.<br>";
 
+        // Clear route cache
+        Artisan::call('route:clear');
+        echo "Route cache cleared.<br>";
+
+        // Clear config cache
+        Artisan::call('config:clear');
+        echo "Config cache cleared.<br>";
+
+        // Clear view cache
+        Artisan::call('view:clear');
+        echo "View cache cleared.<br>";
+
+        return "All caches cleared successfully.";
+    } catch (Exception $e) {
+        return "Failed to clear caches: " . $e->getMessage();
+    }
+});
 
 Route::get('/jury/dashboard',  [JuryController::class, 'render'])->middleware(['auth:jury', 'verified'])->name('jury.dashboard');
 
