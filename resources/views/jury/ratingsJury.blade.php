@@ -6,13 +6,13 @@
     }
 
     .my-small-height-swal .swal2-title {
-    font-size: 1.25em; 
+    font-size: 1.25em;
     margin-bottom: 5px;
     }
 
     .my-small-height-swal .swal2-icon {
     font-size: 1.5em;
-    margin-top: 5px; 
+    margin-top: 5px;
     }
 
 </style>
@@ -106,7 +106,7 @@
         .rated > label:hover ~ input:checked ~ label {
         color: #c59b08;
         }
-</style> 
+</style>
 <!--begin::Content wrapper-->
 <div class="d-flex flex-column flex-column-fluid">
     <!--begin::Content-->
@@ -230,7 +230,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <a 
+                                            <a
                                             class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px rating-btn"
                                             style="background-color: #1E90FF;"
                                             data-image-detail-rating="{{ $participation->image }}"
@@ -243,7 +243,7 @@
                                             data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan_actions">
                                                 <i class="bi bi-pen" style="color: white;"></i>
                                             </a>
-                                            <a 
+                                            <a
                                             class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px delete-btn"
                                             style="background-color: rgb(255, 62, 62);"
                                             data-rating-id="{{ $rating->id }}"
@@ -251,7 +251,7 @@
                                                 <i class="bi bi-trash" style="color: white;"></i>
                                             </a>
 
-                                            
+
                                         </td>
                                     </tr>
                                 @endforeach
@@ -419,7 +419,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                     </div>
                                                     <!-- End Rating Section -->
                                                 </div>
@@ -534,7 +534,7 @@ $(document).ready(function() {
             var imageCategory = $(this).data('image-category');
             var imageDescription = $(this).data('image-category');
             var imageDescription = $(this).data('image-description');
-            
+
             $('#image-detail').attr('src', 'storage/' + imageUrl);
             $('#image-title').text(imageTitle);
             $('#image-category').text(imageCategory);
@@ -567,18 +567,18 @@ $(document).ready(function() {
             var ratingId = $('#rating-id').val();
 
             $.ajax({
-                type: "PUT", 
-                url: `/jury/ratings/${ratingId}/update-rating`, 
+                type: "PUT",
+                url: `/jury/ratings/${ratingId}/update-rating`,
                 data: formData,
                 dataType: 'json',
                 success: function (data) {
                     if (data.success) {
-                        $('#kt_modal_upgrade_plan_actions').modal('hide'); 
-                        
+                        $('#kt_modal_upgrade_plan_actions').modal('hide');
 
-                        $('#ratingsTable').load(location.href + ' #ratingsTable > *');
 
-                        $('#rating-form').load(location.href + ' #rating-form > *');
+                        // $('#ratingsTable').load(location.href + ' #ratingsTable > *');
+
+                        // $('#rating-form').load(location.href + ' #rating-form > *');
 
 
                         Swal.fire({
@@ -594,31 +594,31 @@ $(document).ready(function() {
                         location.reload();
 
 
-                    } 
+                    }
                 }
             });
         });
 
         $(document).on('click', '.delete-btn', function (e){
             e.preventDefault();
-            var ratingId = $(this).data('rating-id'); 
-            var formData = $(this).closest('form').serialize(); 
+            var ratingId = $(this).data('rating-id');
+            var formData = $(this).closest('form').serialize();
 
-            $('#kt_modal_upgrade_plan_delete').modal('show'); 
+            $('#kt_modal_upgrade_plan_delete').modal('show');
 
             $(document).on('click', '.delete-sure', function (e){
                 $.ajax({
-                type: "PUT", 
-                url: `/jury/ratings/${ratingId}/delete-rating`, 
+                type: "PUT",
+                url: `/jury/ratings/${ratingId}/delete-rating`,
                 data: formData + '&_token=' + $('meta[name="csrf-token"]').attr('content'),
                 dataType: 'json',
                 success: function (data) {
                     if (data.success) {
-                        
-                        $('#kt_modal_upgrade_plan_delete').modal('hide'); 
-                        
-                       
-                        $('#ratingsTable').load(location.href + ' #ratingsTable > *');
+
+                        $('#kt_modal_upgrade_plan_delete').modal('hide');
+
+
+                        // $('#ratingsTable').load(location.href + ' #ratingsTable > *');
 
                         Swal.fire({
                         position: "top-end",
@@ -636,7 +636,7 @@ $(document).ready(function() {
                 }
                 });
             });
-            
+
         });
 
 });

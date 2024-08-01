@@ -1,112 +1,5 @@
 @extends('layouts.Dashboard-admin.guest')
 @section('content')
-<style>
-    .my-small-height-swal {
-    padding: 10px;
-    }
-
-    .my-small-height-swal .swal2-title {
-    font-size: 1.25em; 
-    margin-bottom: 5px;
-    }
-
-    .my-small-height-swal .swal2-icon {
-    font-size: 1.5em;
-    margin-top: 5px; 
-    }
-
-</style>
-<style>
-    .rate {
-        float: left;
-        height: 46px;
-        padding: 0 10px;
-        }
-        .rate:not(:checked) > input {
-        position:absolute;
-        display: none;
-        }
-        .rate:not(:checked) > label {
-        float:right;
-        width:1em;
-        overflow:hidden;
-        white-space:nowrap;
-        cursor:pointer;
-        font-size:30px;
-        color:#ccc;
-        }
-        .rated:not(:checked) > label {
-        float:right;
-        width:1em;
-        overflow:hidden;
-        white-space:nowrap;
-        cursor:pointer;
-        font-size:30px;
-        color:#ccc;
-        }
-        .rate:not(:checked) > label:before {
-        content: '★ ';
-        }
-        .rate > input:checked ~ label {
-        color: #ffc700;
-        }
-        .rate:not(:checked) > label:hover,
-        .rate:not(:checked) > label:hover ~ label {
-        color: #deb217;
-        }
-        .rate > input:checked + label:hover,
-        .rate > input:checked + label:hover ~ label,
-        .rate > input:checked ~ label:hover,
-        .rate > input:checked ~ label:hover ~ label,
-        .rate > label:hover ~ input:checked ~ label {
-        color: #c59b08;
-        }
-        .star-rating-complete{
-           color: #c59b08;
-        }
-        .rating-container .form-control:hover, .rating-container .form-control:focus{
-        background: #fff;
-        border: 1px solid #ced4da;
-        }
-        .rating-container textarea:focus, .rating-container input:focus {
-        color: #000;
-        }
-        .rated {
-        float: left;
-        height: 46px;
-        padding: 0 10px;
-        }
-        .rated:not(:checked) > input {
-        position:absolute;
-        display: none;
-        }
-        .rated:not(:checked) > label {
-        float:right;
-        width:1em;
-        overflow:hidden;
-        white-space:nowrap;
-        cursor:pointer;
-        font-size:30px;
-        color:#ffc700;
-        }
-        .rated:not(:checked) > label:before {
-        content: '★ ';
-        }
-        .rated > input:checked ~ label {
-        color: #ffc700;
-        }
-        .rated:not(:checked) > label:hover,
-        .rated:not(:checked) > label:hover ~ label {
-        color: #deb217;
-        }
-        .rated > input:checked + label:hover,
-        .rated > input:checked + label:hover ~ label,
-        .rated > input:checked ~ label:hover,
-        .rated > input:checked ~ label:hover ~ label,
-        .rated > label:hover ~ input:checked ~ label {
-        color: #c59b08;
-        }
-</style> 
 <!--begin::Content wrapper-->
 <div class="d-flex flex-column flex-column-fluid">
     <!--begin::Content-->
@@ -149,6 +42,23 @@
                                 <!--end::Select-->
                             </div>
                             <!--end::Status-->
+                            <!--begin::Status-->
+                            <div class="d-flex align-items-center fw-bold">
+                                <!--begin::Label-->
+                                <div class="text-gray-400 fs-7 me-2">Trier&nbsp;Par</div>
+                                <!--end::Label-->
+                                <!--begin::Select-->
+                                <select id="OrderBy"
+                                    class="form-select form-select-transparent text-gray-900 fs-7 lh-1 fw-bold py-0 ps-3 w-auto select2-hidden-accessible"
+                                    data-control="select2" data-hide-search="true" data-dropdown-css-class="w-150px"
+                                    data-placeholder="Select an option">
+                                    <option value="Show All" selected="selected">Aucun</option>
+                                    <option value="1">Total (ASC)</option>
+                                    <option value="2">Toatl (DESC)</option>
+                                </select>
+                                <!--end::Select-->
+                            </div>
+                            <!--end::Status-->
                             <!--begin::Search-->
                             <div class="position-relative my-1">
                                 <i
@@ -177,12 +87,16 @@
                                     <th class="ps-4 min-w-100px rounded-start">Image</th>
                                     <th class="min-w-100px">Title</th>
                                     <th class="min-w-100px">Categorie</th>
+                                    <th class="min-w-100px">Actions</th>
                                     @foreach ($juries as $jury)
                                     <th class="min-w-100px">{{$jury->name}}</th>
                                     @endforeach
                                     <th class="min-w-100px">Super Admin</th>
-                                    <th class="min-w-100px">Total</th>
-                                    <th class="min-w-100px">Actions</th>
+                                    <th class="min-w-100px">
+                                        <span>Total</span>
+                                        <i class="bi bi-caret-down-fill" id="down-caret" style="display:none;"></i>
+                                        <i class="bi bi-caret-up-fill" id="up-caret" style="display:none;"></i>
+                                    </th>
                                 </tr>
                             </thead>
                             <!--end::Table head-->
@@ -209,56 +123,14 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <span class="d-block text-black-600 fw-bold mb-1 fs-6"
+                                            <span class="d-block text-black-600 fw-bold mb-1 fs-6 py-3 px-4"
                                                 data-title="{{ $participation->title }}">
                                                 {{ $participation->title }}
                                             </span>
                                         </td>
                                         <td>
-                                            <span class="d-block text-grey-600 mb-1 fs-6">
+                                            <span class="d-block text-grey-600 mb-1 fs-6 py-3 px-4">
                                                 {{ $participation->categorie->name }}
-                                            </span>
-                                        </td>
-                                        @php    $total = 0; @endphp
-                                        @foreach($juries as $jury)
-                                        
-                                        <td>
-                                            @php
-                                            $rating = $jury->ratings->where('participation_id', $participation->id)->first();
-                                        @endphp
-                                            @if ($rating)
-                                                <span class="d-block text-black-800 mb-1 fs-6 fw-bold">
-                                                    {{ $rating->rating * 10 }}
-                                                </span>
-                                                @php            $total += ($rating->rating * 10); @endphp
-                                            @else
-                                                <span class="d-block text-gray-800 mb-1 fs-6">
-                                                    null
-                                                </span>
-                                            @endif
-                                        </td>
-                                        @endforeach
-                                        @foreach($admins as $admin)
-                                        
-                                        <td class="text-center">
-                                            @php
-                                                $rating = $admin->ratings->where('participation_id', $participation->id)->first();
-                                            @endphp
-                                            @if ($rating)
-                                                <span class="d-block text-black-800 mb-1 fs-6 fw-bold">
-                                                    {{ $rating->rating * 10 }}
-                                                </span>
-                                                @php            $total += ($rating->rating * 10); @endphp
-                                            @else
-                                                <span class="d-block text-gray-800 mb-1 fs-6">
-                                                    null
-                                                </span>
-                                            @endif
-                                        </td>
-                                        @endforeach
-                                        <td >
-                                            <span class="d-block text-black-800 mb-1 py-3 px-4 fs-4 fw-bold">
-                                                {{ $total }}
                                             </span>
                                         </td>
                                         <td class="text-center">
@@ -267,8 +139,8 @@
                                                 $rating = $admin->ratings->where('participation_id', $participation->id)->first();
                                             @endphp
                                             @if ($rating)
-                                                <a 
-                                                class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px update-btn"
+                                                <a
+                                                class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px py-3 px-4 update-btn"
                                                 style="background-color: #1E90FF;"
                                                 data-image-detail-update="{{ $participation->image }}"
                                                 data-image-title-update="{{ $participation->title }}"
@@ -280,27 +152,69 @@
                                                 data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan_update">
                                                     <i class="bi bi-pen" style="color: white;"></i>
                                                 </a>
-                                                <a 
-                                                class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px delete-btn"
+                                                <a
+                                                class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px py-3 px-4 delete-btn"
                                                 style="background-color: rgb(255, 94, 94);"
                                                 data-rating-id="{{ $rating->id }}"
                                                 data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan_delete">
                                                     <i class="bi bi-trash" style="color: white;"></i>
                                                 </a>
 
-                                            
                                             @else
-                                            <a class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px rating-btn"
+                                            <a class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary w-30px h-30px py-3 px-4 rating-btn"
                                             style="background-color: gold;"
                                             data-image-detail-rating="{{ $participation->image }}"
                                             data-image-title-rating="{{ $participation->title }}"
                                             data-image-category-rating="{{ $participation->categorie->name }}"
                                             data-image-description-rating="{{ $participation->description }}"
-                                            data-image-id-rating="{{ $participation->id }}">
+                                            data-image-id-rating="{{ $participation->id }}"
+                                            data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan_actions">
                                             <i class="bi bi-star-fill" style="color: white;"></i>
                                             </a>
                                             @endif
                                             @endforeach
+                                        </td>
+                                        @php    $total = 0; @endphp
+                                        @foreach($juries as $jury)
+
+                                        <td>
+                                            @php
+                                            $rating = $jury->ratings->where('participation_id', $participation->id)->first();
+                                            @endphp
+                                            @if ($rating)
+                                                <span class="d-block text-black-800 mb-1 fs-6 fw-bold py-3 px-4">
+                                                    {{ $rating->rating * 10 }}
+                                                </span>
+                                                @php            $total += ($rating->rating * 10); @endphp
+                                            @else
+                                                <span class="d-block text-gray-800 mb-1 fs-6 py-3 px-4">
+                                                    null
+                                                </span>
+                                            @endif
+                                        </td>
+                                        @endforeach
+                                        @foreach($admins as $admin)
+
+                                        <td class="text-center">
+                                            @php
+                                                $rating = $admin->ratings->where('participation_id', $participation->id)->first();
+                                            @endphp
+                                            @if ($rating)
+                                                <span class="d-block text-black-800 mb-1 fs-6 fw-bold py-3 px-4">
+                                                    {{ $rating->rating * 10 }}
+                                                </span>
+                                                @php            $total += ($rating->rating * 10); @endphp
+                                            @else
+                                                <span class="d-block text-gray-800 mb-1 fs-6 py-3 px-4">
+                                                    null
+                                                </span>
+                                            @endif
+                                        </td>
+                                        @endforeach
+                                        <td >
+                                            <span class="d-block text-black-800 mb-1 py-3 px-4 fs-4 fw-bold">
+                                                {{ $total }}
+                                            </span>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -610,25 +524,25 @@
                                                             <div class="form-group col">
                                                                 <div class="col d-flex justify-content-center">
                                                                     <div class="rate">
-                                                                        <input type="radio" id="star6" class="rate"
+                                                                        <input type="radio" id="star5_" class="rate"
                                                                             name="rating" value="5" />
-                                                                        <label for="star6" title="5 stars">5 stars</label>
-                                                                        <input type="radio" id="star7" class="rate"
+                                                                        <label for="star5_" title="5 stars">5 stars</label>
+                                                                        <input type="radio" id="star4_" class="rate"
                                                                             name="rating" value="4" />
-                                                                        <label for="star7" title="4 stars">4 stars</label>
-                                                                        <input type="radio" id="star8" class="rate"
+                                                                        <label for="star4_" title="4 stars">4 stars</label>
+                                                                        <input type="radio" id="star3_" class="rate"
                                                                             name="rating" value="3" />
-                                                                        <label for="star8" title="3 stars">3 stars</label>
-                                                                        <input type="radio" id="star9" class="rate"
+                                                                        <label for="star3_" title="3 stars">3 stars</label>
+                                                                        <input type="radio" id="star2_" class="rate"
                                                                             name="rating" value="2">
-                                                                        <label for="star9" title="2 stars">2 stars</label>
-                                                                        <input type="radio" id="star10" class="rate"
+                                                                        <label for="star2_" title="2 stars">2 stars</label>
+                                                                        <input type="radio" id="star1_" class="rate"
                                                                             name="rating" value="1" checked />
-                                                                        <label for="star10" title="1 star">1 star</label>
+                                                                        <label for="star1_" title="1 star">1 star</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            
+
                                                     </div>
                                                     <!-- End Rating Section -->
                                                 </div>
@@ -742,6 +656,48 @@ $(document).ready(function() {
                 }
             });
         });
+
+        $(document).ready(function () {
+            const originalOrder = $('#ratingsTable tbody tr').get();
+
+            $('#OrderBy').on('change', function () {
+                const selectedOrder = $(this).val();
+
+                if (selectedOrder === 'Show All') {
+                    $.each(originalOrder, function (index, row) {
+                        $('#ratingsTable tbody').append(row);
+                    });
+                    $('#up-caret').hide();
+                    $('#down-caret').hide();
+                } else {
+                    const rows = $('#ratingsTable tbody tr').get();
+
+                    rows.sort(function (a, b) {
+                        const totalA = parseInt($(a).find('td').eq(-1).text().trim());
+                        const totalB = parseInt($(b).find('td').eq(-1).text().trim());
+
+                        if (selectedOrder === '1') {
+                            return totalA - totalB;
+                        } else if (selectedOrder === '2') {
+                            return totalB - totalA;
+                        }
+                    });
+
+                    $.each(rows, function (index, row) {
+                        $('#ratingsTable tbody').append(row);
+                    });
+
+                    if (selectedOrder === '1') {
+                        $('#up-caret').show();
+                        $('#down-caret').hide();
+                    } else if (selectedOrder === '2') {
+                        $('#up-caret').hide();
+                        $('#down-caret').show();
+                    }
+                }
+            });
+        });
+
         $('input[data-kt-table-widget-4="search"]').on('keyup', function() {
             const searchText = $(this).val().toLowerCase();
 
@@ -764,7 +720,7 @@ $(document).ready(function() {
             var imageCategory = $(this).data('image-category');
             var imageDescription = $(this).data('image-category');
             var imageDescription = $(this).data('image-description');
-            
+
             $('#image-detail').attr('src', 'storage/' + imageUrl);
             $('#image-title').text(imageTitle);
             $('#image-category').text(imageCategory);
@@ -787,30 +743,30 @@ $(document).ready(function() {
             $('#image-description-rating').text(imageDescription);
             $('#image-id-rating').val(participationId);
 
-            checkParticipation(participationId);
+            // checkParticipation(participationId);
         });
 
-        function checkParticipation(participationId) {
-            $.ajax({
-                url: '/check-participation', // Define your route in web.php
-                type: 'GET',
-                data: { participation_id: participationId },
-                success: function (response) {
-                    if (response.isRated) {
-                        
-                        var myModal1 = new bootstrap.Modal(document.getElementById('kt_modal_1'));
-                        myModal1.show();
-                        $('#kt_modal_upgrade_plan_actions').hide();
-                    } else {
-                        // Show the modal
-                        var myModal = new bootstrap.Modal(document.getElementById('kt_modal_upgrade_plan_actions'));
-                        myModal.show();
-                        $('#kt_modal_1').hide();
+        // function checkParticipation(participationId) {
+        //     $.ajax({
+        //         url: '/check-participation', // Define your route in web.php
+        //         type: 'GET',
+        //         data: { participation_id: participationId },
+        //         success: function (response) {
+        //             if (response.isRated) {
 
-                    }
-                }
-            });
-        }
+        //                 var myModal1 = new bootstrap.Modal(document.getElementById('kt_modal_1'));
+        //                 myModal1.show();
+        //                 $('#kt_modal_upgrade_plan_actions').hide();
+        //             } else {
+        //                 // Show the modal
+        //                 var myModal = new bootstrap.Modal(document.getElementById('kt_modal_upgrade_plan_actions'));
+        //                 myModal.show();
+        //                 $('#kt_modal_1').hide();
+
+        //             }
+        //         }
+        //     });
+        // }
 
         $(document).on('submit', '#rating-form', function (e) {
             e.preventDefault();
@@ -824,7 +780,7 @@ $(document).ready(function() {
                 dataType: 'json',
                 success: function (data) {
                     if (data.success) {
-                        $('#kt_modal_upgrade_plan_actions').modal('hide'); 
+                        $('#kt_modal_upgrade_plan_actions').modal('hide');
 
                         $('#ratingsTable').load(location.href + ' #ratingsTable > *');
 
@@ -840,6 +796,8 @@ $(document).ready(function() {
                             popup: 'my-small-height-swal'
                         }
                         });
+
+                        location.reload();
 
                     } else {
                         alert('Failed to submit rating');
@@ -866,7 +824,7 @@ $(document).ready(function() {
             $('#image-description-update').text(imageDescriptionUpdate);
             $('#image-id-update').val(participationIdUpdate);
             $('#update-id').val(ratingIdUpdate);
-            $('#input[name="rating"][value="' + ratingUpdate + '"]').prop('checked', true);
+            $('#update-form input[name="rating"][value="' + ratingUpdate + '"]').prop('checked', true);
         });
 
         $(document).on('submit', '#update-form', function (e) {
@@ -876,14 +834,14 @@ $(document).ready(function() {
             var ratingId = $('#update-id').val();
 
             $.ajax({
-                type: "PUT", 
-                url: `/admin/ratings/${ratingId}/update-rating`, 
+                type: "PUT",
+                url: `/admin/ratings/${ratingId}/update-rating`,
                 data: formData,
                 dataType: 'json',
                 success: function (data) {
                     if (data.success) {
-                        $('#kt_modal_upgrade_plan_update').modal('hide'); 
-                        
+                        $('#kt_modal_upgrade_plan_update').modal('hide');
+
 
                         $('#ratingsTable').load(location.href + ' #ratingsTable > *');
 
@@ -915,21 +873,21 @@ $(document).ready(function() {
 
         $(document).on('click', '.delete-btn', function (e){
             e.preventDefault();
-            var ratingId = $(this).data('rating-id'); 
-            var formData = $(this).closest('form').serialize(); 
+            var ratingId = $(this).data('rating-id');
+            var formData = $(this).closest('form').serialize();
 
-            $('#kt_modal_upgrade_plan_delete').modal('show'); 
+            $('#kt_modal_upgrade_plan_delete').modal('show');
 
             $(document).on('click', '.delete-sure', function (e){
                 $.ajax({
-                type: "PUT", 
-                url: `/admin/ratings/${ratingId}/delete-rating`, 
+                type: "PUT",
+                url: `/admin/ratings/${ratingId}/delete-rating`,
                 data: formData + '&_token=' + $('meta[name="csrf-token"]').attr('content'),
                 dataType: 'json',
                 success: function (data) {
                     if (data.success) {
-                        
-                        $('#kt_modal_upgrade_plan_delete').modal('hide'); 
+
+                        $('#kt_modal_upgrade_plan_delete').modal('hide');
 
                         $('#ratingsTable').load(location.href + ' #ratingsTable > *');
 
@@ -949,7 +907,7 @@ $(document).ready(function() {
                 }
                 });
             });
-            
+
         });
 
 });
@@ -957,5 +915,111 @@ $(document).ready(function() {
 
 </script>
 
+<style>
+    .my-small-height-swal {
+    padding: 10px;
+    }
 
+    .my-small-height-swal .swal2-title {
+    font-size: 1.25em;
+    margin-bottom: 5px;
+    }
+
+    .my-small-height-swal .swal2-icon {
+    font-size: 1.5em;
+    margin-top: 5px;
+    }
+
+</style>
+<style>
+    .rate {
+        float: left;
+        height: 46px;
+        padding: 0 10px;
+        }
+        .rate:not(:checked) > input {
+        position:absolute;
+        display: none;
+        }
+        .rate:not(:checked) > label {
+        float:right;
+        width:1em;
+        overflow:hidden;
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:30px;
+        color:#ccc;
+        }
+        .rated:not(:checked) > label {
+        float:right;
+        width:1em;
+        overflow:hidden;
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:30px;
+        color:#ccc;
+        }
+        .rate:not(:checked) > label:before {
+        content: '★ ';
+        }
+        .rate > input:checked ~ label {
+        color: #ffc700;
+        }
+        .rate:not(:checked) > label:hover,
+        .rate:not(:checked) > label:hover ~ label {
+        color: #deb217;
+        }
+        .rate > input:checked + label:hover,
+        .rate > input:checked + label:hover ~ label,
+        .rate > input:checked ~ label:hover,
+        .rate > input:checked ~ label:hover ~ label,
+        .rate > label:hover ~ input:checked ~ label {
+        color: #c59b08;
+        }
+        .star-rating-complete{
+           color: #c59b08;
+        }
+        .rating-container .form-control:hover, .rating-container .form-control:focus{
+        background: #fff;
+        border: 1px solid #ced4da;
+        }
+        .rating-container textarea:focus, .rating-container input:focus {
+        color: #000;
+        }
+        .rated {
+        float: left;
+        height: 46px;
+        padding: 0 10px;
+        }
+        .rated:not(:checked) > input {
+        position:absolute;
+        display: none;
+        }
+        .rated:not(:checked) > label {
+        float:right;
+        width:1em;
+        overflow:hidden;
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:30px;
+        color:#ffc700;
+        }
+        .rated:not(:checked) > label:before {
+        content: '★ ';
+        }
+        .rated > input:checked ~ label {
+        color: #ffc700;
+        }
+        .rated:not(:checked) > label:hover,
+        .rated:not(:checked) > label:hover ~ label {
+        color: #deb217;
+        }
+        .rated > input:checked + label:hover,
+        .rated > input:checked + label:hover ~ label,
+        .rated > input:checked ~ label:hover,
+        .rated > input:checked ~ label:hover ~ label,
+        .rated > label:hover ~ input:checked ~ label {
+        color: #c59b08;
+        }
+</style>
 @endsection

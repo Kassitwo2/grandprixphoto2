@@ -644,6 +644,8 @@ class AdminController extends Controller
                 return response()->json(['error' => 'Invalid user ID'], 400);
             }
 
+        
+
             $participations = Participation::where('user_id', $id)->with('categorie')->get();
 
 
