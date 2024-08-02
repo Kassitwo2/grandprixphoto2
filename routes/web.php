@@ -203,6 +203,9 @@ Route::middleware(['auth:admin'])->group(function () {
 
 
     Route::put('/admin/ratings/{id}/delete-rating', [AdminController::class, 'destroyRating'])->name('rating.delete');
+
+    Route::put('/admin/statistiques/ville', [AdminController::class, 'detailsVilles'])->name('admin.detailsVilles');
+
 });
 
 require __DIR__.'/adminauth.php';
