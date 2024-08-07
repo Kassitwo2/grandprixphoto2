@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Exports\UserExport;
@@ -15,6 +16,8 @@ use App\Models\Participation;
 use App\Models\Presence;
 use App\Models\Rating;
 use App\Models\User;
+use App\Models\Ville;
+use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -634,86 +637,75 @@ class AdminController extends Controller
     }
 
 
-    public function getParticipations($id)
+
+            
+    public function getvilles(Request $request)
     {
-        try {
-            // Convert $id to integer
-            $id = intval($id);
-
-            if (!is_int($id)) {
-                return response()->json(['error' => 'Invalid user ID'], 400);
-            }
-
+        $search = $request->input('search');
+        $selectedRegion = $request->input('region');
         
-
-            $participations = Participation::where('user_id', $id)->with('categorie')->get();
-
-
-            return response()->json($participations, 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-
-    public function get_ratings(Request $request)
-    {
-        $participations = Participation::with(['ratings.jury', 'categorie'])
-                            ->where('is_conforme','=', 1)
-                            ->paginate(10);
-
-        $juries = Jury::with('ratings')->get();
-        $countJuries = Jury::count();
-
-        $admins = Admin::with('ratings')->where('id','=', auth()->id())->get();
-
-        return view('admin.ratings', [
-            'participations' => $participations,
-            'juries' => $juries,
-            'countJuries' => $countJuries,
-            'admins'=> $admins,
+        // Charger les régions pour le filtre
+        $regions = \App\Models\Region::all();
+        
+        // Fonction pour appliquer le filtre de recherche et de région
+        $filterQuery = function ($query) use ($search, $selectedRegion) {
+            if ($search) {
+                $query->where('villes.name', 'like', '%' . $search . '%');
+            }
+            if ($selectedRegion) {
+                $query->where('villes.region', $selectedRegion);
+            }
+        };
+    
+        // Compter les utilisateurs professionnels
+        $countpro = User::join('villes', 'villes.id', '=', 'users.ville_id')
+            ->select('villes.id', 'villes.name', DB::raw('COUNT(CASE WHEN users.profile = "Professionnel" THEN 1 END) AS pro_count'))
+            ->when($search || $selectedRegion, $filterQuery)
+            ->groupBy('villes.id', 'villes.name')
+            ->get();
+    
+        // Compter les utilisateurs amateurs
+        $countamt = User::join('villes', 'villes.id', '=', 'users.ville_id')
+            ->select('villes.id', 'villes.name', DB::raw('COUNT(CASE WHEN users.profile = "Amateur" THEN 1 END) AS amt_count'))
+            ->when($search || $selectedRegion, $filterQuery)
+            ->groupBy('villes.id', 'villes.name')
+            ->get();
+    
+        // Compter les utilisateurs masculins
+        $countmales = User::join('villes', 'villes.id', '=', 'users.ville_id')
+            ->select('villes.id', 'villes.name', DB::raw('COUNT(CASE WHEN users.sexe = "homme" THEN 1 END) AS male_count'))
+            ->when($search || $selectedRegion, $filterQuery)
+            ->groupBy('villes.id', 'villes.name')
+            ->get();
+    
+        // Compter les utilisateurs féminins
+        $countfemales = User::join('villes', 'villes.id', '=', 'users.ville_id')
+            ->select('villes.id', 'villes.name', DB::raw('COUNT(CASE WHEN users.sexe = "femme" THEN 1 END) AS female_count'))
+            ->when($search || $selectedRegion, $filterQuery)
+            ->groupBy('villes.id', 'villes.name')
+            ->get();
+    
+        // Combiner les résultats dans un tableau associatif
+        $villesData = $countpro->mapWithKeys(function ($item) use ($countamt, $countmales, $countfemales) {
+            $amtCount = $countamt->where('id', $item->id)->first()->amt_count ?? 0;
+            $maleCount = $countmales->where('id', $item->id)->first()->male_count ?? 0;
+            $femaleCount = $countfemales->where('id', $item->id)->first()->female_count ?? 0;
+    
+            return [$item->id => [
+                'name' => $item->name,
+                'pro_count' => $item->pro_count,
+                'amt_count' => $amtCount,
+                'male_count' => $maleCount,
+                'female_count' => $femaleCount,
+            ]];
+        });
+    
+        return view('admin.statistiques.countparvilles', [
+            'villesData' => $villesData,
+            'search' => $search,
+            'regions' => $regions,
+            'selectedRegion' => $selectedRegion,
         ]);
     }
-
-    public function checkParticipation(Request $request)
-    {
-        $participationId = $request->input('participation_id');
-        $isRated = Rating::where('participation_id', $participationId)
-                        ->where('admin_id','=', auth()->id())
-                        ->exists();
-
-        return response()->json(['isRated' => $isRated]);
-    }
-
-
-
-    public function updateRating(Request $request, $id)
-        {
-            $validatedData = $request->validate([
-                'rating' => 'required|numeric|min:1|max:5',
-            ]);
-
-            $rating = Rating::findOrFail($id);
-
-            $rating->rating = $validatedData['rating'];
-            $success = $rating->update();
-
-            if ($success) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['success' => false]);
-            }
-        }
-
-    public function destroyRating($id)
-    {
-        $rating = Rating::findOrFail($id);
-
-        $success = $rating->delete();
-
-        if ($success) {
-            return response()->json(['success' => true]);
-        } else {
-            return response()->json(['success' => false]);
-        }
-    }
+    
 }
