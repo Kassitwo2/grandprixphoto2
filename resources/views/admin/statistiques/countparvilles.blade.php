@@ -48,7 +48,7 @@
                                             <input type="text" name="search" class="form-control form-control-solid w-250px ps-12" placeholder="Rechercher une ville" value="{{ $search }}">
                                         </div>
                                         <!--end::Search-->
-                                        
+
                                         <!--begin::Region Filter-->
                                         <div class="d-flex align-items-center position-relative ms-3">
                                             <select name="region" class="form-control form-control-solid h-100 w-250px ps-12" onchange="this.form.submit()">
@@ -99,7 +99,7 @@
                                                         <a class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $ville['female_count'] }}</a>
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('detailsVille',['id' => $ville['id']]) }}" class="btn btn-sm btn-primary">Détails</a>
+                                                        <a class="btn btn-sm btn-primary btn-detail" data-id-ville='{{ $ville['id'] }}'>Détails</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -128,4 +128,17 @@
     </div>
     <!--end::Content wrapper-->
 </div>
+
+<script>
+    $(document).ready(function() {
+    $(document).on('click', '.btn-detail', function () {
+        var idVille = $(this).data('id-ville');
+
+        var url = '/admin/statistiques/' + idVille;
+
+        window.location.href = url;
+
+    });
+});
+</script>
 @endsection

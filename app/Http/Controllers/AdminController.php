@@ -638,15 +638,15 @@ class AdminController extends Controller
 
 
 
-            
+
     public function getvilles(Request $request)
     {
         $search = $request->input('search');
         $selectedRegion = $request->input('region');
-        
+
         // Charger les régions pour le filtre
         $regions = \App\Models\Region::all();
-        
+
         // Fonction pour appliquer le filtre de recherche et de région
         $filterQuery = function ($query) use ($search, $selectedRegion) {
             if ($search) {
@@ -656,42 +656,43 @@ class AdminController extends Controller
                 $query->where('villes.region', $selectedRegion);
             }
         };
-    
+
         // Compter les utilisateurs professionnels
         $countpro = User::join('villes', 'villes.id', '=', 'users.ville_id')
             ->select('villes.id', 'villes.name', DB::raw('COUNT(CASE WHEN users.profile = "Professionnel" THEN 1 END) AS pro_count'))
             ->when($search || $selectedRegion, $filterQuery)
             ->groupBy('villes.id', 'villes.name')
             ->get();
-    
+
         // Compter les utilisateurs amateurs
         $countamt = User::join('villes', 'villes.id', '=', 'users.ville_id')
             ->select('villes.id', 'villes.name', DB::raw('COUNT(CASE WHEN users.profile = "Amateur" THEN 1 END) AS amt_count'))
             ->when($search || $selectedRegion, $filterQuery)
             ->groupBy('villes.id', 'villes.name')
             ->get();
-    
+
         // Compter les utilisateurs masculins
         $countmales = User::join('villes', 'villes.id', '=', 'users.ville_id')
             ->select('villes.id', 'villes.name', DB::raw('COUNT(CASE WHEN users.sexe = "homme" THEN 1 END) AS male_count'))
             ->when($search || $selectedRegion, $filterQuery)
             ->groupBy('villes.id', 'villes.name')
             ->get();
-    
+
         // Compter les utilisateurs féminins
         $countfemales = User::join('villes', 'villes.id', '=', 'users.ville_id')
             ->select('villes.id', 'villes.name', DB::raw('COUNT(CASE WHEN users.sexe = "femme" THEN 1 END) AS female_count'))
             ->when($search || $selectedRegion, $filterQuery)
             ->groupBy('villes.id', 'villes.name')
             ->get();
-    
+
         // Combiner les résultats dans un tableau associatif
         $villesData = $countpro->mapWithKeys(function ($item) use ($countamt, $countmales, $countfemales) {
             $amtCount = $countamt->where('id', $item->id)->first()->amt_count ?? 0;
             $maleCount = $countmales->where('id', $item->id)->first()->male_count ?? 0;
             $femaleCount = $countfemales->where('id', $item->id)->first()->female_count ?? 0;
-    
+
             return [$item->id => [
+                'id' => $item->id,
                 'name' => $item->name,
                 'pro_count' => $item->pro_count,
                 'amt_count' => $amtCount,
@@ -699,7 +700,7 @@ class AdminController extends Controller
                 'female_count' => $femaleCount,
             ]];
         });
-    
+
         return view('admin.statistiques.countparvilles', [
             'villesData' => $villesData,
             'search' => $search,
@@ -707,5 +708,79 @@ class AdminController extends Controller
             'selectedRegion' => $selectedRegion,
         ]);
     }
-    
+
+    public function detailsVilles ($ville_id)
+    {
+        $ville = Ville::where('id', $ville_id)->first();
+
+        $hommeUsersCount = User::where('sexe', 'homme')
+                            ->whereIn('id', function ($query) {
+                                $query->select('user_id')
+                                    ->from('participations');
+                            })->count();
+        $femmeUsersCount = User::where('sexe', 'femme')
+                            ->whereIn('id', function ($query) {
+                                $query->select('user_id')
+                                    ->from('participations');
+                            })->count();
+
+        $ParticipationCount = Participation::join('users', 'users.id', '=', 'participations.user_id')
+                         ->where('users.ville_id', $ville_id)
+                         ->count();
+
+        $participationsCountByFaras = Participation::join('users', 'users.id', '=', 'participations.user_id')
+                         ->where('users.ville_id', $ville_id)
+                         ->where('category_id',1)
+                         ->count();
+        $participationsCountByTresorsDuMaroc = Participation::join('users', 'users.id', '=', 'participations.user_id')
+                         ->where('users.ville_id', $ville_id)
+                         ->where('category_id',2)
+                         ->count();
+        $participationsCountByVitalite = Participation::join('users', 'users.id', '=', 'participations.user_id')
+                         ->where('users.ville_id', $ville_id)
+                         ->where('category_id',5)
+                         ->count();
+
+        $usersPro = User::where('ville_id', $ville_id)
+            ->whereIn('id', function ($query) {
+                $query->select('user_id')
+                    ->from('participations');
+            })
+            ->where('profile', 'Professionnel')
+            ->count();
+        $usersAmateur = User::where('ville_id', $ville_id)
+            ->whereIn('id', function ($query) {
+                $query->select('user_id')
+                    ->from('participations');
+            })
+            ->where('profile', 'Amateur')
+            ->count();
+        $allUsersCount = User::where('ville_id', $ville_id)
+            ->whereIn('id', function ($query) {
+                $query->select('user_id')
+                    ->from('participations');
+            })
+            ->count();
+        $users = User::where('ville_id', $ville_id)
+            ->whereIn('id', function ($query) {
+                $query->select('user_id')
+                    ->from('participations');
+            })
+            ->get();
+
+        return view('admin.statistiques.detailsVille', [
+            'ville' => $ville,
+            'ParticipationCount' => $ParticipationCount,
+            'femmeUsersCount' =>$femmeUsersCount,
+            'hommeUsersCount' =>$hommeUsersCount,
+            'users' => $users,
+            'usersProCount' => $usersPro,
+            'usersAmateurCount' => $usersAmateur,
+            'allUsersCount' => $allUsersCount,
+            'participationsCountByFaras'=>$participationsCountByFaras,
+            'participationsCountByTresorsDuMaroc'=>$participationsCountByTresorsDuMaroc,
+            'participationsCountByVitalite'=>$participationsCountByVitalite,
+        ]);
+    }
+
 }

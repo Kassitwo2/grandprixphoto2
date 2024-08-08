@@ -207,6 +207,9 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::put('/admin/statistiques/ville', [AdminController::class, 'detailsVilles'])->name('admin.detailsVilles');
     Route::get('/admin/count-ville', [AdminController::class, 'getvilles'])->name('count-ville');
     Route::get('/admin/detailsVille', [AdminController::class, 'getdetails'])->name('detailsVille');
+    
+    Route::get('/admin/statistiques/{ville_id}', [AdminController::class, 'detailsVilles'])->name('admin.detailsVilles');
+
 });
 
 require __DIR__.'/adminauth.php';
