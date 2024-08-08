@@ -360,8 +360,8 @@
     $(document).on('click', '.get-participations', function () {
         var userId = $(this).data('user-id');
 
-        var url = '/users/' + userId + '/participations';
-
+        var url = '/admin/' + userId + '/participations';
+        
         // Redirect to the constructed URL
         window.location.href = url;
 

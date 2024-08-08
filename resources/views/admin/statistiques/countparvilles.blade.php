@@ -70,7 +70,7 @@
                                         <!--begin::Table head-->
                                         <thead>
                                             <tr class="fw-bold text-muted bg-light">
-                                                <th class="min-w-225px">Ville</th>
+                                                <th class="ps-4 min-w-100px rounded-start">Ville</th>
                                                 <th class="min-w-125px">Professionnels</th>
                                                 <th class="min-w-125px">Amateurs</th>
                                                 <th class="min-w-125px">Males</th>
@@ -99,7 +99,7 @@
                                                         <a class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $ville['female_count'] }}</a>
                                                     </td>
                                                     <td>
-                                                        <a class="btn btn-sm btn-primary btn-detail" data-id-ville='{{ $ville['id'] }}'>Détails</a>
+                                                        <a class="btn btn-sm text-white btn-primary btn-detail" data-id-ville='{{ $ville['id'] }}'>Détails</a>
                                                     </td>
                                                 </tr>
                                             @endforeach

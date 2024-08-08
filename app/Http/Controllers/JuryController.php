@@ -18,15 +18,27 @@ class JuryController extends Controller
     {
         // $participation = Participation::findOrFail($id);
        $userId = Auth::id();
-       $participation = Participation::with('categorie')->whereNotIn('id', function($query) use ($userId) {
-            $query->select('participation_id')
-                ->from('ratings')
-                ->where('jury_id', $userId)
-                ->where('is_conforme','=', 1);
-        })->inRandomOrder()->first();
+       $participation = Participation::with('categorie')
+       ->whereNotIn('id', function($query) use ($userId) {
+           $query->select('participation_id')
+                 ->from('ratings')
+                 ->where('jury_id', $userId);
 
+       })
+       ->where('is_conforme','=', 1)
+       ->inRandomOrder()
+       ->first();
+
+
+
+        $totalConforme = Participation::where('is_conforme', 1)->count();
+        $totalRated = Rating::where('jury_id', Auth()->id())->count();
+
+        
         return view('jury.participations',
         [
+            'totalConforme' => $totalConforme,
+            'totalRated' => $totalRated,
             'participation' => $participation,
             //'exif' =>  exif_read_data($image),
         ]);

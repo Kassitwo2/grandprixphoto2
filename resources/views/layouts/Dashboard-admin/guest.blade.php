@@ -52,7 +52,7 @@
 						<!--begin::Mobile logo-->
 						<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 							<a href="#" class="d-lg-none">
-								<img alt="Logo" src="{{asset('assets-metronic-1/media/logos/default-small.svg')}}" class="h-30px" />
+								<img alt="Logo" src="{{asset('assets-metronic/media/logos/Concours-photo-SocialLogoTransicon.png')}}" class="h-30px" />
 							</a>
 						</div>
 						<!--end::Mobile logo-->
@@ -133,8 +133,8 @@
 						<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
 							<a href="../../demo1/dist/index.html">
-								<img alt="Logo" src="{{asset('assets-metronic/media/logos/GPPM-Logo-Banner.png')}}" class="h-100px app-sidebar-logo-default" />
-								<img alt="Logo" src="{{asset('assets-metronic/media/logos/GPPM-Logo-Banner.png')}}" class="h-100px app-sidebar-logo-minimize" />
+								<img alt="Logo" src="{{asset('assets-metronic/media/logos/logo-gpp.png')}}" class="h-100px app-sidebar-logo-default" />
+								<img alt="Logo" src="{{asset('assets-metronic/media/logos/logo-gpp.png')}}" class="h-100px app-sidebar-logo-minimize" />
 							</a>
 							<!--end::Logo image-->
 						</div>
@@ -228,8 +228,6 @@
 										</div>
 										<!--end:Menu item-->
 										@endif
- 
-
 										<!--begin:Menu item-->
 										<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 											<!--begin:Menu link-->
@@ -314,16 +312,32 @@
 										</div>
 										<!--end:Menu item-->
 
+
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
 											<a class="menu-link" href="/backoffice/admin/presence-list">
 												<span class="menu-icon">
-													<i class="ki-duotone ki-screen fs-2">
+													<i class="ki-duotone ki-chart-pie-3 fs-2">
 														<span class="path1"></span>
 														<span class="path2"></span>
 														<span class="path3"></span>
-														<span class="path4"></span>
+													</i>
+												</span>
+												<span class="menu-title">Statistiques</span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link" href="/backoffice/admin/presence-list">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-26 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
 													</i>
 												</span>
 												<span class="menu-title">Présence formation </span>

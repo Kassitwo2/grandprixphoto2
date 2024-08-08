@@ -210,6 +210,11 @@ Route::middleware(['auth:admin'])->group(function () {
     
     Route::get('/admin/statistiques/{ville_id}', [AdminController::class, 'detailsVilles'])->name('admin.detailsVilles');
 
+    Route::get('/admin/{id}/participants', [AdminController::class, 'getUsersDetails'])->name('admin.getUsersDetails');
+    Route::get('/admin/{id}/participations', [AdminController::class, 'getParticipationsOfUser'])->name('admin.getParticipationsOfUser');
+
+
+
 });
 
 require __DIR__.'/adminauth.php';

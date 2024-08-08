@@ -59,7 +59,7 @@
 					<!--begin::Mobile logo-->
 					<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
 						<a href="" class="d-lg-none">
-							<img alt="Logo" src="{{asset('assets-metronic-1/media/logos/GPPM-Logo-Banner.png')}}"
+							<img alt="Logo" src="{{asset('assets-metronic/media/logos/logo-gpp.png')}}"
 								class="h-30px" />
 						</a>
 					</div>
@@ -151,9 +151,9 @@
 					<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 						<!--begin::Logo image-->
 						<a href="../../demo1/dist/index.html">
-							<img alt="Logo" src="{{asset('assets-metronic/media/logos/GPPM-Logo-Banner.png')}}"
+							<img alt="Logo" src="{{asset('assets-metronic/media/logos/logo-gpp.png')}}"
 								class="h-100px app-sidebar-logo-default" />
-							<img alt="Logo" src="{{asset('assets-metronic/media/logos/GPPM-Logo-Banner.png')}}"
+							<img alt="Logo" src="{{asset('assets-metronic/media/logos/logo-gpp.png')}}"
 								class="h-100px app-sidebar-logo-minimize" />
 						</a>
 						<!--end::Logo image-->
@@ -194,7 +194,7 @@
 									<!--begin:Menu item-->
 									<div class="menu-item">
 										<!--begin:Menu link-->
-										<a class="menu-link" href="/jury/dashboard">
+										<a class="menu-link" href="{{route('jury.dashboard')}}">
 											<span class="menu-icon">
 												<i class="ki-duotone ki-calendar-8 fs-2">
 													<span class="path1"></span>
@@ -210,9 +210,10 @@
 										<!--end:Menu link-->
 									</div>
 									<!--end:Menu item-->
-									<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+									<!--begin:Menu item-->
+									<div class="menu-item">
 										<!--begin:Menu link-->
-										<span class="menu-link">
+										<a class="menu-link" href="{{route('participations.show')}}">
 											<span class="menu-icon">
 												<i class="ki-duotone ki-graph-up fs-1">
 													<span class="path1"></span>
@@ -225,56 +226,15 @@
 												</i>
 											</span>
 											<span class="menu-title">Participations</span>
-											<span class="menu-arrow"></span>
-										</span>
+										</a>
 										<!--end:Menu link-->
-										<!--begin:Menu sub-->
-										<div class="menu-sub menu-sub-accordion" style="margin-left: 50px">
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-												<a class="menu-link" href="/jury/participationsSport">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Sport & Vitalité</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-												<a class="menu-link" href="/jury/participationsTresors">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Trésors du maroc</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-											<!--begin:Menu item-->
-											<div class="menu-item">
-												<!--begin:Menu link-->
-												<a class="menu-link" href="/jury/participationsFaras">
-													<span class="menu-bullet">
-														<span class="bullet bullet-dot"></span>
-													</span>
-													<span class="menu-title">Faras</span>
-												</a>
-												<!--end:Menu link-->
-											</div>
-											<!--end:Menu item-->
-
-										</div>
-										<!--end:Menu sub-->
 									</div>
 									<!--end:Menu item-->
+
 									<!--end:Menu item-->
 									<div class="menu-item">
 										<!--begin:Menu link-->
-										<a class="menu-link" href="/jury/ratings">
+										<a class="menu-link" href="{{route('ratings.store')}}">
 											<span class="menu-icon">
 												<i class="ki-duotone ki-menu fs-1">
 													<span class="path1"></span>

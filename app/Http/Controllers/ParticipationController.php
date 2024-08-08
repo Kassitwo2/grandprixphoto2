@@ -40,7 +40,7 @@ class ParticipationController extends Controller
 
     public function create(){
 
-        $categories = Categorie::all();
+        $categories = Categorie::where('is_active', 1)->get();
         return view('user.participation-form')->with('categories', $categories);
         
     }
@@ -166,7 +166,7 @@ class ParticipationController extends Controller
 
     public function edit(Participation $participation)
     {
-        $categories = Categorie::all();
+        $categories = Categorie::where('is_active', 1)->get();
 
         return view('user.edit-participation-form',
         [

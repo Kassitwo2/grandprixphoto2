@@ -783,4 +783,59 @@ class AdminController extends Controller
         ]);
     }
 
+
+/*     public function getUsersDetails($id){
+
+
+        $users = User::whereHas('participations')
+        ->with('participations')
+        ->whereHas('ville', function($query) use ($id) {
+            $query->where('villes.id', $id);
+        })
+        ->get();
+    
+        return view('admin.usersDetails', [
+            'users' => $users,
+        ]);
+
+    } */
+
+
+    public function getParticipationsOfUser($id){
+
+
+
+        $user = User::where('id', $id)->with('participations')->with('ville')->first();
+
+        $participations = Participation::where('user_id', $id)->with('ratings')->get();
+
+
+        $ParticipationCount = Participation::join('users', 'users.id', '=', 'participations.user_id')
+        ->where('users.id', $id)
+        ->count();
+
+        $participationsCountByFaras = Participation::join('users', 'users.id', '=', 'participations.user_id')
+                ->where('users.id', $id)
+                ->where('category_id',1)
+                ->count();
+        $participationsCountByTresorsDuMaroc = Participation::join('users', 'users.id', '=', 'participations.user_id')
+                ->where('users.id', $id)    
+                ->where('category_id',2)
+                ->count();
+        $participationsCountByVitalite = Participation::join('users', 'users.id', '=', 'participations.user_id')
+                ->where('users.id', $id)
+                ->where('category_id',5)
+                ->count();
+        //dd($participations);
+
+        return view('admin.statistiques.UserParticipations', [
+            'user' => $user,
+            'participations' => $participations,
+            'ParticipationCount' => $ParticipationCount,
+            'participationsCountByFaras'=>$participationsCountByFaras,
+            'participationsCountByTresorsDuMaroc'=>$participationsCountByTresorsDuMaroc,
+            'participationsCountByVitalite'=>$participationsCountByVitalite,
+        ]);
+    }
+
 }

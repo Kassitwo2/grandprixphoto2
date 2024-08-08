@@ -257,6 +257,9 @@
 
 
         </div>
+        <div style="text-align: center;">
+            <h1>{{$totalRated}} / {{$totalConforme}}</h1>
+        </div>
     </div>
     @else
     <div style="text-align: center;">

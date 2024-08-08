@@ -499,6 +499,7 @@
 		// Vérification de la taille du fichier
 		if (file.size < 10 * 1024 * 1024) { // Check if file size is less than 3MB
 			errorMessage += `<li class="error mx-5">Le fichier doit être supérieur à 10MB. Taille actuelle : ${(file.size / 1024 / 1024).toFixed(2)}MB</li>`;
+			fileInput.value = '';
 		}
 
 		const reader = new FileReader();
