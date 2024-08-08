@@ -205,7 +205,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::put('/admin/ratings/{id}/delete-rating', [AdminController::class, 'destroyRating'])->name('rating.delete');
 
     Route::put('/admin/statistiques/ville', [AdminController::class, 'detailsVilles'])->name('admin.detailsVilles');
-    Route::get('/admin/count-ville', [AdminController::class, 'getvilles'])->name('count-ville');
+    Route::get('/admin/statistiques', [AdminController::class, 'getvilles'])->name('admin.statistiques');
     Route::get('/admin/detailsVille', [AdminController::class, 'getdetails'])->name('detailsVille');
     
     Route::get('/admin/statistiques/{ville_id}', [AdminController::class, 'detailsVilles'])->name('admin.detailsVilles');

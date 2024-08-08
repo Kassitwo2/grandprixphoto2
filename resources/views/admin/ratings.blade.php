@@ -87,7 +87,7 @@
                                     <th class="ps-4 min-w-100px rounded-start">Image</th>
                                     <th class="min-w-100px">Title</th>
                                     <th class="min-w-100px">Categorie</th>
-                                    <th class="min-w-100px">Actions</th>
+                                    <th class="min-w-100px text-center">Actions</th>
                                     @foreach ($juries as $jury)
                                     <th class="min-w-100px">{{$jury->name}}</th>
                                     @endforeach

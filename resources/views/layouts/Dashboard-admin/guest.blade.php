@@ -252,7 +252,7 @@
 												<!--begin:Menu item-->
 												<div class="menu-item">
 													<!--begin:Menu link-->
-													<a class="menu-link" href="/backoffice/admin/participations">
+													<a class="menu-link" href="{{route('participationsToConferme.index')}}">
 														<span class="menu-bullet">
 															<span class="bullet bullet-dot"></span>
 														</span>
@@ -264,7 +264,7 @@
 												<!--begin:Menu item-->
 												<div class="menu-item">
 													<!--begin:Menu link-->
-													<a class="menu-link" href="/backoffice/admin/participations-approuve">
+													<a class="menu-link" href="{{route('participations.approuve')}}">
 														<span class="menu-bullet">
 															<span class="bullet bullet-dot"></span>
 														</span>
@@ -276,7 +276,7 @@
 												<!--begin:Menu item-->
 												<div class="menu-item">
 													<!--begin:Menu link-->
-													<a class="menu-link" href="/backoffice/admin/participations-refuse">
+													<a class="menu-link" href="{{route('participations.refuse')}}">
 														<span class="menu-bullet">
 															<span class="bullet bullet-dot"></span>
 														</span>
@@ -316,7 +316,7 @@
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
-											<a class="menu-link" href="/backoffice/admin/presence-list">
+											<a class="menu-link" href="{{route('admin.statistiques')}}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-chart-pie-3 fs-2">
 														<span class="path1"></span>
@@ -333,7 +333,7 @@
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
-											<a class="menu-link" href="/backoffice/admin/presence-list">
+											<a class="menu-link" href="{{route('presence.index')}}">
 												<span class="menu-icon">
 													<i class="ki-duotone ki-abstract-26 fs-2">
 														<span class="path1"></span>

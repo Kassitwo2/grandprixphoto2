@@ -37,7 +37,7 @@
                             <!--begin::Card body-->
                             <div class="card-body col-sm-12 d-flex flex-column px-9 pt-6 pb-8">
                                 <!-- Barre de recherche et tri -->
-                                <form method="GET" action="{{ route('count-ville') }}" id="search-form">
+                                <form method="GET" action="{{ route('admin.statistiques') }}" id="search-form">
                                     <div class="d-flex align-items-center justify-content-start my-1 mb-3">
                                         <!--begin::Search-->
                                         <div class="d-flex align-items-center position-relative">

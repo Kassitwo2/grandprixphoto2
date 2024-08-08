@@ -82,6 +82,58 @@ class AdminController extends Controller
         ]); */
     }
 
+
+    public function get_ratings(Request $request)
+    {
+        $participations = Participation::with(['ratings.jury', 'categorie'])
+                            ->where('is_conforme','=', 1)
+                            ->paginate(10);
+
+        $juries = Jury::with('ratings')->get();
+        $countJuries = Jury::count();
+
+        $admins = Admin::with('ratings')->where('id','=', auth()->id())->get();
+
+        return view('admin.ratings', [
+            'participations' => $participations,
+            'juries' => $juries,
+            'countJuries' => $countJuries,
+            'admins'=> $admins,
+        ]);
+    }
+
+
+    public function updateRating(Request $request, $id)
+        {
+            $validatedData = $request->validate([
+                'rating' => 'required|numeric|min:1|max:5',
+            ]);
+
+            $rating = Rating::findOrFail($id);
+
+            $rating->rating = $validatedData['rating'];
+            $success = $rating->update();
+
+            if ($success) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        }
+
+    public function destroyRating($id)
+    {
+        $rating = Rating::findOrFail($id);
+
+        $success = $rating->delete();
+
+        if ($success) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
+    }
+
     public function get_users(Request $request)
     {
         $users = User::with('ville')->get();
