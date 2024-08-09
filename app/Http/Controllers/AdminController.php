@@ -788,7 +788,7 @@ class AdminController extends Controller
                 $query->select('user_id')
                     ->from('participations');
             })
-            ->paginate(10);
+            ->get();
 
         return view('admin.statistiques.detailsVille', [
             'ville' => $ville,
@@ -815,7 +815,7 @@ class AdminController extends Controller
             $query->where('villes.id', $id);
         })
         ->get();
-
+    
         return view('admin.usersDetails', [
             'users' => $users,
         ]);
@@ -841,7 +841,7 @@ class AdminController extends Controller
                 ->where('category_id',1)
                 ->count();
         $participationsCountByTresorsDuMaroc = Participation::join('users', 'users.id', '=', 'participations.user_id')
-                ->where('users.id', $id)
+                ->where('users.id', $id)    
                 ->where('category_id',2)
                 ->count();
         $participationsCountByVitalite = Participation::join('users', 'users.id', '=', 'participations.user_id')
