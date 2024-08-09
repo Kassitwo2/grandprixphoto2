@@ -695,10 +695,10 @@ class AdminController extends Controller
     {
         $search = $request->input('search');
         $selectedRegion = $request->input('region');
-        
+
         // Charger les régions pour le filtre
         $regions = \App\Models\Region::all();
-    
+
         // Fonction pour appliquer le filtre de recherche et de région
         $filterQuery = function ($query) use ($search, $selectedRegion) {
             if ($search) {
@@ -708,10 +708,10 @@ class AdminController extends Controller
                 $query->where('villes.region', $selectedRegion);
             }
         };
-    
+
         // Compter les utilisateurs professionnels
         $query = User::join('villes', 'villes.id', '=', 'users.ville_id')
-            ->select('villes.id', 'villes.name', 
+            ->select('villes.id', 'villes.name',
                 DB::raw('COUNT(CASE WHEN users.profile = "Professionnel" THEN 1 END) AS pro_count'),
                 DB::raw('COUNT(CASE WHEN users.profile = "Amateur" THEN 1 END) AS amt_count'),
                 DB::raw('COUNT(CASE WHEN users.sexe = "homme" THEN 1 END) AS male_count'),
@@ -719,10 +719,10 @@ class AdminController extends Controller
             )
             ->when($search || $selectedRegion, $filterQuery)
             ->groupBy('villes.id', 'villes.name');
-    
+
         // Paginer les résultats
         $villesData = $query->paginate(10);
-    
+
         return view('admin.statistiques.countparvilles', [
             'villesData' => $villesData,
             'search' => $search,
@@ -788,7 +788,7 @@ class AdminController extends Controller
                 $query->select('user_id')
                     ->from('participations');
             })
-            ->get();
+            ->paginate(10);
 
         return view('admin.statistiques.detailsVille', [
             'ville' => $ville,
@@ -815,7 +815,7 @@ class AdminController extends Controller
             $query->where('villes.id', $id);
         })
         ->get();
-    
+
         return view('admin.usersDetails', [
             'users' => $users,
         ]);
@@ -841,7 +841,7 @@ class AdminController extends Controller
                 ->where('category_id',1)
                 ->count();
         $participationsCountByTresorsDuMaroc = Participation::join('users', 'users.id', '=', 'participations.user_id')
-                ->where('users.id', $id)    
+                ->where('users.id', $id)
                 ->where('category_id',2)
                 ->count();
         $participationsCountByVitalite = Participation::join('users', 'users.id', '=', 'participations.user_id')
