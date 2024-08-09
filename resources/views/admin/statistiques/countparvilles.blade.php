@@ -37,7 +37,7 @@
                             <!--begin::Card body-->
                             <div class="card-body col-sm-12 d-flex flex-column px-9 pt-6 pb-8">
                                 <!-- Barre de recherche et tri -->
-                                <form method="GET" action="{{ route('count-ville') }}" id="search-form">
+                                <form method="GET" action="{{ route('admin.statistiques') }}" id="search-form">
                                     <div class="d-flex align-items-center justify-content-start my-1 mb-3">
                                         <!--begin::Search-->
                                         <div class="d-flex align-items-center position-relative">
@@ -48,7 +48,7 @@
                                             <input type="text" name="search" class="form-control form-control-solid w-250px ps-12" placeholder="Rechercher une ville" value="{{ $search }}">
                                         </div>
                                         <!--end::Search-->
-                                        
+
                                         <!--begin::Region Filter-->
                                         <div class="d-flex align-items-center position-relative ms-3">
                                             <select name="region" class="form-control form-control-solid h-100 w-250px ps-12" onchange="this.form.submit()">
@@ -70,7 +70,7 @@
                                         <!--begin::Table head-->
                                         <thead>
                                             <tr class="fw-bold text-muted bg-light">
-                                                <th class="min-w-225px">Ville</th>
+                                                <th class="ps-4 min-w-100px rounded-start">Ville</th>
                                                 <th class="min-w-125px">Professionnels</th>
                                                 <th class="min-w-125px">Amateurs</th>
                                                 <th class="min-w-125px">Males</th>
@@ -99,7 +99,7 @@
                                                         <a class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{ $ville['female_count'] }}</a>
                                                     </td>
                                                     <td>
-                                                        <a href="{{ route('detailsVille', ['id' => $ville['id']]) }}" class="btn btn-sm btn-primary">Détails</a>
+                                                        <a class="btn btn-sm text-white btn-primary btn-detail" data-id-ville='{{ $ville['id'] }}'>Détails</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -109,12 +109,9 @@
                                 </div>
                                 <!--end::Table-->
 
-                                <!--begin::Pagination-->
-                                <div class="d-flex justify-content-center mt-4">
-                                    {{ $villesData->links('pagination::bootstrap-4') }}
-                                </div>
-                                <!--end::Pagination-->
-
+                                <!--begin::Modals-->
+                                <!-- Ajoutez ici les modaux si nécessaire -->
+                                <!--end::Modals-->
                             </div>
                             <!--end::Card body-->
                         </div>
@@ -131,4 +128,17 @@
     </div>
     <!--end::Content wrapper-->
 </div>
+
+<script>
+    $(document).ready(function() {
+    $(document).on('click', '.btn-detail', function () {
+        var idVille = $(this).data('id-ville');
+
+        var url = '/admin/statistiques/' + idVille;
+
+        window.location.href = url;
+
+    });
+});
+</script>
 @endsection
