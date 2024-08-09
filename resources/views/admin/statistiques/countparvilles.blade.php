@@ -108,6 +108,11 @@
                                     </table>
                                 </div>
                                 <!--end::Table-->
+                                <!--begin::Pagination-->
+                                <div class="d-flex justify-content-center mt-4">
+                                    {{ $villesData->links('pagination::bootstrap-4') }}
+                                </div>
+                                <!--end::Pagination-->
 
                                 <!--begin::Modals-->
                                 <!-- Ajoutez ici les modaux si nécessaire -->

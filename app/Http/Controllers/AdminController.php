@@ -695,10 +695,10 @@ class AdminController extends Controller
     {
         $search = $request->input('search');
         $selectedRegion = $request->input('region');
-
+        
         // Charger les régions pour le filtre
         $regions = \App\Models\Region::all();
-
+    
         // Fonction pour appliquer le filtre de recherche et de région
         $filterQuery = function ($query) use ($search, $selectedRegion) {
             if ($search) {
@@ -708,51 +708,21 @@ class AdminController extends Controller
                 $query->where('villes.region', $selectedRegion);
             }
         };
-
+    
         // Compter les utilisateurs professionnels
-        $countpro = User::join('villes', 'villes.id', '=', 'users.ville_id')
-            ->select('villes.id', 'villes.name', DB::raw('COUNT(CASE WHEN users.profile = "Professionnel" THEN 1 END) AS pro_count'))
+        $query = User::join('villes', 'villes.id', '=', 'users.ville_id')
+            ->select('villes.id', 'villes.name', 
+                DB::raw('COUNT(CASE WHEN users.profile = "Professionnel" THEN 1 END) AS pro_count'),
+                DB::raw('COUNT(CASE WHEN users.profile = "Amateur" THEN 1 END) AS amt_count'),
+                DB::raw('COUNT(CASE WHEN users.sexe = "homme" THEN 1 END) AS male_count'),
+                DB::raw('COUNT(CASE WHEN users.sexe = "femme" THEN 1 END) AS female_count')
+            )
             ->when($search || $selectedRegion, $filterQuery)
-            ->groupBy('villes.id', 'villes.name')
-            ->get();
-
-        // Compter les utilisateurs amateurs
-        $countamt = User::join('villes', 'villes.id', '=', 'users.ville_id')
-            ->select('villes.id', 'villes.name', DB::raw('COUNT(CASE WHEN users.profile = "Amateur" THEN 1 END) AS amt_count'))
-            ->when($search || $selectedRegion, $filterQuery)
-            ->groupBy('villes.id', 'villes.name')
-            ->get();
-
-        // Compter les utilisateurs masculins
-        $countmales = User::join('villes', 'villes.id', '=', 'users.ville_id')
-            ->select('villes.id', 'villes.name', DB::raw('COUNT(CASE WHEN users.sexe = "homme" THEN 1 END) AS male_count'))
-            ->when($search || $selectedRegion, $filterQuery)
-            ->groupBy('villes.id', 'villes.name')
-            ->get();
-
-        // Compter les utilisateurs féminins
-        $countfemales = User::join('villes', 'villes.id', '=', 'users.ville_id')
-            ->select('villes.id', 'villes.name', DB::raw('COUNT(CASE WHEN users.sexe = "femme" THEN 1 END) AS female_count'))
-            ->when($search || $selectedRegion, $filterQuery)
-            ->groupBy('villes.id', 'villes.name')
-            ->get();
-
-        // Combiner les résultats dans un tableau associatif
-        $villesData = $countpro->mapWithKeys(function ($item) use ($countamt, $countmales, $countfemales) {
-            $amtCount = $countamt->where('id', $item->id)->first()->amt_count ?? 0;
-            $maleCount = $countmales->where('id', $item->id)->first()->male_count ?? 0;
-            $femaleCount = $countfemales->where('id', $item->id)->first()->female_count ?? 0;
-
-            return [$item->id => [
-                'id' => $item->id,
-                'name' => $item->name,
-                'pro_count' => $item->pro_count,
-                'amt_count' => $amtCount,
-                'male_count' => $maleCount,
-                'female_count' => $femaleCount,
-            ]];
-        });
-
+            ->groupBy('villes.id', 'villes.name');
+    
+        // Paginer les résultats
+        $villesData = $query->paginate(10);
+    
         return view('admin.statistiques.countparvilles', [
             'villesData' => $villesData,
             'search' => $search,
