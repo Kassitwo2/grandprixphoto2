@@ -66,7 +66,7 @@
                                         <!--begin::Icon-->
                                         <div class="symbol symbol-45px h-45px w-45px bg-light me-5">
                                             <img src="{{asset('assets-metronic\media\svg\card-logos\loading.svg')}}" alt="image" class="p-3" />
-                                        </div>
+                                        </div> 
                                         <!--end::Icon-->
                                         <!--begin::Heading-->
                                         <div>
