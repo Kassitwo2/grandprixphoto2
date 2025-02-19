@@ -164,7 +164,7 @@
                                 <!--begin::Col-->
                                     <div class="col-sm-12 col-md-12 col-lg-6">
                                         <!--begin::Image-->
-                                        <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-100 h-100" style="background-size: contain; background-repeat: no-repeat; background-position: center; background-image: url('{{ asset('storage/' . $participation->image) }}');">
+                                        <div class="bgi-no-repeat bgi-position-center bgi-size-cover card-rounded min-h-400px min-h-100 h-100" style="background-size: contain; background-repeat: no-repeat; background-position: center; background-image: url('{{ asset('storage/Thumbnails/' . $participation->image) }}');">
                                         </div>
                                         <!--end::Image-->
                                     </div>
@@ -258,7 +258,7 @@
 
         </div>
         <div style="text-align: center;">
-            <h1>{{$totalRated}} / {{$totalConforme}}</h1>
+            <h1>{{$totalRated + 1}} / {{$totalConforme}}</h1>
         </div>
     </div>
     @else

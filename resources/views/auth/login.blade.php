@@ -83,8 +83,8 @@
 								<!--begin::Heading-->
 								<div class="text-center mb-11">
 									<!--begin::Title-->
-									<h4 class="text-dark fw-bolder mb-3">Connectez-vous pour participer au grand prix de la photographie et tenter de gagner 150 000 DHS !</h4><br>
-									<h3 class="text-dark fw-bolder mb-3" dir="rtl" >قم بتسجيل الدخول للمشاركة في الجائزة الكبرى للتصوير الفوتوغرافي وحاول الفوز بـ 150,000 درهم!</h3>
+									<h4 class="text-dark fw-bolder mb-3">Connectez-vous pour participer au grand prix de la photographie et tenter de gagner 100 000 DHS !</h4><br>
+									<h3 class="text-dark fw-bolder mb-3" dir="rtl" >قم بتسجيل الدخول للمشاركة في الجائزة الكبرى للتصوير الفوتوغرافي وحاول الفوز بـ 100,000 درهم!</h3>
 									<!--end::Title-->
 								</div>
 								<!--begin::Heading-->
@@ -111,11 +111,11 @@
 
 									<!--begin::Col-->
 									<div class="col-md-12">
-										<!--begin::Google link-->
+										<!--begin::Google link
 										<a href="/backoffice/auth/facebook" class="btn btn-flex btn-outline btn-text-gray-700 btn-active-color-primary bg-state-light flex-center text-nowrap w-100">
                                             <img alt="Logo" src="{{asset('assets-metronic/media/svg/brand-logos/facebook-2.svg')}}" class="theme-light-show h-15px me-3" />
 										    <img alt="Logo" src="{{asset('assets-metronic/media/svg/brand-logos/facebook-2.svg')}}" class="theme-dark-show h-15px me-3" />Connectez-vous avec Facebook
-										</a>
+										</a>-->
 										<!--end::Google link=-->
 									</div>
 									<!--end::Col-->
@@ -125,11 +125,11 @@
 								<!--begin::Heading-->
 								<div class="text-center mb-11">
 									<!--begin::Title-->
-									<span class="text-dark mb-3">«Conformément à la loi 09-08, vous disposez d’un droit d’accès, de rectification et d’opposition au traitement de vos données personnelles. Ce traitement et le transfert de données ont été autorisé par la CNDP sous les numéro … et …» 
+									<span class="text-dark mb-3">«Conformément à la loi 09-08, vous disposez d’un droit d’accès, de rectification et d’opposition au traitement de vos données personnelles. Ce traitement et le transfert de données ont été autorisé par la CNDP sous le numéro A-PO-429/2024»
 										<br>En continuant, vous acceptez <a style="font-weight: bold; color: rgb(17, 17, 17);" href="https://grandprixphoto.ma/reglement-du-concours/"> conditions générales d’utilisation</a>, notamment la mention relative à la protection de données personnelles</span>
 										<div class="zI7 iyn Hsu" style="border-bottom: 1px solid rgb(222, 222, 222); margin: 10px auto; width: 110px;"></div>
-										<span class="text-dark  mb-3" dir="rtl" >"بموجب القانون 09-08، لديك الحق في الوصول إلى بياناتك الشخصية وتصحيحها والاعتراض عليها. تمت الموافقة على هذه المعالجة ونقل البيانات من قبل CNDP تحت أرقام ... و ..."
-  										<br>من خلال المتابعة، فإنك توافق على <a style="font-weight: bold; color: rgb(17, 17, 17);" href="https://grandprixphoto.ma/reglement-du-concours/">الشروط العامة للاستخدام</a>، ولا سيما الإشعار المتعلق بحماية البيانات الشخصية</span>
+										<span class="text-dark  mb-3" dir="rtl" >"بموجب القانون 09-08، لديك الحق في الوصول إلى بياناتك الشخصية وتصحيحها والاعتراض عليها. تمت الموافقة على هذه المعالجة ونقل البيانات من قبل CNDP تحت الرقم A-PO-429/2024."
+										<br>من خلال المتابعة، فإنك توافق على <a style="font-weight: bold; color: rgb(17, 17, 17);" href="https://grandprixphoto.ma/reglement-du-concours/">الشروط العامة للاستخدام</a>، ولا سيما الإشعار المتعلق بحماية البيانات الشخصية</span>
 
 										
 									<!--end::Title-->

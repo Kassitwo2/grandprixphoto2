@@ -316,15 +316,14 @@
 										<!--begin:Menu item-->
 										<div class="menu-item">
 											<!--begin:Menu link-->
-											<a class="menu-link" href="{{route('admin.statistiques')}}">
+											<a class="menu-link" href="{{route('category.create')}}">
 												<span class="menu-icon">
-													<i class="ki-duotone ki-chart-pie-3 fs-2">
+													<i class="ki-duotone ki-abstract-26 fs-2">
 														<span class="path1"></span>
 														<span class="path2"></span>
-														<span class="path3"></span>
 													</i>
 												</span>
-												<span class="menu-title">Statistiques</span>
+												<span class="menu-title">Categories </span>
 											</a>
 											<!--end:Menu link-->
 										</div>

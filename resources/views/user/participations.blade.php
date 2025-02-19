@@ -42,10 +42,10 @@
 						<!--begin::Wrapper-->
 						<div class="d-flex flex-align-items flex-wrap gap-3 gap-xl-0">
 
-							<!--begin::Actions
-							<div class="d-flex align-items-center flex-shrink-0">
+							<!--begin::Actions-->
+{{-- 							<div class="d-flex align-items-center flex-shrink-0">
 								<a href="/backoffice/participation-form" class="btn btn-sm btn-flex btn-primary ms-5">Participer</a>
-							</div>-->
+							</div> --}}
 							<!--end::Actions-->
 						</div>
 						<!--end::Wrapper-->
@@ -77,10 +77,10 @@
 											<h3 class="card-title align-items-start flex-column">
 												<span class="card-label fw-bold fs-3 mb-1">Mes participations</span>
 											</h3>
-											<div class="card-toolbar">
+{{-- 											<div class="card-toolbar">
 												<a href="/backoffice/participation-form" class="btn btn-sm btn-light-primary">
 												<i class="ki-duotone ki-plus fs-2"></i>nouvelle participation</a>
-											</div>
+											</div> --}}
 										</div>
 										<!--end::Header-->
 										<!--begin::Body-->
@@ -138,7 +138,7 @@
 
 															<td class="text-start">		
 
-																<a href="{{ route('participations.edit', $participation->id) }}" data-bs-toggle="tooltip" data-bs-placement="top"  title="Modifier" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+ 																<a href="{{ route('participations.edit', $participation->id) }}" data-bs-toggle="tooltip" data-bs-placement="top"  title="Modifier" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 																	<i class="ki-duotone ki-pencil fs-2">
 																		<span class="path1"></span>
 																		<span class="path2"></span>
@@ -241,7 +241,7 @@
 
 															<td class="text-start">		
 
-																<a href="{{ route('participations.edit', $participation->id) }}" data-bs-toggle="tooltip" data-bs-placement="top"  title="Modifier" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+	 															<a href="{{ route('participations.edit', $participation->id) }}" data-bs-toggle="tooltip" data-bs-placement="top"  title="Modifier" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
 																	<i class="ki-duotone ki-pencil fs-2">
 																		<span class="path1"></span>
 																		<span class="path2"></span>
@@ -287,21 +287,21 @@
 															<!--begin::Content-->
 															<div class="fw-semibold">
 																<h4 class="text-gray-900 fw-bold">Notification</h4>
-																		<div class="fs-6 text-gray-700">
+																	{{--	<div class="fs-6 text-gray-700">
 																			Vous n'avez actuellement aucune participation. Vous pouvez participer en cliquant sur le lien
 																			<a href="/backoffice/participation-form">ici</a> ou  le bouton 'Nouvelle Participation' ci-dessus.
-																		</div> 
-				{{-- 														<div class="fs-6 text-gray-700">
-																			Cher utilisateur, nous tenons à vous informer que la participation débutera le <b>1 mai 2024.</b> 
+																		</div>  --}}
+				 														<div class="fs-6 text-gray-700">
+																			Cher utilisateur, nous tenons à vous informer que la participation débutera le <b> 1er mars 2025.</b>  
 																			Nous avons hâte de vous voir rejoindre cet événement passionnant !
 																		</div>
 																		<br>
 																		<div class="fs-6 text-gray-700 text-end">
 																			<span>!</span>	عزيزي المستخدم، نود إعلامك بأن المشاركة ستبدأ
 																			في
-																			<b> 1 مايو 2024. </b>
+																			<b>1 مارس 2025</b>
 																			نتطلع إلى رؤيتكم للانضمام إلى هذا الحدث المثير
-																		</div> --}}
+																		</div>
 															<!--end::Content-->
 															</div>
 														<!--end::Wrapper-->

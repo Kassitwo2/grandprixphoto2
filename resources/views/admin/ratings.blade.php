@@ -222,8 +222,10 @@
                             <!--end::Table body-->
                         </table>
                         <!--end::Table-->
+
                     </div>
                     <!--end::Table container-->
+
                 </div>
                 <!--begin::Body-->
             </div>
@@ -638,279 +640,279 @@
 </div>
 
 <script>
-$(document).ready(function() {
-        $('#categoryFilter').on('change', function () {
-            const selectedCategory = $(this).val();
+    $(document).ready(function() {
+            $('#categoryFilter').on('change', function () {
+                const selectedCategory = $(this).val();
 
-            // Always show the table header
-            $('#ratingsTable thead tr').show();
+                // Always show the table header
+                $('#ratingsTable thead tr').show();
 
-            // Filter the table body rows
-            $('#ratingsTable tbody tr').each(function () {
-                const categoryId = $(this).data('category-id');
+                // Filter the table body rows
+                $('#ratingsTable tbody tr').each(function () {
+                    const categoryId = $(this).data('category-id');
 
-                if (selectedCategory === 'Show All' || categoryId == selectedCategory) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
-
-        $(document).ready(function () {
-            const originalOrder = $('#ratingsTable tbody tr').get();
-
-            $('#OrderBy').on('change', function () {
-                const selectedOrder = $(this).val();
-
-                if (selectedOrder === 'Show All') {
-                    $.each(originalOrder, function (index, row) {
-                        $('#ratingsTable tbody').append(row);
-                    });
-                    $('#up-caret').hide();
-                    $('#down-caret').hide();
-                } else {
-                    const rows = $('#ratingsTable tbody tr').get();
-
-                    rows.sort(function (a, b) {
-                        const totalA = parseInt($(a).find('td').eq(-1).text().trim());
-                        const totalB = parseInt($(b).find('td').eq(-1).text().trim());
-
-                        if (selectedOrder === '1') {
-                            return totalA - totalB;
-                        } else if (selectedOrder === '2') {
-                            return totalB - totalA;
-                        }
-                    });
-
-                    $.each(rows, function (index, row) {
-                        $('#ratingsTable tbody').append(row);
-                    });
-
-                    if (selectedOrder === '1') {
-                        $('#up-caret').show();
-                        $('#down-caret').hide();
-                    } else if (selectedOrder === '2') {
-                        $('#up-caret').hide();
-                        $('#down-caret').show();
-                    }
-                }
-            });
-        });
-
-        $('input[data-kt-table-widget-4="search"]').on('keyup', function() {
-            const searchText = $(this).val().toLowerCase();
-
-            $('#ratingsTable tr').each(function() {
-                const rowText = $(this).text().toLowerCase();
-
-                if (rowText.includes(searchText)) {
-                    $('#ratingsTable thead tr').show();
-                    $(this).show();
-                } else {
-                    $('#ratingsTable thead tr').show();
-                    $(this).hide();
-                }
-            });
-        });
-
-        $(document).on('click', '.image-modal-link', function () {
-            var imageUrl = $(this).data('image-detail');
-            var imageTitle = $(this).data('image-title');
-            var imageCategory = $(this).data('image-category');
-            var imageDescription = $(this).data('image-category');
-            var imageDescription = $(this).data('image-description');
-
-            $('#image-detail').attr('src', 'storage/' + imageUrl);
-            $('#image-title').text(imageTitle);
-            $('#image-category').text(imageCategory);
-            $('#image-description').text(imageDescription);
-
-        });
-
-
-
-        $(document).on('click', '.rating-btn', function () {
-            var imageUrl = $(this).data('image-detail-rating');
-            var imageTitle = $(this).data('image-title-rating');
-            var imageCategory = $(this).data('image-category-rating');
-            var imageDescription = $(this).data('image-description-rating');
-            var participationId = $(this).data('image-id-rating');
-
-            $('#image-detail-rating').attr('src', 'storage/' + imageUrl);
-            $('#image-title-rating').text(imageTitle);
-            $('#image-category-rating').text(imageCategory);
-            $('#image-description-rating').text(imageDescription);
-            $('#image-id-rating').val(participationId);
-
-            // checkParticipation(participationId);
-        });
-
-        // function checkParticipation(participationId) {
-        //     $.ajax({
-        //         url: '/check-participation', // Define your route in web.php
-        //         type: 'GET',
-        //         data: { participation_id: participationId },
-        //         success: function (response) {
-        //             if (response.isRated) {
-
-        //                 var myModal1 = new bootstrap.Modal(document.getElementById('kt_modal_1'));
-        //                 myModal1.show();
-        //                 $('#kt_modal_upgrade_plan_actions').hide();
-        //             } else {
-        //                 // Show the modal
-        //                 var myModal = new bootstrap.Modal(document.getElementById('kt_modal_upgrade_plan_actions'));
-        //                 myModal.show();
-        //                 $('#kt_modal_1').hide();
-
-        //             }
-        //         }
-        //     });
-        // }
-
-        $(document).on('submit', '#rating-form', function (e) {
-            e.preventDefault();
-
-            var formData = $(this).serialize();
-
-            $.ajax({
-                type: "POST",
-                url: $(this).attr('action'),
-                data: formData,
-                dataType: 'json',
-                success: function (data) {
-                    if (data.success) {
-                        $('#kt_modal_upgrade_plan_actions').modal('hide');
-
-                        $('#ratingsTable').load(location.href + ' #ratingsTable > *');
-
-                        $('#rating-form').load(location.href + ' #rating-form > *');
-
-                        Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Évaluation ajoutée avec succès",
-                        showConfirmButton: false,
-                        timer: 500,
-                        customClass: {
-                            popup: 'my-small-height-swal'
-                        }
-                        });
-
-                        location.reload();
-
+                    if (selectedCategory === 'Show All' || categoryId == selectedCategory) {
+                        $(this).show();
                     } else {
-                        alert('Failed to submit rating');
+                        $(this).hide();
                     }
-                },
-                error: function (xhr, status, error) {
-                    alert('An error occurred while processing your request: ' + error);
-                }
-            });
-        });
-
-        $(document).on('click', '.update-btn', function () {
-            var imageUrlUpdate = $(this).data('image-detail-update');
-            var imageTitleUpdate = $(this).data('image-title-update');
-            var imageCategoryUpdate = $(this).data('image-category-update');
-            var imageDescriptionUpdate = $(this).data('image-description-update');
-            var participationIdUpdate = $(this).data('image-id-update');
-            var ratingIdUpdate = $(this).data('update-id');
-            var ratingUpdate = $(this).data('image-update');
-
-            $('#image-detail-update').attr('src', 'storage/' + imageUrlUpdate);
-            $('#image-title-update').text(imageTitleUpdate);
-            $('#image-category-update').text(imageCategoryUpdate);
-            $('#image-description-update').text(imageDescriptionUpdate);
-            $('#image-id-update').val(participationIdUpdate);
-            $('#update-id').val(ratingIdUpdate);
-            $('#update-form input[name="rating"][value="' + ratingUpdate + '"]').prop('checked', true);
-        });
-
-        $(document).on('submit', '#update-form', function (e) {
-            e.preventDefault();
-
-            var formData = $(this).serialize();
-            var ratingId = $('#update-id').val();
-
-            $.ajax({
-                type: "PUT",
-                url: `/admin/ratings/${ratingId}/update-rating`,
-                data: formData,
-                dataType: 'json',
-                success: function (data) {
-                    if (data.success) {
-                        $('#kt_modal_upgrade_plan_update').modal('hide');
-
-
-                        $('#ratingsTable').load(location.href + ' #ratingsTable > *');
-
-                        $('#update-form').load(location.href + ' #update-form > *');
-
-
-                        Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Évaluation mise à jour avec succès",
-                        showConfirmButton: false,
-                        timer: 500,
-                        customClass: {
-                            popup: 'my-small-height-swal'
-                        }
-                        });
-                        location.reload();
-
-
-                    } else {
-                        alert('Failed to submit rating');
-                    }
-                },
-                error: function (xhr, status, error) {
-                    alert('An error occurred while processing your request: ' + error);
-                }
-            });
-        });
-
-        $(document).on('click', '.delete-btn', function (e){
-            e.preventDefault();
-            var ratingId = $(this).data('rating-id');
-            var formData = $(this).closest('form').serialize();
-
-            $('#kt_modal_upgrade_plan_delete').modal('show');
-
-            $(document).on('click', '.delete-sure', function (e){
-                $.ajax({
-                type: "PUT",
-                url: `/admin/ratings/${ratingId}/delete-rating`,
-                data: formData + '&_token=' + $('meta[name="csrf-token"]').attr('content'),
-                dataType: 'json',
-                success: function (data) {
-                    if (data.success) {
-
-                        $('#kt_modal_upgrade_plan_delete').modal('hide');
-
-                        $('#ratingsTable').load(location.href + ' #ratingsTable > *');
-
-
-                        Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "Évaluation supprimée avec succès",
-                        showConfirmButton: false,
-                        timer: 500,
-                        customClass: {
-                            popup: 'my-small-height-swal'
-                        }
-                        });
-
-                    }
-                }
                 });
             });
 
-        });
+            $(document).ready(function () {
+                const originalOrder = $('#ratingsTable tbody tr').get();
 
-});
+                $('#OrderBy').on('change', function () {
+                    const selectedOrder = $(this).val();
+
+                    if (selectedOrder === 'Show All') {
+                        $.each(originalOrder, function (index, row) {
+                            $('#ratingsTable tbody').append(row);
+                        });
+                        $('#up-caret').hide();
+                        $('#down-caret').hide();
+                    } else {
+                        const rows = $('#ratingsTable tbody tr').get();
+
+                        rows.sort(function (a, b) {
+                            const totalA = parseInt($(a).find('td').eq(-1).text().trim());
+                            const totalB = parseInt($(b).find('td').eq(-1).text().trim());
+
+                            if (selectedOrder === '1') {
+                                return totalA - totalB;
+                            } else if (selectedOrder === '2') {
+                                return totalB - totalA;
+                            }
+                        });
+
+                        $.each(rows, function (index, row) {
+                            $('#ratingsTable tbody').append(row);
+                        });
+
+                        if (selectedOrder === '1') {
+                            $('#up-caret').show();
+                            $('#down-caret').hide();
+                        } else if (selectedOrder === '2') {
+                            $('#up-caret').hide();
+                            $('#down-caret').show();
+                        }
+                    }
+                });
+            });
+
+            $('input[data-kt-table-widget-4="search"]').on('keyup', function() {
+                const searchText = $(this).val().toLowerCase();
+
+                $('#ratingsTable tr').each(function() {
+                    const rowText = $(this).text().toLowerCase();
+
+                    if (rowText.includes(searchText)) {
+                        $('#ratingsTable thead tr').show();
+                        $(this).show();
+                    } else {
+                        $('#ratingsTable thead tr').show();
+                        $(this).hide();
+                    }
+                });
+            });
+
+            $(document).on('click', '.image-modal-link', function () {
+                var imageUrl = $(this).data('image-detail');
+                var imageTitle = $(this).data('image-title');
+                var imageCategory = $(this).data('image-category');
+                var imageDescription = $(this).data('image-category');
+                var imageDescription = $(this).data('image-description');
+
+                $('#image-detail').attr('src', 'storage/' + imageUrl);
+                $('#image-title').text(imageTitle);
+                $('#image-category').text(imageCategory);
+                $('#image-description').text(imageDescription);
+
+            });
+
+
+
+            $(document).on('click', '.rating-btn', function () {
+                var imageUrl = $(this).data('image-detail-rating');
+                var imageTitle = $(this).data('image-title-rating');
+                var imageCategory = $(this).data('image-category-rating');
+                var imageDescription = $(this).data('image-description-rating');
+                var participationId = $(this).data('image-id-rating');
+
+                $('#image-detail-rating').attr('src', 'storage/' + imageUrl);
+                $('#image-title-rating').text(imageTitle);
+                $('#image-category-rating').text(imageCategory);
+                $('#image-description-rating').text(imageDescription);
+                $('#image-id-rating').val(participationId);
+
+                // checkParticipation(participationId);
+            });
+
+            // function checkParticipation(participationId) {
+            //     $.ajax({
+            //         url: '/check-participation', // Define your route in web.php
+            //         type: 'GET',
+            //         data: { participation_id: participationId },
+            //         success: function (response) {
+            //             if (response.isRated) {
+
+            //                 var myModal1 = new bootstrap.Modal(document.getElementById('kt_modal_1'));
+            //                 myModal1.show();
+            //                 $('#kt_modal_upgrade_plan_actions').hide();
+            //             } else {
+            //                 // Show the modal
+            //                 var myModal = new bootstrap.Modal(document.getElementById('kt_modal_upgrade_plan_actions'));
+            //                 myModal.show();
+            //                 $('#kt_modal_1').hide();
+
+            //             }
+            //         }
+            //     });
+            // }
+
+            $(document).on('submit', '#rating-form', function (e) {
+                e.preventDefault();
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: $(this).attr('action'),
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                            $('#kt_modal_upgrade_plan_actions').modal('hide');
+
+                            $('#ratingsTable').load(location.href + ' #ratingsTable > *');
+
+                            $('#rating-form').load(location.href + ' #rating-form > *');
+
+                            Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Évaluation ajoutée avec succès",
+                            showConfirmButton: false,
+                            timer: 500,
+                            customClass: {
+                                popup: 'my-small-height-swal'
+                            }
+                            });
+
+                            location.reload();
+
+                        } else {
+                            alert('Failed to submit rating');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('An error occurred while processing your request: ' + error);
+                    }
+                });
+            });
+
+            $(document).on('click', '.update-btn', function () {
+                var imageUrlUpdate = $(this).data('image-detail-update');
+                var imageTitleUpdate = $(this).data('image-title-update');
+                var imageCategoryUpdate = $(this).data('image-category-update');
+                var imageDescriptionUpdate = $(this).data('image-description-update');
+                var participationIdUpdate = $(this).data('image-id-update');
+                var ratingIdUpdate = $(this).data('update-id');
+                var ratingUpdate = $(this).data('image-update');
+
+                $('#image-detail-update').attr('src', 'storage/' + imageUrlUpdate);
+                $('#image-title-update').text(imageTitleUpdate);
+                $('#image-category-update').text(imageCategoryUpdate);
+                $('#image-description-update').text(imageDescriptionUpdate);
+                $('#image-id-update').val(participationIdUpdate);
+                $('#update-id').val(ratingIdUpdate);
+                $('#update-form input[name="rating"][value="' + ratingUpdate + '"]').prop('checked', true);
+            });
+
+            $(document).on('submit', '#update-form', function (e) {
+                e.preventDefault();
+
+                var formData = $(this).serialize();
+                var ratingId = $('#update-id').val();
+
+                $.ajax({
+                    type: "PUT",
+                    url: `/admin/ratings/${ratingId}/update-rating`,
+                    data: formData,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+                            $('#kt_modal_upgrade_plan_update').modal('hide');
+
+
+                            $('#ratingsTable').load(location.href + ' #ratingsTable > *');
+
+                            $('#update-form').load(location.href + ' #update-form > *');
+
+
+                            Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Évaluation mise à jour avec succès",
+                            showConfirmButton: false,
+                            timer: 500,
+                            customClass: {
+                                popup: 'my-small-height-swal'
+                            }
+                            });
+                            location.reload();
+
+
+                        } else {
+                            alert('Failed to submit rating');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('An error occurred while processing your request: ' + error);
+                    }
+                });
+            });
+
+            $(document).on('click', '.delete-btn', function (e){
+                e.preventDefault();
+                var ratingId = $(this).data('rating-id');
+                var formData = $(this).closest('form').serialize();
+
+                $('#kt_modal_upgrade_plan_delete').modal('show');
+
+                $(document).on('click', '.delete-sure', function (e){
+                    $.ajax({
+                    type: "PUT",
+                    url: `backoffice/admin/ratings/${ratingId}/delete-rating`,
+                    data: formData + '&_token=' + $('meta[name="csrf-token"]').attr('content'),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.success) {
+
+                            $('#kt_modal_upgrade_plan_delete').modal('hide');
+
+                            $('#ratingsTable').load(location.href + ' #ratingsTable > *');
+
+
+                            Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Évaluation supprimée avec succès",
+                            showConfirmButton: false,
+                            timer: 500,
+                            customClass: {
+                                popup: 'my-small-height-swal'
+                            }
+                            });
+
+                        }
+                    }
+                    });
+                });
+
+            });
+
+    });
 
 
 </script>

@@ -26,8 +26,13 @@ class RedirectIfAuthenticated
             if ($guard=="admin" && Auth::guard($guard)->check()) {
                 return redirect(RouteServiceProvider::ADMIN_DASHBOARD);
             }
+            if (Auth::guard('jury')->check()) {
+                if (Auth::guard('jury')->check()) {
+                    return redirect(RouteServiceProvider::JURY_DASHBOARD); // Redirect to the dashboard if already logged in
+                }
+                return view(RouteServiceProvider::JURY_DASHBOARD); // Show the login page if not logged in       
+            }
         }
-
         return $next($request);
     }
 }

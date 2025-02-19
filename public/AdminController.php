@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Exports\UserExport;
@@ -16,8 +15,6 @@ use App\Models\Participation;
 use App\Models\Presence;
 use App\Models\Rating;
 use App\Models\User;
-use App\Models\Ville;
-use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -28,8 +25,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
-use Illuminate\Support\Facades\Storage;
-use PhpOffice\PhpSpreadsheet\Calculation\Category;
 
 class AdminController extends Controller
 {
@@ -82,92 +77,6 @@ class AdminController extends Controller
 /*         return Inertia::render('Admin/Participations', [
             // Additional data to pass to the component if needed
         ]); */
-    }
-
-
-    public function get_ratings(Request $request)
-    {
-        $participations = Participation::with(['ratings.jury', 'categorie'])
-                            ->where('is_conforme','=', 1)
-                            ->get();
-
-        $juries = Jury::with('ratings')->get();
-        $countJuries = Jury::count();
-
-        $admins = Admin::with('ratings')->where('id','=', auth()->id())->get();
-
-        return view('admin.ratings', [
-            'participations' => $participations,
-            'juries' => $juries,
-            'countJuries' => $countJuries,
-            'admins'=> $admins,
-        ]);
-    }
-
-    public function storeRating(Request $request, $participationId)
-    {
-
-        $validatedData = $request->validate([
-            'rating' => 'required|integer|min:1|max:5',
-        ]);
-
-        $juryId = auth()->id(); // Assuming you are using authentication
-
-        // Check if the user has already rated the product
-        $existingRating = Rating::where('participation_id', $participationId)
-                                       ->where('jury_id', $juryId)
-                                       ->first();
-
-        if ($existingRating) {
-            // User has already rated the product, update the rating
-            $existingRating->rating = $validatedData['rating'];
-            $existingRating->save();
-            return response()->json(['message' => 'Rating updated successfully']);
-        } else {
-
-            // Save the rating to the database
-            // Assuming you have a ProductRating model
-            $participationRating = new Rating();
-            $participationRating->participation_id = $participationId;
-            $participationRating->jury_id = auth()->id(); // Assuming you are using authentication
-            $participationRating->rating = $validatedData['rating'];
-            $participationRating->save();
-
-            return response()->json(['message' => 'Rating added successfully']);
-        }
-
-       // return response()->json(['message' => 'Rating saved successfully']);
-    }
-
-    public function updateRating(Request $request, $id)
-        {
-            $validatedData = $request->validate([
-                'rating' => 'required|numeric|min:1|max:5',
-            ]);
-
-            $rating = Rating::findOrFail($id);
-
-            $rating->rating = $validatedData['rating'];
-            $success = $rating->update();
-
-            if ($success) {
-                return response()->json(['success' => true]);
-            } else {
-                return response()->json(['success' => false]);
-            }
-        }
-
-    public function destroyRating($id)
-    {
-        $rating = Rating::findOrFail($id);
-
-        $success = $rating->delete();
-
-        if ($success) {
-            return response()->json(['success' => true]);
-        } else {
-            return response()->json(['success' => false]);
-        }
     }
 
     public function get_users(Request $request)
@@ -405,7 +314,6 @@ class AdminController extends Controller
             'participationsCountByVitalite'=>$participationsCountByVitalite
         ]);
     }
-    
     public function show($id)
     {
         $participation = Participation::findOrFail($id);
@@ -423,6 +331,41 @@ class AdminController extends Controller
         ]);
     }
 
+
+    public function storeRating(Request $request, $participationId)
+    {
+
+        $validatedData = $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
+
+        $juryId = auth()->id(); // Assuming you are using authentication
+
+        // Check if the user has already rated the product
+        $existingRating = Rating::where('participation_id', $participationId)
+                                       ->where('jury_id', $juryId)
+                                       ->first();
+
+        if ($existingRating) {
+            // User has already rated the product, update the rating
+            $existingRating->rating = $validatedData['rating'];
+            $existingRating->save();
+            return response()->json(['message' => 'Rating updated successfully']);
+        } else {
+
+            // Save the rating to the database
+            // Assuming you have a ProductRating model
+            $participationRating = new Rating();
+            $participationRating->participation_id = $participationId;
+            $participationRating->jury_id = auth()->id(); // Assuming you are using authentication
+            $participationRating->rating = $validatedData['rating'];
+            $participationRating->save();
+
+            return response()->json(['message' => 'Rating added successfully']);
+        }
+
+       // return response()->json(['message' => 'Rating saved successfully']);
+    }
 
 
     public function pagination(Request $request){
@@ -502,8 +445,6 @@ class AdminController extends Controller
         $user = User::findOrFail($participation->user_id);
         $image = $participation->image;
 
-        
-
         // Helper function to send email and handle exceptions
         function sendEmail($user, $mailable) {
             try {
@@ -513,36 +454,14 @@ class AdminController extends Controller
             }
         }
 
-
         // Determine action based on category
         if ($request->is_categorie == 0) {
-            $participation->motif = 'Approuvee';
-
-            // Define source and destination paths
-            $sourcePath = 'public/'.$image; // Path relative to the disk root
-            $destinationPath ='public/uploads/images/approuvee/'. $image;
-            // Check if the file exists at the source path
-            if (Storage::exists($sourcePath)){
-                // Move the file to the new location
-                Storage::move($sourcePath, $destinationPath);
-                // Send the email after moving the file
-                sendEmail($user, new ParticipationApprouvee(image: $image));
-                $participation->update([
-                    'is_conforme' => $request->is_conforme
-                ]);
-                return 'File moved successfully!';
-            } else {
-                return 'Source file does not exist.';
-            }
-        }  elseif ($request->is_categorie == -1) {
-            $participation->motif = 'Hort sujet';
+            sendEmail($user, new ParticipationApprouvee($image));
+        } elseif ($request->is_categorie == -1) {
             sendEmail($user, new emailSujetRejetee($image));
         } elseif ($request->is_categorie == 1) {
-            $participation->motif = 'Hort Categorie';
             sendEmail($user, new emailCategorieRejetee($image));
         } elseif ($request->is_categorie == 2) {
-            $participation->motif = 'Hort largeur et langeur';
-
             // Check if the image file exists
             if (file_exists(public_path('storage/' . $image))) {
                 $imagePath = public_path('storage/' . $image);
@@ -565,7 +484,6 @@ class AdminController extends Controller
                 return response()->json(['success' => false, 'message' => 'Image file does not exist.']);
             }
         } else {
-            $participation->motif = 'Approuvee';
             sendEmail($user, new ParticipationApprouvee($image));
         }
 
@@ -716,220 +634,84 @@ class AdminController extends Controller
     }
 
 
-
-
-    public function getvilles(Request $request)
+    public function getParticipations($id)
     {
-        $search = $request->input('search');
-        $selectedRegion = $request->input('region');
-        
-        // Charger les régions pour le filtre
-        $regions = \App\Models\Region::all();
-    
-        // Fonction pour appliquer le filtre de recherche et de région
-        $filterQuery = function ($query) use ($search, $selectedRegion) {
-            if ($search) {
-                $query->where('villes.name', 'like', '%' . $search . '%');
+        try {
+            // Convert $id to integer
+            $id = intval($id);
+
+            if (!is_int($id)) {
+                return response()->json(['error' => 'Invalid user ID'], 400);
             }
-            if ($selectedRegion) {
-                $query->where('villes.region', $selectedRegion);
-            }
-        };
-    
-        // Compter les utilisateurs professionnels
-        $query = User::join('villes', 'villes.id', '=', 'users.ville_id')
-            ->select('villes.id', 'villes.name', 
-                DB::raw('COUNT(CASE WHEN users.profile = "Professionnel" THEN 1 END) AS pro_count'),
-                DB::raw('COUNT(CASE WHEN users.profile = "Amateur" THEN 1 END) AS amt_count'),
-                DB::raw('COUNT(CASE WHEN users.sexe = "homme" THEN 1 END) AS male_count'),
-                DB::raw('COUNT(CASE WHEN users.sexe = "femme" THEN 1 END) AS female_count')
-            )
-            ->when($search || $selectedRegion, $filterQuery)
-            ->groupBy('villes.id', 'villes.name');
-    
-        // Paginer les résultats
-        $villesData = $query->paginate(10);
-    
-        return view('admin.statistiques.countparvilles', [
-            'villesData' => $villesData,
-            'search' => $search,
-            'regions' => $regions,
-            'selectedRegion' => $selectedRegion,
-        ]);
+
+            $participations = Participation::where('user_id', $id)->with('categorie')->get();
+
+
+            return response()->json($participations, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
-    public function detailsVilles ($ville_id)
+    public function get_ratings(Request $request)
     {
-        $ville = Ville::where('id', $ville_id)->first();
+        $participations = Participation::with(['ratings.jury', 'categorie'])
+                            ->where('is_conforme','=', 1)
+                            ->paginate(10);
 
-        $hommeUsersCount = User::where('sexe', 'homme')
-                            ->whereIn('id', function ($query) {
-                                $query->select('user_id')
-                                    ->from('participations');
-                            })->count();
-        $femmeUsersCount = User::where('sexe', 'femme')
-                            ->whereIn('id', function ($query) {
-                                $query->select('user_id')
-                                    ->from('participations');
-                            })->count();
+        $juries = Jury::with('ratings')->get();
+        $countJuries = Jury::count();
 
-        $ParticipationCount = Participation::join('users', 'users.id', '=', 'participations.user_id')
-                         ->where('users.ville_id', $ville_id)
-                         ->count();
+        $admins = Admin::with('ratings')->where('id','=', auth()->id())->get();
 
-        $participationsCountByFaras = Participation::join('users', 'users.id', '=', 'participations.user_id')
-                         ->where('users.ville_id', $ville_id)
-                         ->where('category_id',1)
-                         ->count();
-        $participationsCountByTresorsDuMaroc = Participation::join('users', 'users.id', '=', 'participations.user_id')
-                         ->where('users.ville_id', $ville_id)
-                         ->where('category_id',2)
-                         ->count();
-        $participationsCountByVitalite = Participation::join('users', 'users.id', '=', 'participations.user_id')
-                         ->where('users.ville_id', $ville_id)
-                         ->where('category_id',5)
-                         ->count();
-
-        $usersPro = User::where('ville_id', $ville_id)
-            ->whereIn('id', function ($query) {
-                $query->select('user_id')
-                    ->from('participations');
-            })
-            ->where('profile', 'Professionnel')
-            ->count();
-        $usersAmateur = User::where('ville_id', $ville_id)
-            ->whereIn('id', function ($query) {
-                $query->select('user_id')
-                    ->from('participations');
-            })
-            ->where('profile', 'Amateur')
-            ->count();
-        $allUsersCount = User::where('ville_id', $ville_id)
-            ->whereIn('id', function ($query) {
-                $query->select('user_id')
-                    ->from('participations');
-            })
-            ->count();
-        $users = User::where('ville_id', $ville_id)
-            ->whereIn('id', function ($query) {
-                $query->select('user_id')
-                    ->from('participations');
-            })
-            ->get();
-
-        return view('admin.statistiques.detailsVille', [
-            'ville' => $ville,
-            'ParticipationCount' => $ParticipationCount,
-            'femmeUsersCount' =>$femmeUsersCount,
-            'hommeUsersCount' =>$hommeUsersCount,
-            'users' => $users,
-            'usersProCount' => $usersPro,
-            'usersAmateurCount' => $usersAmateur,
-            'allUsersCount' => $allUsersCount,
-            'participationsCountByFaras'=>$participationsCountByFaras,
-            'participationsCountByTresorsDuMaroc'=>$participationsCountByTresorsDuMaroc,
-            'participationsCountByVitalite'=>$participationsCountByVitalite,
-        ]);
-    }
-
-
-    public function categories ()
-    {
-        $categories = Categorie::all();
-        return view('admin.categories', [
-            'categories' => $categories,
-        ]);
-    }
-
-    public function storeCategory(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
-
-        $category = Categorie::create([
-            'name' => $request->input('name'),
-        ]);
-
-        return response()->json(['success' => true, 'category' => $category]);
-    }
-
-    public function updateCategory(Request $request)
-    {
-        $request->validate([
-            'id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-        ]);
-
-        $category = Categorie::find($request->input('id'));
-        $category->name = $request->input('name');
-        $category->save();
-
-        return response()->json(['success' => true, 'category' => $category]);
-    }
-
-    public function destroyCategory($id)
-    {
-        $category = Categorie::findOrFail($id);
-        $category->delete();
-
-        return response()->json(['success' => true]);
-    }
-
-
-
-/*     public function getUsersDetails($id){
-
-
-        $users = User::whereHas('participations')
-        ->with('participations')
-        ->whereHas('ville', function($query) use ($id) {
-            $query->where('villes.id', $id);
-        })
-        ->get();
-    
-        return view('admin.usersDetails', [
-            'users' => $users,
-        ]);
-
-    } */
-
-
-    public function getParticipationsOfUser($id){
-
-
-
-        $user = User::where('id', $id)->with('participations')->with('ville')->first();
-
-        $participations = Participation::where('user_id', $id)->with('ratings')->get();
-
-
-        $ParticipationCount = Participation::join('users', 'users.id', '=', 'participations.user_id')
-        ->where('users.id', $id)
-        ->count();
-
-        $participationsCountByFaras = Participation::join('users', 'users.id', '=', 'participations.user_id')
-                ->where('users.id', $id)
-                ->where('category_id',1)
-                ->count();
-        $participationsCountByTresorsDuMaroc = Participation::join('users', 'users.id', '=', 'participations.user_id')
-                ->where('users.id', $id)    
-                ->where('category_id',2)
-                ->count();
-        $participationsCountByVitalite = Participation::join('users', 'users.id', '=', 'participations.user_id')
-                ->where('users.id', $id)
-                ->where('category_id',5)
-                ->count();
-        //dd($participations);
-
-        return view('admin.statistiques.UserParticipations', [
-            'user' => $user,
+        return view('admin.ratings', [
             'participations' => $participations,
-            'ParticipationCount' => $ParticipationCount,
-            'participationsCountByFaras'=>$participationsCountByFaras,
-            'participationsCountByTresorsDuMaroc'=>$participationsCountByTresorsDuMaroc,
-            'participationsCountByVitalite'=>$participationsCountByVitalite,
+            'juries' => $juries,
+            'countJuries' => $countJuries,
+            'admins'=> $admins,
         ]);
     }
 
+    public function checkParticipation(Request $request)
+    {
+        $participationId = $request->input('participation_id');
+        $isRated = Rating::where('participation_id', $participationId)
+                        ->where('admin_id','=', auth()->id())
+                        ->exists();
+
+        return response()->json(['isRated' => $isRated]);
+    }
+
+
+
+    public function updateRating(Request $request, $id)
+        {
+            $validatedData = $request->validate([
+                'rating' => 'required|numeric|min:1|max:5',
+            ]);
+
+            $rating = Rating::findOrFail($id);
+
+            $rating->rating = $validatedData['rating'];
+            $success = $rating->update();
+
+            if ($success) {
+                return response()->json(['success' => true]);
+            } else {
+                return response()->json(['success' => false]);
+            }
+        }
+
+    public function destroyRating($id)
+    {
+        $rating = Rating::findOrFail($id);
+
+        $success = $rating->delete();
+
+        if ($success) {
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
+        }
+    }
 }

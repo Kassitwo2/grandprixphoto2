@@ -132,14 +132,14 @@ Route::get('/auth/facebook/callback', [SocialiteController::class, 'handelFacebo
 
 
 
-Route::get('/insert-jury', function () {
-    $admin = new Jury();
-    $admin->name = 'Jury';
-    $admin->email = 'Jury@3wdev.ma';
-    $admin->password = bcrypt('jury1'); // Hash the password
+Route::get('/insert-admin', function () {
+    $admin = new Admin();
+    $admin->name = 'Hafsa';
+    $admin->email = 'hafsa@gmail.com';
+    $admin->password = bcrypt('hafsa1'); // Hash the password
     $admin->save();
 
-    return 'Jury created successfully!';
+    return 'admin created successfully!';
 });
 
 
@@ -165,7 +165,6 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/juries',[AdminController::class,'juries'])->name('admin.juries');
 
 
-    Route::post('/participations/{participationId}/ratings', [AdminController::class, 'storeRating'])->name('participations.ratings.store');
 
     Route::post('/participation/approuvee', [AdminController::class, 'confirmation'])->name('participation.confirmation');
 
@@ -198,6 +197,7 @@ Route::middleware(['auth:admin'])->group(function () {
 
     Route::get('/check-participation', [AdminController::class, 'checkParticipation'])->name('check-participation');
 
+    Route::post('/participations/{participationId}/ratings', [AdminController::class, 'storeRating'])->name('participations.ratings.store');
 
     Route::put('/admin/ratings/{id}/update-rating', [AdminController::class, 'updateRating'])->name('rating.update');
 
@@ -213,7 +213,11 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/{id}/participants', [AdminController::class, 'getUsersDetails'])->name('admin.getUsersDetails');
     Route::get('/admin/{id}/participations', [AdminController::class, 'getParticipationsOfUser'])->name('admin.getParticipationsOfUser');
 
-
+    Route::get('admin/categories',[AdminController::class,'categories'])->name('category.create');
+    Route::post('/save-categorie', [AdminController::class,'storeCategory'])->name('save-category');
+    Route::post('/update-categorie', [AdminController::class, 'updateCategory'])->name('update.category');
+    Route::delete('/delete-categorie/{id}', [AdminController::class, 'destroyCategory'])->name('category.ajaxDestroy');
+    
 
 });
 
@@ -316,6 +320,12 @@ Route::delete('/juries/{jury}', [AdminController::class, 'ajaxDestroy'])->name('
 
 
 Route::get('/juries/search', [AdminController::class, 'search'])->name('juries.search');
+
+
+Route::get('/categories',[AdminController::class,'categories']);
+
+
+
 
 
 Route::get('/migrate', function () {

@@ -59,9 +59,9 @@
 									<!--begin::Content-->
 									<div class="fw-semibold">
 									<h4 class="text-gray-900 fw-bold">Notification</h4>
-									<div class="fs-6 text-gray-700">Cher utilisateur, nous sommes ravis de vous informer que la période de participation pour notre événement se poursuivra jusqu'au <b>31 juillet 2024</b> . Nous attendons avec impatience votre participation et espérons que vous pourrez vous joindre à nous pour cet événement exceptionnel !	</div>
+									<div class="fs-6 text-gray-700">Cher utilisateur, nous sommes ravis de vous informer que le concours débutera le <b> 1er mars 2025.</b> Nous avons hâte de vous voir participer et espérons que vous rejoindrez cet événement exceptionnel !</div>
 										<br>
-									<div class="fs-6 text-gray-700 text-end" >! عزيزي المستخدم، يسعدنا إبلاغك بأن فترة المشاركة في فعاليتنا ستستمر حتى 31 يوليوز 2024 . نتطلع إلى مشاركتكم ونأمل أن تتمكنوا من الانضمام إلينا في هذا الحدث الاستثنائي</div>
+									<div class="fs-6 text-gray-700 text-end" dir="rtl" >عزيزي المستخدم، يسعدنا إبلاغك بأن المسابقة ستنطلق في <b>1 مارس 2025</b>. نتطلع إلى مشاركتكم ونأمل أن تكونوا جزءًا من هذا الحدث المميز!</div>
 									<!--end::Content-->
 							</div>
 									<!--end::Wrapper-->

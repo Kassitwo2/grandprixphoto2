@@ -381,7 +381,7 @@
                                                     
                                                         try {
                                                             // Path to your image file
-                                                            $imagePath = 'storage/' . $participation->image;
+                                                            $imagePath = 'storage/uploads/images/approuvee/' . $participation->image;
                                                     
                                                             // Read EXIF data from the image file
                                                             $exifData = exif_read_data($imagePath);
@@ -425,7 +425,7 @@
 
                                                                             try {
                                                                                 // Path to your image file
-                                                                                $imagePath = 'storage/'.$participation->image;
+                                                                                $imagePath = 'storage/uploads/images/approuvee/'.$participation->image;
 
                                                                                 // Read EXIF data from the image file
                                                                                 $exifData = exif_read_data($imagePath);
@@ -453,7 +453,7 @@
 
                                                                             try {
                                                                                 // Path to your image file
-                                                                                $imagePath = 'storage/'.$participation->image ;
+                                                                                $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                                 // Read EXIF data from the image file
                                                                                 $exifData = exif_read_data($imagePath);
@@ -474,7 +474,7 @@
 
                                                                             try {
                                                                                 // Path to your image file
-                                                                                $imagePath = 'storage/'.$participation->image ;
+                                                                                $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                                 // Read EXIF data from the image file
                                                                                 $exifData = exif_read_data($imagePath);
@@ -507,7 +507,7 @@
 
                                                                             try {
                                                                                 // Path to your image file
-                                                                                $imagePath = 'storage/'.$participation->image ;
+                                                                                $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                                 // Read EXIF data from the image file
                                                                                 $exifData = exif_read_data($imagePath);
@@ -598,7 +598,7 @@
 
                                                                         try {
                                                                             // Path to your image file
-                                                                            $imagePath = 'storage/'.$participation->image ;
+                                                                            $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                             // Read EXIF data from the image file
                                                                             $exifData = exif_read_data($imagePath);
@@ -637,7 +637,7 @@
 
                                                                             try {
                                                                                 // Path to your image file
-                                                                                $imagePath = 'storage/'.$participation->image ;
+                                                                                $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                                 // Read EXIF data from the image file
                                                                                 $exifData = exif_read_data($imagePath);
@@ -679,7 +679,7 @@
 
                                                                             try {
                                                                                 // Path to your image file
-                                                                                $imagePath = 'storage/'.$participation->image;
+                                                                                $imagePath = 'storage/uploads/images/approuvee/'.$participation->image;
 
                                                                                 // Read EXIF data from the image file
                                                                                 $exifData = exif_read_data($imagePath);
@@ -707,7 +707,7 @@
 
                                                                             try {
                                                                                 // Path to your image file
-                                                                                $imagePath = 'storage/'.$participation->image ;
+                                                                                $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                                 // Read EXIF data from the image file
                                                                                 $exifData = exif_read_data($imagePath);
@@ -728,7 +728,7 @@
 
                                                                             try {
                                                                                 // Path to your image file
-                                                                                $imagePath = 'storage/'.$participation->image ;
+                                                                                $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                                 // Read EXIF data from the image file
                                                                                 $exifData = exif_read_data($imagePath);
@@ -761,7 +761,7 @@
 
                                                                             try {
                                                                                 // Path to your image file
-                                                                                $imagePath = 'storage/'.$participation->image ;
+                                                                                $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                                 // Read EXIF data from the image file
                                                                                 $exifData = exif_read_data($imagePath);
@@ -851,7 +851,7 @@
 
                                                                         try {
                                                                             // Path to your image file
-                                                                            $imagePath = 'storage/'.$participation->image ;
+                                                                            $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                             // Read EXIF data from the image file
                                                                             $exifData = exif_read_data($imagePath);
@@ -889,7 +889,7 @@
 
                                                                             try {
                                                                                 // Path to your image file
-                                                                                $imagePath = 'storage/'.$participation->image ;
+                                                                                $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                                 // Read EXIF data from the image file
                                                                                 $exifData = exif_read_data($imagePath);
@@ -935,7 +935,7 @@
 
                                                                         try {
                                                                             // Path to your image file
-                                                                            $imagePath = 'storage/'.$participation->image;
+                                                                            $imagePath = 'storage/uploads/images/approuvee/'.$participation->image;
 
                                                                             // Read EXIF data from the image file
                                                                             $exifData = exif_read_data($imagePath);
@@ -963,7 +963,7 @@
 
                                                                         try {
                                                                             // Path to your image file
-                                                                            $imagePath = 'storage/'.$participation->image ;
+                                                                            $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                             // Read EXIF data from the image file
                                                                             $exifData = exif_read_data($imagePath);
@@ -984,7 +984,7 @@
 
                                                                         try {
                                                                             // Path to your image file
-                                                                            $imagePath = 'storage/'.$participation->image ;
+                                                                            $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                             // Read EXIF data from the image file
                                                                             $exifData = exif_read_data($imagePath);
@@ -1017,7 +1017,7 @@
 
                                                                         try {
                                                                             // Path to your image file
-                                                                            $imagePath = 'storage/'.$participation->image ;
+                                                                            $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                             // Read EXIF data from the image file
                                                                             $exifData = exif_read_data($imagePath);
@@ -1109,8 +1109,7 @@
 
                                                                     try {
                                                                         // Path to your image file
-                                                                        $imagePath = 'storage/'.$participation->image ;
-
+                                                                        $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
                                                                         // Read EXIF data from the image file
                                                                         $exifData = exif_read_data($imagePath);
                                                                         $sizeInMegabytes = $exifData['FileSize'] / (1024 * 1024);
@@ -1148,7 +1147,7 @@
 
                                                                         try {
                                                                             // Path to your image file
-                                                                            $imagePath = 'storage/'.$participation->image ;
+                                                                            $imagePath = 'storage/uploads/images/approuvee/'.$participation->image ;
 
                                                                             // Read EXIF data from the image file
                                                                             $exifData = exif_read_data($imagePath);
@@ -1247,7 +1246,7 @@
                 //show images with full size
                 $(document).on('click', '.image-modal-link', function() {
                     var imageUrl = $(this).data('image-detail');
-                    $('#image-detail').attr('src', 'storage/' + imageUrl); // Assuming 'storage' is your base path
+                    $('#image-detail').attr('src', 'storage/uploads/images/approuvee/' + imageUrl); // Assuming 'storage' is your base path
                 });
 
 

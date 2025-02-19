@@ -1,4 +1,4 @@
-@extends('layouts.Dashboard-Jury.guest')
+@extends('layouts.Dashboard-jury.guest')
 @section('content')
 <style>
     .my-small-height-swal {
@@ -568,7 +568,7 @@ $(document).ready(function() {
 
             $.ajax({
                 type: "PUT",
-                url: `/jury/ratings/${ratingId}/update-rating`,
+                url: `/backoffice/jury/ratings/${ratingId}/update-rating`,
                 data: formData,
                 dataType: 'json',
                 success: function (data) {
@@ -609,7 +609,7 @@ $(document).ready(function() {
             $(document).on('click', '.delete-sure', function (e){
                 $.ajax({
                 type: "PUT",
-                url: `/jury/ratings/${ratingId}/delete-rating`,
+                url: `/backoffice/jury/ratings/${ratingId}/delete-rating`,
                 data: formData + '&_token=' + $('meta[name="csrf-token"]').attr('content'),
                 dataType: 'json',
                 success: function (data) {

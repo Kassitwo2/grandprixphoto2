@@ -48,8 +48,8 @@ class ParticipationController extends Controller
     public function store(Request $request)
     {   
         try {
-        ini_set('memory_limit', '1024M'); // Increase memory limit
-        set_time_limit(3600);
+        //ini_set('memory_limit', '1024M'); // Increase memory limit
+        //set_time_limit(3600);
         $userId = auth()->id();
         // Get the count of participations for the user
         $participationCount = Participation::where('user_id', $userId)->count();
@@ -158,12 +158,14 @@ class ParticipationController extends Controller
         // Optionally, redirect the user or return a response
         //return response()->json(['message' => 'Participation created successfully',$participationCount], 201);
         return Redirect('/participations');
-    } catch (Exception $e) {
-        Log::error('Error in store method: ' . $e->getMessage());
-        return response()->json(['error' =>  $e->getMessage()], 500);
-    }
+        } catch (Exception $e) {
+            Log::error('Error in store method: ' . $e->getMessage());
+            return response()->json(['error' =>  $e->getMessage()], 500);
+        }
     }
 
+
+    
     public function edit(Participation $participation)
     {
         $categories = Categorie::where('is_active', 1)->get();
@@ -279,10 +281,17 @@ class ParticipationController extends Controller
     public function destroy(Participation $participation)
     {
       //$participation = Participation::find($id);
-      $participation->delete();
+      
 
 
-      try {
+    try {
+        $image_path = 'storage/' . $participation->image ;  // Value is not URL but directory file path
+        if(File::exists($image_path)) {
+            File::delete($image_path);
+        }
+
+        $participation->delete();
+
         Mail::to(Auth::user()->email)->send(new emailSuppressionParticipation);
     } catch (Exception $e) {
 

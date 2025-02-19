@@ -338,7 +338,6 @@
                                     <!--end::Heading-->
                                 </div>
                             <!--end::Card body-->
-                            {{ $users->links() }}
                         </div>
                         <!--end::Card-->
                     </div>
@@ -362,7 +361,7 @@
         var userId = $(this).data('user-id');
 
         var url = '/admin/' + userId + '/participations';
-
+        
         // Redirect to the constructed URL
         window.location.href = url;
 
