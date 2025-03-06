@@ -193,10 +193,9 @@ class AdminController extends Controller
 
 
 
-        $participationsCountByFaras = Participation::where('category_id',1)->count(); // Get the count of users
-        $participationsCountByTresorsDuMaroc= Participation::where('category_id',2)->count(); // Get the count of users
-        $participationsCountByVitalite = Participation::where('category_id',5)->count(); // Get the count of users
-
+        $participationsCountByCentrerBallon = Participation::where('category_id',7)->count(); // Get the count of users
+        $participationsCountByZellige= Participation::where('category_id',8)->count(); // Get the count of users
+        $participationsCountByLumière = Participation::where('category_id',9)->count(); // Get the count of users
 
 
 
@@ -266,9 +265,9 @@ class AdminController extends Controller
             'participations' => $participations,
             'countsByProfileProfessionnel'=>$countsByProfileProfessionnel,
             'countsByProfileAmateur'=>$countsByProfileAmateur,
-            'participationsCountByFaras'=>$participationsCountByFaras,
-            'participationsCountByTresorsDuMaroc'=>$participationsCountByTresorsDuMaroc,
-            'participationsCountByVitalite'=>$participationsCountByVitalite,
+            'participationsCountByCentrerBallon'=>$participationsCountByCentrerBallon,
+            'participationsCountByZellige'=>$participationsCountByZellige,
+            'participationsCountByLumière'=>$participationsCountByLumière,    
             'totalParticipants' => $totalParticipants,
             'totalParticipantsFemme'=> $totalParticipantsFemme,
             'totalParticipantsHomme'=> $totalParticipantsHomme,
@@ -296,20 +295,18 @@ class AdminController extends Controller
         $participationsRefuse = Participation::with('categorie')->where('is_conforme',-1)->paginate(12);
 
 
-        $participationsCountByFaras = Participation::where('category_id', 1)
+        $participationsCountByCentrerBallon = Participation::where('category_id', 7)
         ->where('is_conforme',-1)
         ->count(); // Get the count of users
 
-        $participationsCountByTresorsDuMaroc = Participation::where('category_id', 2)
-        ->where('is_conforme',-1)
-        ->count(); // Get the count of users
-
-
-        $participationsCountByVitalite = Participation::where('category_id', 5)
+        $participationsCountByZellige = Participation::where('category_id', 8)
         ->where('is_conforme',-1)
         ->count(); // Get the count of users
 
 
+        $participationsCountByLumière = Participation::where('category_id', 9)
+        ->where('is_conforme',-1)
+        ->count(); // Get the count of users
 
         $countParticipationsStandBy = Participation::where('is_conforme',0)->count();
         $countParticipationsApprouve = Participation::where('is_conforme',1)->count();
@@ -343,9 +340,9 @@ class AdminController extends Controller
             'countParticipantsStandBy'=>$countParticipantsStandBy,
             'countParticipantsApprouvées' => $countParticipantsApprouvées,
             'countParticipantsRejetes'=>$countParticipantsRejetes,
-            'participationsCountByFaras'=>$participationsCountByFaras,
-            'participationsCountByTresorsDuMaroc'=>$participationsCountByTresorsDuMaroc,
-            'participationsCountByVitalite'=>$participationsCountByVitalite
+            'participationsCountByCentrerBallon'=>$participationsCountByCentrerBallon,
+            'participationsCountByZellige'=>$participationsCountByZellige,
+            'participationsCountByLumière'=>$participationsCountByLumière
         ]);
     }
 
@@ -359,18 +356,19 @@ class AdminController extends Controller
         $countParticipationsApprouve = Participation::where('is_conforme',1)->count();
         $countParticipationsRefuse = Participation::where('is_conforme',-1)->count();
 
-        $participationsCountByFaras = Participation::where('category_id', 1)
+        $participationsCountByCentrerBallon = Participation::where('category_id', 7)
         ->where('is_conforme',1)
         ->count(); // Get the count of users
 
-        $participationsCountByTresorsDuMaroc = Participation::where('category_id', 2)
+        $participationsCountByZellige = Participation::where('category_id', 8)
         ->where('is_conforme',1)
         ->count(); // Get the count of users
 
 
-        $participationsCountByVitalite = Participation::where('category_id', 5)
+        $participationsCountByLumière = Participation::where('category_id', 9)
         ->where('is_conforme',1)
         ->count(); // Get the count of users
+
 
         $countParticipantsStandBy = DB::table('participations')
         ->where('is_conforme', 0)
@@ -399,10 +397,10 @@ class AdminController extends Controller
             'countParticipationsRefuse'=>$countParticipationsRefuse,
             'countParticipantsStandBy'=>$countParticipantsStandBy,
             'countParticipantsApprouvées' => $countParticipantsApprouvées,
-            'countParticipantsRejetes'=>$countParticipantsRejetes,
-            'participationsCountByFaras'=>$participationsCountByFaras,
-            'participationsCountByTresorsDuMaroc'=>$participationsCountByTresorsDuMaroc,
-            'participationsCountByVitalite'=>$participationsCountByVitalite
+            'countParticipantsRejetes'=> $countParticipantsRejetes,
+            'participationsCountByCentrerBallon'=> $participationsCountByCentrerBallon,
+            'participationsCountByZellige'=> $participationsCountByZellige,
+            'participationsCountByLumière'=> $participationsCountByLumière
         ]);
     }
     
@@ -535,11 +533,82 @@ class AdminController extends Controller
                 return 'Source file does not exist.';
             }
         }  elseif ($request->is_categorie == -1) {
-            $participation->motif = 'Hort sujet';
-            sendEmail($user, new emailSujetRejetee($image));
+
+
+            // Define source and destination paths
+            $sourcePath  ='public/uploads/images/approuvee/'. $image; // Path relative to the disk root
+            $destinationPath = 'public/'.$image; 
+
+            if (Storage::exists($sourcePath)){
+
+                // Check if the file exists at the source path
+                $participation->motif = 'Hors categorie';
+                // Move the file to the new location
+                Storage::move($sourcePath, $destinationPath);
+
+                // Send the email after moving the file
+                sendEmail($user, new emailSujetRejetee($image));
+                $participation->update([
+                    'is_conforme' => $request->is_conforme
+                ]);
+
+            }else{
+
+                // Check if the file exists at the source path
+                $participation->motif = 'Hors categorie';
+
+                // Send the email after moving the file
+                sendEmail($user, new emailSujetRejetee($image));
+                $participation->update([
+                    'is_conforme' => $request->is_conforme
+                ]);
+
+            }
+
+
+            
+            
         } elseif ($request->is_categorie == 1) {
-            $participation->motif = 'Hort Categorie';
-            sendEmail($user, new emailCategorieRejetee($image));
+
+
+            // Define source and destination paths
+            $sourcePath  ='public/uploads/images/approuvee/'. $image; // Path relative to the disk root
+            $destinationPath = 'public/'.$image; 
+
+            if (Storage::exists($sourcePath)){
+
+                // Check if the file exists at the source path
+                $participation->motif = 'Changer la categorie';
+
+                // Move the file to the new location
+                Storage::move($sourcePath, $destinationPath);
+
+                // Send the email after moving the file
+                sendEmail($user, new emailCategorieRejetee($image));
+                $participation->update([
+                    'is_conforme' => $request->is_conforme
+                ]);
+
+            }else{
+
+                // Check if the file exists at the source path
+                $participation->motif = 'Changer la categorie';
+                // Send the email after moving the file
+                sendEmail($user, new emailCategorieRejetee($image));
+                $participation->update([
+                    'is_conforme' => $request->is_conforme
+                ]);
+
+            }
+
+
+
+
+
+
+
+            
+            
         } elseif ($request->is_categorie == 2) {
             $participation->motif = 'Hort largeur et langeur';
 
@@ -680,7 +749,7 @@ class AdminController extends Controller
 
     public function navigation(){
 
-        $participations = Participation::orderBy('id')->get();
+        $participations = Participation::Where('is_conforme','1')->orderBy('id')->get();
         return view('admin.navigation', compact('participations'))->with('participations', $participations);
     }
 
@@ -777,17 +846,19 @@ class AdminController extends Controller
                          ->where('users.ville_id', $ville_id)
                          ->count();
 
-        $participationsCountByFaras = Participation::join('users', 'users.id', '=', 'participations.user_id')
+
+
+        $participationsCountByCentrerBallon = Participation::join('users', 'users.id', '=', 'participations.user_id')
                          ->where('users.ville_id', $ville_id)
-                         ->where('category_id',1)
+                         ->where('category_id',7)
                          ->count();
-        $participationsCountByTresorsDuMaroc = Participation::join('users', 'users.id', '=', 'participations.user_id')
+        $participationsCountByZellige = Participation::join('users', 'users.id', '=', 'participations.user_id')
                          ->where('users.ville_id', $ville_id)
-                         ->where('category_id',2)
+                         ->where('category_id',8)
                          ->count();
-        $participationsCountByVitalite = Participation::join('users', 'users.id', '=', 'participations.user_id')
+        $participationsCountByLumière = Participation::join('users', 'users.id', '=', 'participations.user_id')
                          ->where('users.ville_id', $ville_id)
-                         ->where('category_id',5)
+                         ->where('category_id',9)
                          ->count();
 
         $usersPro = User::where('ville_id', $ville_id)
@@ -826,9 +897,9 @@ class AdminController extends Controller
             'usersProCount' => $usersPro,
             'usersAmateurCount' => $usersAmateur,
             'allUsersCount' => $allUsersCount,
-            'participationsCountByFaras'=>$participationsCountByFaras,
-            'participationsCountByTresorsDuMaroc'=>$participationsCountByTresorsDuMaroc,
-            'participationsCountByVitalite'=>$participationsCountByVitalite,
+            'participationsCountByCentrerBallon'=>$participationsCountByCentrerBallon,
+            'participationsCountByZellige'=>$participationsCountByZellige,
+            'participationsCountByLumière'=>$participationsCountByLumière,
         ]);
     }
 
@@ -932,4 +1003,36 @@ class AdminController extends Controller
         ]);
     }
 
+
+    public function photographers(Request $request)
+    {
+        // Fetch all villes for filter dropdown
+        $villes = Ville::orderBy('name', 'asc')->get();
+
+        // Get selected ville from request
+        $selectedVille = $request->query('ville');
+
+        // Query users with ville relationship, filtered by selected ville if provided
+        $users = User::with('ville')
+            ->where('is_complete', 1)
+            ->when($selectedVille, function ($query, $selectedVille) {
+                return $query->where('ville_id', $selectedVille);
+            })
+            ->latest()
+            ->paginate(20);
+
+
+            $villes = Ville::orderBy('name', 'asc')->get();
+            $query = User::with('ville')->where('is_complete', 1);
+        
+            if ($request->has('ville_id') && !empty($request->ville_id)) {
+                $query->where('ville_id', $request->ville_id);
+            }
+        
+            $users = $query->paginate(10);
+        
+        return view('admin.photographers', compact('users', 'villes'));
+
+       // return view('admin.photographers', compact('users', 'villes'));
+    }
 }

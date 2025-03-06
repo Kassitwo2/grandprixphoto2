@@ -300,28 +300,29 @@
                                 <table class="table align-middle gs-0 gy-4">
                                     <!--begin::Table head-->
                                     <thead>
-                                        <tr class="fw-bold text-muted bg-light">
-
-                                            <th class="ps-18 min-w-125px rounded-start">Faras</th>
-                                            <th class="min-w-125px">Trésors du maroc</th>
-                                            <th class="min-w-125px rounded-end">Vitalité</th>
-                                        </tr>
-                                    </thead>
-                                    <!--end::Table head-->
-                                    <!--begin::Table body-->
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <a class="ps-20 text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{$participationsCountByFaras}}</a>
-                                            </td>
-                                            <td>
-                                                <a class="ps-15 text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{$participationsCountByTresorsDuMaroc}}</a>
-                                            </td>
-                                            <td>
-                                                <a class="ps-5 text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{$participationsCountByVitalite}}</a>
-                                            </td>
-                                        </tr>
-                                    </tbody>
+                                        <thead>
+                                            <tr class="fw-bold text-muted bg-light">
+    
+                                                <th class="ps-18 min-w-125px rounded-start">Centrer le ballon</th>
+                                                <th class="min-w-125px">Zellige</th>
+                                                <th class="min-w-125px rounded-end">La lumière</th>
+                                            </tr>
+                                        </thead>
+                                        <!--end::Table head-->
+                                        <!--begin::Table body-->
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <a class="ps-20 text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{$participationsCountByCentrerBallon}}</a>
+                                                </td>
+                                                <td>
+                                                    <a class="ps-15 text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{$participationsCountByZellige}}</a>
+                                                </td>
+                                                <td>
+                                                    <a class="ps-5 text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{$participationsCountByLumière}}</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
                                     <!--end::Table body-->
                                 </table>
                             <!--end::Heading-->
@@ -406,7 +407,7 @@
                                                                             <div class="symbol symbol-50px me-5">
                                                                                 <a href="#" class="symbol symbol-50px m-3 image-modal-link" data-image-detail="{{ $participation->image }}" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">
                                                                                     <span class="symbol-label bg-light">
-                                                                                        <img src="storage/Thumbnails/{{ $participation->image }}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;" alt="">
+                                                                                        <img src="backoffice/storage/Thumbnails/{{ $participation->image }}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;" alt="">
                                                                                     </span> 
                                                                                 </a>                                                                         
                                                                             </div>
@@ -544,22 +545,22 @@
                                                                                     <input hidden type="text" name="id" value="{{$participation->id}}">
                                                                                     <input hidden type="text" name="is_categorie" value="1">
                                                                                     <input hidden type="text" name="is_conforme" value="-1">
-                                                                                    <button title="Refuser la catégorie" style="background-color:#ff9500" class="btn btn-bg-danger btn-color-muted btn-active-color-primary btn-sm px-4 me-2" type="submit">
+                                                                                    <button title="Changer la categorie" style="background-color:#ff9500" class="btn btn-bg-danger btn-color-muted btn-active-color-primary btn-sm px-4 me-2" type="submit">
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>                                                                                    </button>
                                                                                 </form>
                                                                             </div>
                                                                             <div class="col-3">
-                                                                                <form id="RejeteeForm" action="{{ route('participation.confirmation', $participation->id) }}" method="POST">
+                                                                                <form id="HorsCategorie" action="{{ route('participation.confirmation', $participation->id) }}" method="POST">
                                                                                     @csrf
                                                                                     <input hidden type="text" name="id" value="{{$participation->id}}">
                                                                                     <input hidden type="text" name="is_categorie" value="-1">
                                                                                     <input hidden type="text" name="is_conforme" value="-1">
-                                                                                    <button title="Refuser le sujet"  class="btn btn-bg-danger btn-color-muted btn-active-color-primary btn-sm px-4 me-2" type="submit">
+                                                                                    <button title="Hors categorie"  class="btn btn-bg-danger btn-color-muted btn-active-color-primary btn-sm px-4 me-2" type="submit">
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="25" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L512.9 376.7C552.2 340.2 576 292.3 576 240C576 125.1 461.4 32 320 32c-67.7 0-129.3 21.4-175.1 56.3L38.8 5.1zm385.2 425L82.9 161.3C70.7 185.6 64 212.2 64 240c0 45.1 17.7 86.8 47.7 120.9c-1.9 24.5-11.4 46.3-21.4 62.9c-5.5 9.2-11.1 16.6-15.2 21.6c-2.1 2.5-3.7 4.4-4.9 5.7c-.6 .6-1 1.1-1.3 1.4l-.3 .3 0 0 0 0 0 0 0 0c-4.6 4.6-5.9 11.4-3.4 17.4c2.5 6 8.3 9.9 14.8 9.9c28.7 0 57.6-8.9 81.6-19.3c22.9-10 42.4-21.9 54.3-30.6c31.8 11.5 67 17.9 104.1 17.9c37 0 72.3-6.4 104.1-17.9z"/></svg>
                                                                                     </button>
                                                                                 </form>
                                                                             </div>
-                                                                            <div class="col-3">
+{{--                                                                             <div class="col-3">
                                                                                 <form id="RejeteeForm" action="{{ route('participation.confirmation', $participation->id) }}" method="POST">
                                                                                     @csrf
                                                                                     <input hidden type="text" name="id" value="{{$participation->id}}">
@@ -569,7 +570,7 @@
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M200 32H56C42.7 32 32 42.7 32 56V200c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l40-40 79 79-79 79L73 295c-6.9-6.9-17.2-8.9-26.2-5.2S32 302.3 32 312V456c0 13.3 10.7 24 24 24H200c9.7 0 18.5-5.8 22.2-14.8s1.7-19.3-5.2-26.2l-40-40 79-79 79 79-40 40c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H456c13.3 0 24-10.7 24-24V312c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2l-40 40-79-79 79-79 40 40c6.9 6.9 17.2 8.9 26.2 5.2s14.8-12.5 14.8-22.2V56c0-13.3-10.7-24-24-24H312c-9.7 0-18.5 5.8-22.2 14.8s-1.7 19.3 5.2 26.2l40 40-79 79-79-79 40-40c6.9-6.9 8.9-17.2 5.2-26.2S209.7 32 200 32z"/></svg>                                                                            
                                                                                     </button>
                                                                                 </form>
-                                                                            </div>
+                                                                            </div> --}}
                                                                         </div>
                                                                     </td> 
                                                                     
@@ -659,7 +660,7 @@
                                                                             <div class="symbol symbol-50px me-5">
                                                                                 <a href="#" class="symbol symbol-50px m-3 image-modal-link" data-image-detail="{{ $participation->image }}" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">
                                                                                     <span class="symbol-label bg-light">
-                                                                                        <img src="storage/Thumbnails/{{ $participation->image }}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;" alt="">
+                                                                                        <img src="backoffice/storage/Thumbnails/{{ $participation->image }}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;" alt="">
                                                                                     </span>
                                                                                 </a>
                                                                             </div>
@@ -798,22 +799,22 @@
                                                                                     <input hidden type="text" name="id" value="{{$participation->id}}">
                                                                                     <input hidden type="text" name="is_categorie" value="1">
                                                                                     <input hidden type="text" name="is_conforme" value="-1">
-                                                                                    <button title="Refuser la catégorie" style="background-color:#ff9500" class="btn btn-bg-danger btn-color-muted btn-active-color-primary btn-sm px-4 me-2" type="submit">
+                                                                                    <button title="Changer la categorie" style="background-color:#ff9500" class="btn btn-bg-danger btn-color-muted btn-active-color-primary btn-sm px-4 me-2" type="submit">
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>                                                                                    </button>
                                                                                 </form>
                                                                             </div>
                                                                             <div class="col-3">
-                                                                                <form id="RejeteeForm" action="{{ route('participation.confirmation', $participation->id) }}" method="POST">
+                                                                                <form id="HorsCategorie" action="{{ route('participation.confirmation', $participation->id) }}" method="POST">
                                                                                     @csrf
                                                                                     <input hidden type="text" name="id" value="{{$participation->id}}">
                                                                                     <input hidden type="text" name="is_categorie" value="-1">
                                                                                     <input hidden type="text" name="is_conforme" value="-1">
-                                                                                    <button title="Refuser le sujet"  class="btn btn-bg-danger btn-color-muted btn-active-color-primary btn-sm px-4 me-2" type="submit">
+                                                                                    <button title="Hors categorie"  class="btn btn-bg-danger btn-color-muted btn-active-color-primary btn-sm px-4 me-2" type="submit">
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="25" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L512.9 376.7C552.2 340.2 576 292.3 576 240C576 125.1 461.4 32 320 32c-67.7 0-129.3 21.4-175.1 56.3L38.8 5.1zm385.2 425L82.9 161.3C70.7 185.6 64 212.2 64 240c0 45.1 17.7 86.8 47.7 120.9c-1.9 24.5-11.4 46.3-21.4 62.9c-5.5 9.2-11.1 16.6-15.2 21.6c-2.1 2.5-3.7 4.4-4.9 5.7c-.6 .6-1 1.1-1.3 1.4l-.3 .3 0 0 0 0 0 0 0 0c-4.6 4.6-5.9 11.4-3.4 17.4c2.5 6 8.3 9.9 14.8 9.9c28.7 0 57.6-8.9 81.6-19.3c22.9-10 42.4-21.9 54.3-30.6c31.8 11.5 67 17.9 104.1 17.9c37 0 72.3-6.4 104.1-17.9z"/></svg>
                                                                                     </button>
                                                                                 </form>
                                                                             </div>
-                                                                            <div class="col-3">
+{{--                                                                             <div class="col-3">
                                                                                 <form id="RejeteeForm" action="{{ route('participation.confirmation', $participation->id) }}" method="POST">
                                                                                     @csrf
                                                                                     <input hidden type="text" name="id" value="{{$participation->id}}">
@@ -823,7 +824,7 @@
                                                                                         <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M200 32H56C42.7 32 32 42.7 32 56V200c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l40-40 79 79-79 79L73 295c-6.9-6.9-17.2-8.9-26.2-5.2S32 302.3 32 312V456c0 13.3 10.7 24 24 24H200c9.7 0 18.5-5.8 22.2-14.8s1.7-19.3-5.2-26.2l-40-40 79-79 79 79-40 40c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H456c13.3 0 24-10.7 24-24V312c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2l-40 40-79-79 79-79 40 40c6.9 6.9 17.2 8.9 26.2 5.2s14.8-12.5 14.8-22.2V56c0-13.3-10.7-24-24-24H312c-9.7 0-18.5 5.8-22.2 14.8s-1.7 19.3 5.2 26.2l40 40-79 79-79-79 40-40c6.9-6.9 8.9-17.2 5.2-26.2S209.7 32 200 32z"/></svg>                                                                            
                                                                                     </button>
                                                                                 </form>
-                                                                            </div>
+                                                                            </div> --}}
                                                                         </div>
                                                                     </td> 
                                                                     
@@ -914,7 +915,7 @@
                                                                             <div class="symbol symbol-50px me-5">               
                                                                                 <a href="#" class="symbol symbol-50px m-3 image-modal-link" data-image-detail="{{ $participation->image }}" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">
                                                                                 <span class="symbol-label bg-light">
-                                                                                    <img src="storage/Thumbnails/{{ $participation->image }}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;" alt="">
+                                                                                    <img src="backoffice/storage/Thumbnails/{{ $participation->image }}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;" alt="">
                                                                                 </span>
                                                                                 </a>
                                                                             </div>
@@ -1054,23 +1055,23 @@
                                                                                 <input hidden type="text" name="id" value="{{$participation->id}}">
                                                                                 <input hidden type="text" name="is_categorie" value="1">
                                                                                 <input hidden type="text" name="is_conforme" value="-1">
-                                                                                <button title="Refuser la catégorie" style="background-color:#ff9500" class="btn btn-bg-danger btn-color-muted btn-active-color-primary btn-sm px-4 me-2" type="submit">
+                                                                                <button title="Changer la categorie" style="background-color:#ff9500" class="btn btn-bg-danger btn-color-muted btn-active-color-primary btn-sm px-4 me-2" type="submit">
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M40 48C26.7 48 16 58.7 16 72v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V72c0-13.3-10.7-24-24-24H40zM192 64c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zm0 160c-17.7 0-32 14.3-32 32s14.3 32 32 32H480c17.7 0 32-14.3 32-32s-14.3-32-32-32H192zM16 232v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V232c0-13.3-10.7-24-24-24H40c-13.3 0-24 10.7-24 24zM40 368c-13.3 0-24 10.7-24 24v48c0 13.3 10.7 24 24 24H88c13.3 0 24-10.7 24-24V392c0-13.3-10.7-24-24-24H40z"/></svg>                                                                                
                                                                                 </button>
                                                                             </form>
                                                                         </div>
                                                                         <div class="col-3">
-                                                                            <form id="RejeteeForm" action="{{ route('participation.confirmation', $participation->id) }}" method="POST">
+                                                                            <form id="HorsCategorie" action="{{ route('participation.confirmation', $participation->id) }}" method="POST">
                                                                                 @csrf
                                                                                 <input hidden type="text" name="id" value="{{$participation->id}}">
                                                                                 <input hidden type="text" name="is_categorie" value="-1">
                                                                                 <input hidden type="text" name="is_conforme" value="-1">
-                                                                                <button title="Refuser le sujet"  class="btn btn-bg-danger btn-color-muted btn-active-color-primary btn-sm px-4 me-2" type="submit">
+                                                                                <button title="Hors categorie"  class="btn btn-bg-danger btn-color-muted btn-active-color-primary btn-sm px-4 me-2" type="submit">
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" height="20" width="25" viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L512.9 376.7C552.2 340.2 576 292.3 576 240C576 125.1 461.4 32 320 32c-67.7 0-129.3 21.4-175.1 56.3L38.8 5.1zm385.2 425L82.9 161.3C70.7 185.6 64 212.2 64 240c0 45.1 17.7 86.8 47.7 120.9c-1.9 24.5-11.4 46.3-21.4 62.9c-5.5 9.2-11.1 16.6-15.2 21.6c-2.1 2.5-3.7 4.4-4.9 5.7c-.6 .6-1 1.1-1.3 1.4l-.3 .3 0 0 0 0 0 0 0 0c-4.6 4.6-5.9 11.4-3.4 17.4c2.5 6 8.3 9.9 14.8 9.9c28.7 0 57.6-8.9 81.6-19.3c22.9-10 42.4-21.9 54.3-30.6c31.8 11.5 67 17.9 104.1 17.9c37 0 72.3-6.4 104.1-17.9z"/></svg>
                                                                                 </button>
                                                                             </form>
                                                                         </div>
-                                                                        <div class="col-3">
+{{--                                                                         <div class="col-3">
                                                                             <form id="RejeteeForm" action="{{ route('participation.confirmation', $participation->id) }}" method="POST">
                                                                                 @csrf
                                                                                 <input hidden type="text" name="id" value="{{$participation->id}}">
@@ -1080,7 +1081,7 @@
                                                                                     <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M200 32H56C42.7 32 32 42.7 32 56V200c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l40-40 79 79-79 79L73 295c-6.9-6.9-17.2-8.9-26.2-5.2S32 302.3 32 312V456c0 13.3 10.7 24 24 24H200c9.7 0 18.5-5.8 22.2-14.8s1.7-19.3-5.2-26.2l-40-40 79-79 79 79-40 40c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H456c13.3 0 24-10.7 24-24V312c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2l-40 40-79-79 79-79 40 40c6.9 6.9 17.2 8.9 26.2 5.2s14.8-12.5 14.8-22.2V56c0-13.3-10.7-24-24-24H312c-9.7 0-18.5 5.8-22.2 14.8s-1.7 19.3 5.2 26.2l40 40-79 79-79-79 40-40c6.9-6.9 8.9-17.2 5.2-26.2S209.7 32 200 32z"/></svg>                                                                            
                                                                                 </button>
                                                                             </form>
-                                                                        </div>
+                                                                        </div> --}}
                                                                     </div>
                                                                 </td> 
                                                                 
@@ -1237,7 +1238,7 @@
                 //show images with full size
                 $(document).on('click', '.image-modal-link', function() {
                     var imageUrl = $(this).data('image-detail');
-                    $('#image-detail').attr('src', 'storage/' + imageUrl); // Assuming 'storage' is your base path
+                    $('#image-detail').attr('src', 'backoffice/storage/' + imageUrl); // Assuming 'storage' is your base path
                 });
 
 
@@ -1325,7 +1326,7 @@
                                 });
                                 Toast.fire({
                                     icon: "success",
-                                    title: "Participation rejetée."
+                                    title: "Participation hors sujet."
                                 });
 
                             },
@@ -1336,6 +1337,55 @@
                             }
                         });
                 });
+
+
+
+                //Rejetee les participation
+                $(document).on('submit', '#HorsCategorie', function(e) {
+                    
+                        e.preventDefault();
+
+                        // Serialize form data
+                        var formData = $(this).serialize();
+
+                        // Send AJAX request
+                        $.ajax({
+                            type: "POST",
+                            url: "{{ route('participation.confirmation') }}",
+                            data: formData,
+                            success: function(response) {
+                                // Handle success response
+                                console.log(response);
+
+                                $('.refuse').load(location.href + ' .refuse');
+                                $('.standby').load(location.href + ' .standby');
+                                $('.approuve').load(location.href + ' .approuve');
+
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: "top-end",
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                        toast.onmouseenter = Swal.stopTimer;
+                                        toast.onmouseleave = Swal.resumeTimer;
+                                    }
+                                });
+                                Toast.fire({
+                                    icon: "success",
+                                    title: "Participation hors categorie."
+                                });
+
+                            },
+                            error: function(xhr, status, error) {
+                                // Handle error response
+                                console.error(xhr.responseText);
+                                alert('Failed to update');
+                            }
+                        });
+                });
+
 
 
             });

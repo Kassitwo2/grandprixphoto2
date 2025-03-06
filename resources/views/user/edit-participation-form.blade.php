@@ -247,18 +247,50 @@
 													<div class="card-body pt-0">
 														<!--begin::Input group-->
 														<div class="mb-10 row">
-															<div class="mb-10 col-sm-12 col-lg-6">
-																<!--begin::Label-->
-																<label class="required form-label">Image / الصورة</label>
-																<!--end::Label-->
-																<!--begin::Input-->
-																<input class="form-control form-control-lg"  value="{{$participation->image}}"  name="image" id="formFileLg" type="file" size="20000000" />
-																<!--end::Input-->
+															<div class="mb-10 col-sm-12 col-lg-6 card-body text-center pt-0">
+																<!--begin::Image input-->
+																<div class="image-input image-input-outline {{ $participation->image ? '' : 'image-input-empty' }} image-input-placeholder mb-3" data-kt-image-input="true">
+																	<!--begin::Preview existing image-->
+																	<div class="image-input-wrapper w-150px h-150px" 
+																		style="background-image: url('{{ $participation->image ? asset("storage/Thumbnails/$participation->image") : asset("default-image.jpg") }}')">
+																	</div>
+																	<!--end::Preview existing image-->
+															
+																	<label class="required form-label">Image / الصورة</label>
+															
+																	<!--begin::Label for Upload-->
+																	<label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" 
+																		   data-kt-image-input-action="change" 
+																		   data-bs-toggle="tooltip" 
+																		   title="Changer l'image">
+																		   <i class="ki-duotone ki-pencil fs-7">
+																			<span class="path1"></span>
+																			<span class="path2"></span>
+																		</i>																		<!--begin::Inputs-->
+																		<input type="file" name="image" id="formFileLg" accept=".png, .jpg, .jpeg" size="20000000"/>
+																		<input type="hidden" name="avatar_remove" />
+																		<!--end::Inputs-->
+																	</label>
+																	<!--end::Label for Upload-->
+															
+																	<!--begin::Cancel-->
+																	<span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" 
+																		  data-kt-image-input-action="cancel" 
+																		  data-bs-toggle="tooltip" 
+																		  title="Cancel avatar">
+																		<i class="ki-duotone ki-cross fs-2"></i>
+																	</span>
+																	<!--end::Cancel-->
+
+																</div>
+																<!--end::Image input-->
+															
 																<!--begin::Description-->
-																<div class="text-muted pt-1 fs-7">Types de fichiers autorisés : png, jpg, jpeg.</div>
+																<div class="text-muted fs-7">Types de fichiers autorisés : png, jpg, jpeg.</div>
 																<!--end::Description-->
 															</div>
-															<div class="col-sm-12 col-lg-6">
+															
+															<div class="col-sm-12 col-lg-12">
 																<!--begin::Label-->
 																<label class="required form-label">Catégories / الفئات</label>
 																<!--end::Label-->

@@ -217,7 +217,9 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('/save-categorie', [AdminController::class,'storeCategory'])->name('save-category');
     Route::post('/update-categorie', [AdminController::class, 'updateCategory'])->name('update.category');
     Route::delete('/delete-categorie/{id}', [AdminController::class, 'destroyCategory'])->name('category.ajaxDestroy');
-    
+
+    Route::get('/photographers', [AdminController::class, 'photographers'])->name('photographers.index');
+
 
 });
 

@@ -132,7 +132,7 @@
 						<!--begin::Logo-->
 						<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
-							<a href="../../demo1/dist/index.html">
+							<a href="/">
 								<img alt="Logo" src="{{asset('assets-metronic/media/logos/logo-gpp.png')}}" class="h-100px app-sidebar-logo-default" />
 								<img alt="Logo" src="{{asset('assets-metronic/media/logos/logo-gpp.png')}}" class="h-100px app-sidebar-logo-minimize" />
 							</a>
@@ -324,6 +324,21 @@
 													</i>
 												</span>
 												<span class="menu-title">Categories </span>
+											</a>
+											<!--end:Menu link-->
+										</div>
+										<!--end:Menu item-->
+										<!--begin:Menu item-->
+										<div class="menu-item">
+											<!--begin:Menu link-->
+											<a class="menu-link" href="{{route('photographers.index')}}">
+												<span class="menu-icon">
+													<i class="ki-duotone ki-abstract-26 fs-2">
+														<span class="path1"></span>
+														<span class="path2"></span>
+													</i>
+												</span>
+												<span class="menu-title">Photographers </span>
 											</a>
 											<!--end:Menu link-->
 										</div>

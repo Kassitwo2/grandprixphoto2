@@ -43,9 +43,9 @@
 						<div class="d-flex flex-align-items flex-wrap gap-3 gap-xl-0">
 
 							<!--begin::Actions-->
-{{-- 							<div class="d-flex align-items-center flex-shrink-0">
+							<div class="d-flex align-items-center flex-shrink-0">
 								<a href="/backoffice/participation-form" class="btn btn-sm btn-flex btn-primary ms-5">Participer</a>
-							</div> --}}
+							</div> 
 							<!--end::Actions-->
 						</div>
 						<!--end::Wrapper-->
@@ -68,6 +68,12 @@
 								{{ session('error') }}
 							</div>
 						@endif
+						@if(session('error'))
+							<div class="alert alert-danger">
+								{{ session('error') }}
+							</div>
+						@endif
+
 							<!--begin::Participations-->
 							<div class="card card-flush">
 								<!--begin::Tables Widget 11-->
@@ -229,12 +235,9 @@
 															<td>
 																<a class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{$participation->categorie->name}}</a>
 															</td>
-
 															<td>
-																<a href="#" class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">Rejetée</a>
+																<a href="#" class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{$participation->motif}}</a>
 															</td>
-
-
 															<td>
 																<a class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">{{$participation->created_at->format('d/m/Y')}}</a>
 															</td>
@@ -287,11 +290,11 @@
 															<!--begin::Content-->
 															<div class="fw-semibold">
 																<h4 class="text-gray-900 fw-bold">Notification</h4>
-																	{{--	<div class="fs-6 text-gray-700">
+																		<div class="fs-6 text-gray-700">
 																			Vous n'avez actuellement aucune participation. Vous pouvez participer en cliquant sur le lien
 																			<a href="/backoffice/participation-form">ici</a> ou  le bouton 'Nouvelle Participation' ci-dessus.
-																		</div>  --}}
-				 														<div class="fs-6 text-gray-700">
+																		</div>  
+				 													{{--	<div class="fs-6 text-gray-700">
 																			Cher utilisateur, nous tenons à vous informer que la participation débutera le <b> 1er mars 2025.</b>  
 																			Nous avons hâte de vous voir rejoindre cet événement passionnant !
 																		</div>
@@ -301,7 +304,7 @@
 																			في
 																			<b>1 مارس 2025</b>
 																			نتطلع إلى رؤيتكم للانضمام إلى هذا الحدث المثير
-																		</div>
+																		</div>--}}
 															<!--end::Content-->
 															</div>
 														<!--end::Wrapper-->

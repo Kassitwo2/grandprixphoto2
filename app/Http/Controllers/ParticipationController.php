@@ -143,14 +143,19 @@ class ParticipationController extends Controller
          $Thumbnail->toPng()->save(public_path('storage/Thumbnails/'. $path));
         }
 
-            ///////////////
+        ///////////////
         try {
             Mail::to(Auth::user()->email)->send(new emailParticipation());
-        } catch (Exception $e) {
-
-            session()->flash('success', 'Votre participation a été enregistrée avec succès.');
-            return Redirect('/participations'); 
+        } catch (\Exception $e) {
+            Log::error('Email sending failed: ' . $e->getMessage());
+            
+            // Store error message in session to show in the frontend
+            session()->flash('error', 'Échec de l\'envoi de l\'e-mail : ' . $e->getMessage());
+            
+            // Redirect back to the form or participation page
+            return redirect()->route('index.participations');
         }
+        
 
 
         session()->flash('success', 'Votre participation a été enregistrée avec succès.');

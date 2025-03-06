@@ -62,7 +62,7 @@
 <body>
 <table>
     <tr>
-        <td colspan="2" align="center"><img src="https://grandprixphoto.ma/gpp/wp-content/uploads/2024/05/Concours-photo-annonce.jpg" width="100%"></td>
+        <td colspan="2" align="center"><img src="https://grandprixphoto.ma/gpp/wp-content/uploads/2025/02/GPP24-Banner-MarsSeptembre-1.jpg" width="100%"></td>
     </tr>    
     <tr>
         <td colspan="2" align="center">

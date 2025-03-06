@@ -114,7 +114,7 @@
                                                         data-image-description="{{ $participation->description }}"
                                                         data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">
                                                         <span class="symbol-label bg-light">
-                                                            <img src="storage/Thumbnails/{{ $participation->image }}"
+                                                            <img src="backoffice/storage/Thumbnails/{{ $participation->image }}"
                                                                 style="width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0;"
                                                                 alt="">
                                                         </span>
