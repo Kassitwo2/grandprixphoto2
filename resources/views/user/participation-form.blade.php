@@ -383,11 +383,17 @@
 	<div class="footer py-4 d-flex flex-column flex-md-row align-items-center justify-content-between" id="kt_footer">
 		<!--begin::Copyright-->
 		<div class="order-2 order-md-1">
-			<span class="text-white opacity-75 fw-semibold me-1">2024&copy;</span>
+			<span class="text-white opacity-75 fw-semibold me-1">2025&copy;</span>
 			<a href="https://www.3wdev.ma/" target="_blank" class="text-white text-hover-primary opacity-75">Powered by
 				3wDev.ma</a>
 		</div>
 		<!--end::Copyright-->
+								<!--begin::Copyright-->
+								<div class="order-2 order-md-1">
+									<span class="text-white opacity-75 fw-semibold me-1">Envoyez les bugs techniques à </span>
+									<a href="mailto:tech@3wdev.ma" target="_blank" class="px-2">tech@3wdev.ma</a>.
+								</div>
+								<!--end::Copyright-->
 		<!--begin::Menu-->
 		<ul class="menu menu-white menu-hover-primary fw-semibold order-1 opacity-75">
 			<li class="menu-item">
@@ -505,6 +511,11 @@
 		// Vérification de la taille du fichier
 		if (file.size < 10 * 1024 * 1024) { // Check if file size is less than 3MB
 			errorMessage += `<li class="error mx-5">Le fichier doit être supérieur à 10MB. Taille actuelle : ${(file.size / 1024 / 1024).toFixed(2)}MB</li>`;
+			fileInput.value = '';
+		}
+		// Vérification de la taille du fichier
+		if (file.size > 20 * 1024 * 1024) { // Check if file size is less than 3MB
+			errorMessage += `<li class="error mx-5">Le fichier doit être inférieure à 20MB. Taille actuelle : ${(file.size / 1024 / 1024).toFixed(2)}MB</li>`;
 			fileInput.value = '';
 		}
 

@@ -747,22 +747,25 @@ class AdminController extends Controller
 
 
 
-    public function navigation(){
+    public function navigation()
+    {
+        // Fetch participations that are conforming
+        $participations = Participation::where('is_conforme', '1')->orderBy('id')->get();
 
-        $participations = Participation::Where('is_conforme','1')->orderBy('id')->get();
-        return view('admin.navigation', compact('participations'))->with('participations', $participations);
+        // Return the view with the participations data
+        return view('admin.navigation', compact('participations'));
     }
 
-    public function next($id)
+    public function nextParticipation($id)
     {
-        $participations = Participation::where('id', '>', $id)->orderBy('id')->first();
-        return response()->json($participations);
+        $participation = Participation::where('is_conforme', '1')->where('id', '>', $id)->orderBy('id')->first();
+        return response()->json($participation);
     }
 
-    public function previous($id)
+    public function previousParticipation($id)
     {
-        $participations = Participation::where('id', '<', $id)->orderByDesc('id')->first();
-        return response()->json($participations);
+        $participation = Participation::where('is_conforme', '1')->where('id', '<', $id)->orderBy('id', 'desc')->first();
+        return response()->json($participation);
     }
 
 

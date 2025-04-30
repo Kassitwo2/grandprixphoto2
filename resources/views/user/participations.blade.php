@@ -318,9 +318,6 @@
 										<!--begin::Body-->
 									</div>
 									<!--end::Tables Widget 11-->
-
-
-
 							</div>
 							<!--end::Participations-->
 						</div>
@@ -331,12 +328,19 @@
 					<div class="footer py-4 d-flex flex-column flex-md-row align-items-center justify-content-between" id="kt_footer">
 						<!--begin::Copyright-->
 						<div class="order-2 order-md-1">
-							<span class="text-white opacity-75 fw-semibold me-1">2024&copy;</span>
+							<span class="text-white opacity-75 fw-semibold me-1">2025&copy;</span>
 							<a href="https://www.3wdev.ma/" target="_blank" class="text-white text-hover-primary opacity-75">Powered by 3wDev.ma</a>
+						</div>
+						<!--end::Copyright-->
+						<!--begin::Copyright-->
+						<div class="order-2 order-md-1">
+							<span class="text-white opacity-75 fw-semibold me-1">Envoyez les bugs techniques à </span>
+							<a href="mailto:tech@3wdev.ma" target="_blank" class="px-2">tech@3wdev.ma</a>.
 						</div>
 						<!--end::Copyright-->
 						<!--begin::Menu-->
 						<ul class="menu menu-white menu-hover-primary fw-semibold order-1 opacity-75">
+							
 							<li class="menu-item">
 								<a href="https://grandprixphoto.ma/reglement-du-concours/" target="_blank" class="menu-link px-2">Règlement du concours.</a>
 							</li>

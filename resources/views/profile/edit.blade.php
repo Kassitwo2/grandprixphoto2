@@ -48,7 +48,7 @@
 					<div class="footer py-4 d-flex flex-column flex-md-row align-items-center justify-content-between" id="kt_footer">
 						<!--begin::Copyright-->
 						<div class="order-2 order-md-1">
-							<span class="text-white opacity-75 fw-semibold me-1">2023&copy;</span>
+							<span class="text-white opacity-75 fw-semibold me-1">2025&copy;</span>
 							<a href="https://www.3wdev.ma/" target="_blank" class="text-white text-hover-primary opacity-75">Powered by 3wDev.ma</a>
 						</div>
 						<!--end::Copyright-->

@@ -59,9 +59,11 @@
 									<!--begin::Content-->
 									<div class="fw-semibold">
 									<h4 class="text-gray-900 fw-bold">Notification</h4>
-									<div class="fs-6 text-gray-700">Cher utilisateur, nous sommes ravis de vous informer que le concours débutera le <b> 1er mars 2025.</b> Nous avons hâte de vous voir participer et espérons que vous rejoindrez cet événement exceptionnel !</div>
+									<div class="fs-6 text-gray-700">Cher utilisateur, nous sommes ravis de vous informer que la période de participation pour notre événement débutera le <b> 31 mars</b> et se poursuivra jusqu'en <b>31 juillet 2025</b> . Nous attendons avec impatience votre participation et espérons que vous pourrez vous joindre à nous pour cet événement exceptionnel !	</div>
+
 										<br>
-									<div class="fs-6 text-gray-700 text-end" dir="rtl" >عزيزي المستخدم، يسعدنا إبلاغك بأن المسابقة ستنطلق في <b>1 مارس 2025</b>. نتطلع إلى مشاركتكم ونأمل أن تكونوا جزءًا من هذا الحدث المميز!</div>
+									<div class="fs-6 text-gray-700 text-end" > <span>!</span>  عزيزي المستخدم، يسعدنا إبلاغك بأن فترة المشاركة في فعاليتنا ستبدأ في 31 مارس وتستمر حتى 31 يوليو 2025 . نتطلع إلى مشاركتكم ونأمل أن تتمكنوا من الانضمام إلينا في هذا الحدث الاستثنائي</div>
+
 									<!--end::Content-->
 							</div>
 									<!--end::Wrapper-->
@@ -302,8 +304,14 @@
 					<div class="footer py-4 d-flex flex-column flex-md-row align-items-center justify-content-between" id="kt_footer">
 						<!--begin::Copyright-->
 						<div class="order-2 order-md-1">
-							<span class="text-white opacity-75 fw-semibold me-1">2024&copy;</span>
+							<span class="text-white opacity-75 fw-semibold me-1">2025&copy;</span>
 							<a href="https://www.3wdev.ma/" target="_blank" class="text-white text-hover-primary opacity-75">Powered by 3wDev.ma</a>
+						</div>
+						<!--end::Copyright-->
+						<!--begin::Copyright-->
+						<div class="order-2 order-md-1">
+							<span class="text-white opacity-75 fw-semibold me-1">Envoyez les bugs techniques à </span>
+							<a href="mailto:tech@3wdev.ma" target="_blank" class="px-2">tech@3wdev.ma</a>.
 						</div>
 						<!--end::Copyright-->
 						<!--begin::Menu-->

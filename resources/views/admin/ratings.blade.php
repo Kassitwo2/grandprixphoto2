@@ -1,5 +1,113 @@
 @extends('layouts.Dashboard-admin.guest')
 @section('content')
+
+<style>
+    .my-small-height-swal {
+    padding: 10px;
+    }
+
+    .my-small-height-swal .swal2-title {
+    font-size: 1.25em;
+    margin-bottom: 5px;
+    }
+
+    .my-small-height-swal .swal2-icon {
+    font-size: 1.5em;
+    margin-top: 5px;
+    }
+
+</style>
+<style>
+    .rate {
+        float: left;
+        height: 46px;
+        padding: 0 10px;
+        }
+        .rate:not(:checked) > input {
+        position:absolute;
+        display: none;
+        }
+        .rate:not(:checked) > label {
+        float:right;
+        width:1em;
+        overflow:hidden;
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:30px;
+        color:#ccc;
+        }
+        .rated:not(:checked) > label {
+        float:right;
+        width:1em;
+        overflow:hidden;
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:30px;
+        color:#ccc;
+        }
+        .rate:not(:checked) > label:before {
+        content: '★ ';
+        }
+        .rate > input:checked ~ label {
+        color: #ffc700;
+        }
+        .rate:not(:checked) > label:hover,
+        .rate:not(:checked) > label:hover ~ label {
+        color: #deb217;
+        }
+        .rate > input:checked + label:hover,
+        .rate > input:checked + label:hover ~ label,
+        .rate > input:checked ~ label:hover,
+        .rate > input:checked ~ label:hover ~ label,
+        .rate > label:hover ~ input:checked ~ label {
+        color: #c59b08;
+        }
+        .star-rating-complete{
+           color: #c59b08;
+        }
+        .rating-container .form-control:hover, .rating-container .form-control:focus{
+        background: #fff;
+        border: 1px solid #ced4da;
+        }
+        .rating-container textarea:focus, .rating-container input:focus {
+        color: #000;
+        }
+        .rated {
+        float: left;
+        height: 46px;
+        padding: 0 10px;
+        }
+        .rated:not(:checked) > input {
+        position:absolute;
+        display: none;
+        }
+        .rated:not(:checked) > label {
+        float:right;
+        width:1em;
+        overflow:hidden;
+        white-space:nowrap;
+        cursor:pointer;
+        font-size:30px;
+        color:#ffc700;
+        }
+        .rated:not(:checked) > label:before {
+        content: '★ ';
+        }
+        .rated > input:checked ~ label {
+        color: #ffc700;
+        }
+        .rated:not(:checked) > label:hover,
+        .rated:not(:checked) > label:hover ~ label {
+        color: #deb217;
+        }
+        .rated > input:checked + label:hover,
+        .rated > input:checked + label:hover ~ label,
+        .rated > input:checked ~ label:hover,
+        .rated > input:checked ~ label:hover ~ label,
+        .rated > label:hover ~ input:checked ~ label {
+        color: #c59b08;
+        }
+</style>
 <!--begin::Content wrapper-->
 <div class="d-flex flex-column flex-column-fluid">
     <!--begin::Content-->
@@ -723,7 +831,7 @@
                 var imageDescription = $(this).data('image-category');
                 var imageDescription = $(this).data('image-description');
 
-                $('#image-detail').attr('src', 'storage/' + imageUrl);
+                $('#image-detail').attr('src', 'backoffice/storage/uploads/images/approuvee/' + imageUrl);
                 $('#image-title').text(imageTitle);
                 $('#image-category').text(imageCategory);
                 $('#image-description').text(imageDescription);
@@ -739,7 +847,7 @@
                 var imageDescription = $(this).data('image-description-rating');
                 var participationId = $(this).data('image-id-rating');
 
-                $('#image-detail-rating').attr('src', 'storage/' + imageUrl);
+                $('#image-detail-rating').attr('src', 'backoffice/storage/uploads/images/approuvee/' + imageUrl);
                 $('#image-title-rating').text(imageTitle);
                 $('#image-category-rating').text(imageCategory);
                 $('#image-description-rating').text(imageDescription);
@@ -917,111 +1025,4 @@
 
 </script>
 
-<style>
-    .my-small-height-swal {
-    padding: 10px;
-    }
-
-    .my-small-height-swal .swal2-title {
-    font-size: 1.25em;
-    margin-bottom: 5px;
-    }
-
-    .my-small-height-swal .swal2-icon {
-    font-size: 1.5em;
-    margin-top: 5px;
-    }
-
-</style>
-<style>
-    .rate {
-        float: left;
-        height: 46px;
-        padding: 0 10px;
-        }
-        .rate:not(:checked) > input {
-        position:absolute;
-        display: none;
-        }
-        .rate:not(:checked) > label {
-        float:right;
-        width:1em;
-        overflow:hidden;
-        white-space:nowrap;
-        cursor:pointer;
-        font-size:30px;
-        color:#ccc;
-        }
-        .rated:not(:checked) > label {
-        float:right;
-        width:1em;
-        overflow:hidden;
-        white-space:nowrap;
-        cursor:pointer;
-        font-size:30px;
-        color:#ccc;
-        }
-        .rate:not(:checked) > label:before {
-        content: '★ ';
-        }
-        .rate > input:checked ~ label {
-        color: #ffc700;
-        }
-        .rate:not(:checked) > label:hover,
-        .rate:not(:checked) > label:hover ~ label {
-        color: #deb217;
-        }
-        .rate > input:checked + label:hover,
-        .rate > input:checked + label:hover ~ label,
-        .rate > input:checked ~ label:hover,
-        .rate > input:checked ~ label:hover ~ label,
-        .rate > label:hover ~ input:checked ~ label {
-        color: #c59b08;
-        }
-        .star-rating-complete{
-           color: #c59b08;
-        }
-        .rating-container .form-control:hover, .rating-container .form-control:focus{
-        background: #fff;
-        border: 1px solid #ced4da;
-        }
-        .rating-container textarea:focus, .rating-container input:focus {
-        color: #000;
-        }
-        .rated {
-        float: left;
-        height: 46px;
-        padding: 0 10px;
-        }
-        .rated:not(:checked) > input {
-        position:absolute;
-        display: none;
-        }
-        .rated:not(:checked) > label {
-        float:right;
-        width:1em;
-        overflow:hidden;
-        white-space:nowrap;
-        cursor:pointer;
-        font-size:30px;
-        color:#ffc700;
-        }
-        .rated:not(:checked) > label:before {
-        content: '★ ';
-        }
-        .rated > input:checked ~ label {
-        color: #ffc700;
-        }
-        .rated:not(:checked) > label:hover,
-        .rated:not(:checked) > label:hover ~ label {
-        color: #deb217;
-        }
-        .rated > input:checked + label:hover,
-        .rated > input:checked + label:hover ~ label,
-        .rated > input:checked ~ label:hover,
-        .rated > input:checked ~ label:hover ~ label,
-        .rated > label:hover ~ input:checked ~ label {
-        color: #c59b08;
-        }
-</style>
 @endsection

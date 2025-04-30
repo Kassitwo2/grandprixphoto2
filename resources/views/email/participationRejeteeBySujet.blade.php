@@ -78,23 +78,33 @@
             <p>Nous vous informons que votre photo ne correspond à aucune des trois catégories du concours. Pour rappel, voici les trois catégories :</p>
             
         <br>
-        <li><b>1. Vitalité :</b></li>
-        Cette catégorie met en avant l'énergie et le dynamisme des Marocains dans divers contextes de vie.
-        Que ce soit des activités sportives, des festivals, ou des moments quotidiens pleins de vie,
-        nous recherchons des images qui capturent la passion et l'engagement des Marocains dans leur quotidien.
+        <li><b>1. Centrer le ballon :</b></li>
+        Le sport est une scène où se jouent la passion, 
+        la précision et la performance. Le Maroc, terre d’accueil de grands événements sportifs internationaux tels que la Coupe d’Afrique des Nations, 
+        la Coupe du Monde des Clubs de la FIFA, ou encore Rabat Jeunesse, vibre au rythme de ces compétitions qui rassemblent des millions de passionnés.
+        Dans cette catégorie, le ballon n’est pas seulement un objet du jeu, mais le centre de la composition photographique. 
+        Il symbolise l’enjeu, l’effort et l’exploit. Des stades bouillonnants aux terrains de quartier, 
+        chaque instant où le ballon est en jeu raconte une histoire de dépassement de soi, de cohésion et d’émotions intenses. Cette catégorie est une ode au mouvement, 
+        au timing parfait et à l’impact visuel du sport sous toutes ses formes.
         <br>
 
-        <li><b>2. Trésors du Maroc :</b></li>
-        Cette catégorie vise à valoriser la richesse culturelle, historique et naturelle du Maroc. 
-        Nous attendons des photos qui documentent les paysages, les monuments, 
-        les traditions et les scènes de vie qui font la singularité et la beauté du patrimoine marocain.
+        <li><b>2. Zellige :</b></li>
+        Le zellige, cet art ancestral du Maroc, est bien plus qu’un simple ornement architectural. Il est le reflet d’un savoir-faire transmis de génération en génération, 
+        une expression de la géométrie sacrée, un langage codé où chaque motif porte en lui une histoire millénaire.
+
+        Des palais royaux aux riads traditionnels, des fontaines aux mosquées, le zellige habille les espaces et donne vie aux structures avec une richesse de formes et de couleurs inégalée. 
+        Cette catégorie rend hommage à cet art raffiné et invite les photographes à en capturer la précision, la symétrie et la diversité. 
+        Chaque cliché devra révéler l’âme de ces mosaïques, mettant en lumière leur élégance et leur place au cœur du patrimoine marocain.
         <br>
 
-        <li><b>3. Faras :</b></li>
-        Cette catégorie se concentre sur le rôle du cheval dans la culture marocaine.
-        De la tborida aux pratiques équestres quotidiennes,
-        les images devraient explorer la relation entre les Marocains et leurs chevaux,
-        symboles de grâce et de puissance.
+        <li><b>3. La lumière :</b></li>
+        La lumière est l’élément fondamental de la photographie. Elle sculpte les ombres, révèle les textures et sublime les paysages. 
+        Le Maroc, grâce à sa position géographique et à la pureté de son atmosphère, bénéficie d’une lumière exceptionnelle, qui a depuis toujours inspiré artistes et photographes.
+
+        Du lever du soleil sur les dunes du Sahara aux reflets dorés sur l’Atlantique, des contrastes saisissants des médinas aux nuits étoilées du Haut Atlas, 
+        cette catégorie met en avant la qualité unique de la lumière marocaine. Qu’elle soit diffuse ou tranchée, chaude ou froide, 
+        elle est une source d’inspiration infinie pour celui qui sait la capturer. Cette catégorie est un défi technique et artistique, 
+        une invitation à jouer avec les ombres et les reflets, à exprimer toute la magie de la lumière dans l’image.
         <br>
         <br>
 
@@ -113,21 +123,31 @@
             <p>نحيطكم علماً بأن صورتكم لا تتوافق مع أي من الفئات الثلاث للمسابقة. للتذكير، إليكم الفئات الثلاث:</p> 
             <br>
 
-            <li><b>1. رياضة و حيوية:</b></li>
+            <li><b>1. التركيز على الكرة:</b></li>
             <br>
             <p>
-                تُبرز هذه الفئة الطاقة والحيوية لدى المغاربة في مختلف جوانب الحياة. سواء كانت الأنشطة الرياضية، أو المهرجانات، أو اللحظات اليومية المليئة بالحياة، نبحث عن صور تلتقط الشغف والالتزام لدى المغاربة في حياتهم اليومية. 
+                تسعى هذه الفئة إلى تسليط الضوء على الكرة كعنصر محوري في عالم الرياضة، حيث تتجاوز دورها التقليدي كأداة لعب لتصبح جوهر الصورة وركيزتها البصرية.
+
+                ندعو المصورين إلى التقاط الكرة في قلب الحدث الرياضي، سواء في البطولات الكبرى، أو في الرياضات الشعبية التي تنبض بالحياة في الشوارع والأحياء.
+                
+                سواء كانت كرة قدم، كرة سلة، كرة يد، كرة طائرة أو أي رياضة أخرى، يجب أن تكون الكرة هي النقطة المحورية للصورة، حيث تحكي قصتها الخاصة، بين الحركة، الترقب، واللحظة الحاسمة التي تجمع اللاعبين والجماهير في شغف واحد.
             </p>
 
-            <li><b>2. كنوز المغرب:</b></li>
+            <li><b>2. الزليج:</b></li>
             <br>
             <p>
-                تهدف هذه الفئة إلى تسليط الضوء على الثروة الثقافية والتاريخية والطبيعية للمغرب. ننتظر صوراً توثق المناظر الطبيعية، والمعالم، والتقاليد، والمشاهد الحياتية التي تُظهر تفرد وجمال التراث المغربي.
+                الزليج ليس مجرد زخرفة معمارية، بل لغة بصرية تنطق بجمال الفن الإسلامي والمغربي. تمثل هذه الفئة فرصة لاستكشاف التعقيد الهندسي، والتوازن الدقيق بين الألوان، والدلالات التاريخية لهذا الفن الفريد.
+
+                يدعو هذا الموضوع المصورين إلى تسليط الضوء على الحرفيين، التفاصيل المعمارية، والأنماط المتكررة التي تحمل في طياتها تاريخًا يمتد لقرون.
+                
+                من القصور الملكية إلى المساجد العتيقة، ومن النافورات المزخرفة إلى تصاميم المنازل التقليدية، يمثل الزليج شاهدًا على الإبداع المغربي وأحد أعظم كنوز التراث الحي.
             </p>
-            <li><b>3. فارس:</b></li>
+            <li><b>3. الضوء:</b></li>
             <br>
             <p>
-                تركز هذه الفئة على دور الحصان في الثقافة المغربية. من التبوريدة إلى الممارسات الفروسية اليومية، يجب أن تستكشف الصور العلاقة بين المغاربة وخيولهم، رموز الرشاقة والقوة.
+                يقدم هذا الموضوع للمصورين فرصة فريدة للتعبير عن رؤيتهم الإبداعية حول كيفية تفاعل المغرب مع تراثه ليس فقط للحفاظ عليه ولكن لإحيائه وإعادة تفسيره.
+
+                من خلال المشاركة في هذا الحدث، يساهم المصورون في إثراء المشهد الثقافي العالمي وتعزيز تقدير الهوية المغربية المتنوعة، حيث يبقى التراث عنصرًا حيًا ومتجددًا يواكب العصر.
             </p>
             <br><br>
             <p>ندعوكم لتقديم صورة جديدة تتوافق مع إحدى هذه الفئات. شكراً لتفهمكم ولمشاركتكم.</p>

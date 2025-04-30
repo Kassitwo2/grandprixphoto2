@@ -184,10 +184,8 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('/update-admin', [AdminController::class, 'updateAdmin'])->name('update.admin');
     Route::delete('/admins/{admin}', [AdminController::class, 'adminDestroy'])->name('admins.adminDestroy');
     Route::get('/admins/navigation', [AdminController::class, 'navigation'])->name('admins.navigation');
-    Route::get('/participations/{id}/next', [AdminController::class, 'next']);
-    Route::get('/participations/{id}/previous', [AdminController::class, 'previous']);
-
-
+    Route::get('/participations/{id}/next', [AdminController::class, 'nextParticipation']);
+    Route::get('/participations/{id}/previous', [AdminController::class, 'previousParticipation']);
 
     Route::get('/admin/participations_with_users',[AdminController::class,'onlyDarem'])->name('admin.onlyDarem');
     Route::get('/users/{id}/participations', [AdminController::class, 'getParticipations']);
